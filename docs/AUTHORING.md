@@ -194,6 +194,11 @@ generated `main()`. `CHECK(expr)`, `CHECK_EQ(a, b)`, and `CHECK_NEAR(a, b, eps)`
 are available; failures report the expression with the actual and expected
 values. The reader writes declarations only, no `main`.
 
+`CHECK` is variadic, so a braced initialiser inside it is fine:
+`CHECK(Point{1, 2} == other)`. `CHECK_EQ` and `CHECK_NEAR` take a fixed number
+of arguments, so a comma inside a brace there splits the macro — name the value
+first, or wrap it in parentheses.
+
 **`check: output`** — the reader writes a whole program and the Tests section is
 the exact stdout it must produce. Use `stdin:` in the front-matter to feed it
 input.

@@ -68,7 +68,9 @@ inline int finish() {
 }
 }  // namespace cpptb
 
-#define CHECK(expr) ::cpptb::check_bool(static_cast<bool>(expr), #expr, __LINE__)
+// Variadic so that a braced initialiser inside the expression — Point{1, 2} —
+// is not split into separate macro arguments by its comma.
+#define CHECK(...) ::cpptb::check_bool(static_cast<bool>(__VA_ARGS__), #__VA_ARGS__, __LINE__)
 #define CHECK_EQ(a, b) ::cpptb::check_eq((a), (b), #a " == " #b, __LINE__)
 #define CHECK_NEAR(a, b, eps) ::cpptb::check_near((a), (b), (eps), #a " ~= " #b, __LINE__)
 // ---- end harness ----
