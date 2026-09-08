@@ -10,7 +10,7 @@ Progress is also visible, without reading this file, at `/progress/`.
 
 ---
 
-## Wave 1 — the two entry paths
+## Wave 1 — the two entry paths ✅ complete
 
 Finishes Part 1 (so a beginner can start) and the core of Part 2 (so a reader
 coming from another language can start). Until this wave is done, the home
@@ -22,7 +22,7 @@ within a chapter or two.
 - [x] 1.3 Making decisions
 - [x] 1.4 Repetition
 - [x] 1.5 Functions
-- [ ] 1.6 Your toolchain
+- [x] 1.6 Your toolchain
 - [x] 2.1 Objects and storage
 - [x] 2.2 Pointers
 - [x] 2.3 References
