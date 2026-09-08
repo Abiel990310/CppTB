@@ -98,7 +98,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 - [x] 8.1 Threads
 - [x] 8.2 Data races and mutexes
 - [x] 8.3 Atomics and the memory model
-- [ ] 8.4 Futures, promises, and tasks
+- [x] 8.4 Futures, promises, and tasks
 - [ ] 8.5 Coroutines
 - [ ] 9.3 Build systems and CMake
 - [ ] 9.2 Modules
