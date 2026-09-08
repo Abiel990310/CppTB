@@ -21,7 +21,14 @@ CPPTB_BASE=/CppTB/ npm run build
 
 A GitHub Pages *project* site is exactly this case — it lives at
 `https://<user>.github.io/<repo>/`. The deploy workflow sets `CPPTB_BASE` from
-the repository name automatically, so nothing needs changing there. A custom
+the repository name automatically, so nothing needs changing there.
+
+Pages itself must be enabled once by a human: **Settings → Pages → Build and
+deployment → Source: GitHub Actions**. The workflow asks for it with
+`enablement: true`, but the Actions token cannot create a Pages site — it fails
+with `Resource not accessible by integration` — so the first deploy will not
+succeed until that switch is flipped. Once it is, re-run the failed job from
+the Actions tab; no new commit is needed. A custom
 domain or a user site (`<user>.github.io`) serves from the root, and needs no
 base at all.
 

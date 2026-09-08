@@ -48,8 +48,13 @@ every sample in the book and every problem's solution and starter.
 ## Deploying
 
 Pushing to `main` builds and publishes to GitHub Pages via
-`.github/workflows/deploy.yml`, which enables Pages on the repository itself
-the first time it runs — there is no manual step in repository settings.
+`.github/workflows/deploy.yml`.
+
+**Pages has to be switched on once, by hand:** Settings → Pages → Build and
+deployment → Source: **GitHub Actions**. The workflow passes
+`enablement: true`, but `GITHUB_TOKEN` is not permitted to create a Pages site
+("Resource not accessible by integration"), so the first deploy fails until a
+human enables it. After that the flag is a no-op and deploys are automatic.
 
 `npm run build` produces a fully static `dist/`, deployable to any static host.
 If it will not be served from the domain root, build with the prefix —
