@@ -10,6 +10,9 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { compileAndRun } from '../server/compile.ts';
 
+/** What a sanitizer's output looks like, as opposed to a program's own stderr. */
+const SANITIZER_REPORT = /Sanitizer|runtime error:|ERROR: |SUMMARY: /;
+
 interface Snippet {
   file: string;
   index: number;
@@ -87,7 +90,7 @@ for (const file of files.sort()) {
     // A sample marked expect-ub exists to be caught. If the sanitizers stay
     // quiet, the demonstration silently stopped demonstrating anything.
     if (expectUb) {
-      if (result.stderr.trim()) {
+      if (SANITIZER_REPORT.test(result.stderr)) {
         console.log(`  ok   ${label} (sanitizers catch it, as intended)`);
       } else {
         failures += 1;
@@ -96,7 +99,9 @@ for (const file of files.sort()) {
       continue;
     }
 
-    if (result.stderr.trim()) {
+    // A sample may write to stderr deliberately — the debugging chapter does.
+    // Only treat it as a failure when it carries a sanitizer's signature.
+    if (SANITIZER_REPORT.test(result.stderr)) {
       failures += 1;
       console.log(`FAIL   ${label}: sanitizers reported ${result.stderr.split('\n')[0]}`);
       continue;
