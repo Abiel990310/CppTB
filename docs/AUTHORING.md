@@ -213,6 +213,24 @@ Problems run under AddressSanitizer with leak detection on, so a memory leak
 fails a problem even when every assertion passes. Say so in the prompt when the
 problem is about ownership.
 
+## A refactoring problem needs a stub, not a working starter
+
+`verify:problems` rejects a problem whose starter already passes, and it is
+right to: a starter that produces correct answers gives the reader nothing to
+check against, and no way to tell whether their rewrite worked.
+
+This bites every time a problem is framed as "rewrite this correct-but-verbose
+code". Two problems have already hit it — `pipeline-refactor` and
+`expected-pipeline`. The fix that keeps the teaching intact:
+
+- make the **starter a stub** (`return {};`), so the checks fail until the
+  reader writes something
+- move the verbose-but-correct version into the **Notes**, framed as "written
+  by hand, it looks like this"
+
+The alternative — introducing a bug into the starter — turns a design lesson
+into a debugging exercise, which is usually not what the chapter wanted.
+
 ## Before you commit
 
 ```bash
