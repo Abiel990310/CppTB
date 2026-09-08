@@ -89,7 +89,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 - [x] 7.2 Measuring, not guessing
 - [x] 7.3 Cache and data layout
 - [x] 7.5 Copies, moves, and elision
-- [ ] 7.4 Zero-cost abstraction, examined
+- [x] 7.4 Zero-cost abstraction, examined
 - [ ] 7.6 Inlining, linking, and layout
 
 ## Wave 7 — concurrency and shipping
