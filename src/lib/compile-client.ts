@@ -18,6 +18,8 @@ export interface CompileRequest {
   action?: Action;
   optimization?: string;
   stdin?: string;
+  /** Per-run wall-clock budget in ms; the server clamps it to its own maximum. */
+  timeLimitMs?: number;
 }
 
 export interface CompileResult {

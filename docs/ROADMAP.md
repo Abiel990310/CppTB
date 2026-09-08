@@ -140,15 +140,19 @@ The `output` check mode currently supports a **single** `stdin` string and one
 expected stdout (`build/types.ts`, `CheckMode`). A judge problem needs several
 independent cases. Before writing chapter 10.1:
 
-- [ ] Extend `output` problems to carry a list of `(stdin, expected stdout)`
+- [x] Extend `output` problems to carry a list of `(stdin, expected stdout)`
       cases, and report which case failed rather than just "wrong output".
-- [ ] Give each case an optional time limit, so a quadratic solution to a linear
+      A `## Cases` section of `in`/`out` fence pairs; see `docs/AUTHORING.md`.
+- [x] Give each case an optional time limit, so a quadratic solution to a linear
       problem fails the way it would on a real judge instead of timing out the
-      whole page.
-- [ ] Teach `scripts/verify-exercises.ts` the new shape: the solution must pass
-      every case, the starter must fail at least one.
-- [ ] Decide how a judge problem's statement renders — constraints block, sample
-      input/output pair, and the hidden cases kept out of the page.
+      whole page. `timeLimitMs` in the front-matter, clamped to the server's own
+      limit so it can only make a problem stricter.
+- [x] Teach `scripts/verify-exercises.ts` the new shape: the solution must pass
+      every case, the starter must fail at least one. It reports the first
+      failure by case name, with expected and actual output.
+- [x] Decide how a judge problem's statement renders — sample cases appear above
+      the editor with their input and expected output, hidden ones are counted
+      but not shown, and a failure reveals the case that failed.
 
 ### Wave A — foundations of problem solving
 

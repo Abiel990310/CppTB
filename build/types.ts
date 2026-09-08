@@ -6,10 +6,25 @@ export type Difficulty = 'intro' | 'core' | 'stretch' | 'deep';
  * How a submission is judged.
  * - `unit`   the reader writes declarations; the Tests section is a body of
  *            CHECK assertions that runs inside a generated main().
- * - `output` the reader writes a whole program; the Tests section is the exact
- *            stdout it must produce.
+ * - `output` the reader writes a whole program. With a `## Cases` section it is
+ *            judged like a contest judge — every case run separately, each with
+ *            its own stdin and expected stdout. Without one, the Tests section
+ *            is the exact stdout it must produce for the single `stdin`.
  */
 export type CheckMode = 'unit' | 'output';
+
+/**
+ * One input/output pair for a judge-style problem. Cases run independently;
+ * a submission passes only if every one of them matches.
+ */
+export interface JudgeCase {
+  /** Shown to the reader when the case is a sample, and in failure reports. */
+  readonly name: string;
+  readonly stdin: string;
+  readonly expected: string;
+  /** Sample cases are shown in the prompt; the rest are hidden until failure. */
+  readonly sample: boolean;
+}
 
 /** One heading extracted from a chapter, used to build the "on this page" rail. */
 export interface Heading {
@@ -65,6 +80,13 @@ export interface Exercise {
   readonly check: CheckMode;
   /** Text piped to the program's stdin, for `output` problems that read input. */
   readonly stdin: string;
+  /**
+   * Judge cases, for `output` problems that declare a `## Cases` section.
+   * Empty for every other problem, in which case `stdin`/`tests` are used.
+   */
+  readonly cases: readonly JudgeCase[];
+  /** Wall-clock budget per case, in milliseconds. 0 means the server default. */
+  readonly timeLimitMs: number;
   /** Prompt, rendered from Markdown. */
   readonly promptHtml: string;
   readonly starter: string;

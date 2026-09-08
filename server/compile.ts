@@ -23,6 +23,13 @@ export interface CompileRequest {
   action?: Action;
   optimization?: string;
   stdin?: string;
+  /**
+   * Wall-clock budget for the program itself, in milliseconds. Clamped to the
+   * server maximum — a judge problem may ask for less than the default so that
+   * a solution of the wrong complexity fails the way it would on a real judge,
+   * but nothing may ask for more.
+   */
+  timeLimitMs?: number;
 }
 
 export interface CompileResponse {
@@ -180,6 +187,11 @@ export async function compileAndRun(req: CompileRequest): Promise<CompileRespons
       ? '-O2'
       : '-O0';
 
+  // A problem may ask for a shorter budget than the default; never a longer one.
+  const requested = Number(req.timeLimitMs ?? 0);
+  const runTimeout =
+    requested > 0 ? Math.min(requested, RUN_TIMEOUT_MS) : RUN_TIMEOUT_MS;
+
   const dir = await mkdtemp(join(tmpdir(), 'cpptb-'));
   try {
     const src = join(dir, 'main.cpp');
@@ -244,7 +256,7 @@ export async function compileAndRun(req: CompileRequest): Promise<CompileRespons
       ['-c', `ulimit -f 8192; ulimit -c 0; exec "${exe}"`],
       {
         cwd: dir,
-        timeoutMs: RUN_TIMEOUT_MS,
+        timeoutMs: runTimeout,
         stdin: req.stdin,
         env: {
           ASAN_OPTIONS: SANITIZER_ENV.ASAN_OPTIONS,

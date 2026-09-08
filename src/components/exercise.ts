@@ -8,6 +8,13 @@ import {
   type CheckReport,
 } from '../lib/harness.ts';
 
+interface JudgeCase {
+  name: string;
+  stdin: string;
+  expected: string;
+  sample: boolean;
+}
+
 interface ExerciseData {
   id: string;
   title: string;
@@ -15,12 +22,59 @@ interface ExerciseData {
   standard: string;
   check: 'unit' | 'output';
   stdin: string;
+  cases?: JudgeCase[];
+  timeLimitMs?: number;
   promptHtml: string;
   starter: string;
   tests: string;
   hints: string[];
   solution: string;
   solutionNotesHtml: string;
+}
+
+function escapeText(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+/**
+ * Judge problems show their sample cases, and say how many are hidden. A
+ * reader needs the input format; they do not need the answers.
+ */
+function samplesHtml(data: ExerciseData): string {
+  const cases = data.cases ?? [];
+  if (!cases.length) return '';
+
+  const samples = cases.filter((c) => c.sample);
+  if (!samples.length) return '';
+
+  const blocks = samples
+    .map(
+      (c) => `
+      <div class="judge-case">
+        <div class="judge-case__side">
+          <p class="judge-case__label">input</p>
+          <pre class="judge-case__body">${escapeText(c.stdin)}</pre>
+        </div>
+        <div class="judge-case__side">
+          <p class="judge-case__label">expected output</p>
+          <pre class="judge-case__body">${escapeText(c.expected)}</pre>
+        </div>
+      </div>`,
+    )
+    .join('');
+
+  const hidden = cases.length - samples.length;
+  const note = hidden
+    ? `<p class="judge-cases__note">${hidden} further ${hidden === 1 ? 'case is' : 'cases are'} hidden. Your program must pass all ${cases.length}.</p>`
+    : '';
+  const limit = data.timeLimitMs
+    ? `<p class="judge-cases__note">Time limit: ${data.timeLimitMs} ms per case.</p>`
+    : '';
+
+  return `<div class="judge-cases"><p class="judge-cases__title">${samples.length === 1 ? 'Sample' : 'Samples'}</p>${blocks}${note}${limit}</div>`;
 }
 
 const cache = new Map<string, Promise<ExerciseData>>();
@@ -79,7 +133,8 @@ export class CppExercise extends HTMLElement {
         ${progress.isSolved(data.id) ? '<span class="exercise__solved">solved</span>' : ''}
       </div>
       ${this.dataset.standalone ? '' : `<h3 class="exercise__title"><a href="/practice/${data.id}/">${data.title}</a></h3>`}
-      <div class="exercise__prompt">${data.promptHtml}</div>`;
+      <div class="exercise__prompt">${data.promptHtml}</div>
+      ${samplesHtml(data)}`;
 
     this.editor = new CodeEditor(progress.draft(data.id) ?? data.starter, { minRows: 10 });
     this.editor.onRunRequested(() => void this.check());
@@ -151,6 +206,20 @@ export class CppExercise extends HTMLElement {
     this.results.innerHTML = '<div class="runner__spinner" role="status">Working…</div>';
 
     const { data } = this;
+
+    if (data.cases && data.cases.length) {
+      try {
+        await this.checkCases(data.cases);
+      } catch (error) {
+        this.showMessage('bad', 'Could not reach a compiler', error instanceof Error ? error.message : String(error));
+      } finally {
+        this.busy = false;
+        this.status.classList.remove('is-busy');
+        this.status.textContent = '';
+      }
+      return;
+    }
+
     const submission = buildSubmission(this.editor.value, data.tests, data.check);
 
     try {
@@ -159,6 +228,7 @@ export class CppExercise extends HTMLElement {
         standard: data.standard,
         action: 'run',
         stdin: data.stdin,
+        timeLimitMs: data.timeLimitMs,
       });
 
       if (!result.compiled) {
@@ -183,6 +253,94 @@ export class CppExercise extends HTMLElement {
       this.status.classList.remove('is-busy');
       this.status.textContent = '';
     }
+  }
+
+  /**
+   * Judge-style checking: run the program once per case, stop at the first
+   * failure, and report which case it was. Hidden cases show their input only
+   * once they have failed — before that they are the point of the exercise.
+   */
+  private async checkCases(cases: JudgeCase[]): Promise<void> {
+    const { data } = this;
+    const passedNames: string[] = [];
+
+    for (const testCase of cases) {
+      this.status.textContent = `Running ${testCase.name}…`;
+
+      const result = await compile({
+        source: this.editor.value,
+        standard: data.standard,
+        action: 'run',
+        stdin: testCase.stdin,
+        timeLimitMs: data.timeLimitMs,
+      });
+
+      if (!result.compiled) {
+        this.showCompileError(result.diagnostics);
+        return;
+      }
+      if (result.timedOut) {
+        this.showMessage(
+          'bad',
+          `Time limit exceeded on ${testCase.name}`,
+          'The program was still running when the limit ran out. On a real judge this is a wrong answer, and it usually means the algorithm is a complexity class too slow.',
+        );
+        return;
+      }
+      const sanitizer = result.stderr.trim();
+      if (sanitizer) {
+        this.showMessage('bad', `${testCase.name} tripped a sanitizer`, sanitizer.split('\n')[0]);
+        return;
+      }
+
+      const report = compareOutput(result.stdout, testCase.expected);
+      if (!report.allPassed) {
+        this.showCaseFailure(testCase, report, passedNames.length, cases.length);
+        return;
+      }
+      passedNames.push(testCase.name);
+    }
+
+    this.results.innerHTML = '';
+    const panel = document.createElement('div');
+    panel.className = 'panel panel--pass';
+    panel.innerHTML =
+      `<p class="panel__title">All ${cases.length} cases passed.</p>` +
+      '<p class="panel__hint">Accepted.</p>';
+    this.results.append(panel);
+    progress.markSolved(data.id);
+  }
+
+  private showCaseFailure(
+    testCase: JudgeCase,
+    report: CheckReport,
+    passed: number,
+    total: number,
+  ): void {
+    this.results.innerHTML = '';
+    const panel = document.createElement('div');
+    panel.className = 'panel panel--error';
+
+    const heading = document.createElement('p');
+    heading.className = 'panel__title';
+    heading.textContent = `Wrong answer on ${testCase.name} (${passed} of ${total} cases passed)`;
+    panel.append(heading);
+
+    const block = (label: string, text: string) => {
+      const title = document.createElement('p');
+      title.className = 'panel__hint';
+      title.textContent = label;
+      const pre = document.createElement('pre');
+      pre.className = 'panel__body';
+      pre.textContent = text || '(nothing)';
+      panel.append(title, pre);
+    };
+
+    block('input', testCase.stdin);
+    block('expected output', report.checks[0]?.expected ?? '');
+    block('your output', report.checks[0]?.actual ?? '');
+
+    this.results.append(panel);
   }
 
   private showCompileError(diagnostics: string): void {

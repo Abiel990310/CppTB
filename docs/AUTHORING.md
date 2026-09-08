@@ -266,3 +266,78 @@ This compiles every runnable sample, asserts the `expect-error` ones fail,
 compiles each problem's solution (must pass) and starter (must fail), and
 typechecks the site. It takes a couple of minutes because it is really invoking
 a compiler a hundred times. That is the point.
+
+
+## Judge-style problems
+
+Part 10's problems come in two shapes. The function-style ones are ordinary
+`check: unit` problems, exactly as everywhere else in the book. The drill
+problems are `check: output` with a `## Cases` section, and are judged the way a
+contest judge judges: the program is run once per case, each with its own stdin,
+and passes only if **every** case matches.
+
+````markdown
+---
+id: sum-of-n
+check: output
+timeLimitMs: 1000        # optional; per case, clamped to the server's 6 s
+---
+
+Read `n`, then `n` integers, and print their sum.
+
+## Starter
+```cpp
+#include <iostream>
+int main() { … }
+```
+
+## Cases
+
+### Sample
+```in
+3
+1 2 3
+```
+```out
+6
+```
+
+### large n
+```in
+100000
+…
+```
+```out
+4999950000
+```
+````
+
+Rules the parser follows:
+
+- A case is an `in` fence followed by its `out` fence. A `###` heading above a
+  pair names it; the name appears in failure reports and is worth making
+  descriptive (`negatives`, `single element`, `n = 0`).
+- A case whose name contains **sample** is shown to the reader. If nothing is
+  named as a sample, the **first** case is shown anyway — a judge problem with
+  no visible case is a guessing game about the input format.
+- Everything else is hidden until it fails, at which point its input, the
+  expected output and the reader's output are shown side by side.
+- Output comparison ignores trailing whitespace on each line and at the end.
+
+`timeLimitMs` is per case and is clamped to the server's own limit, so it can
+only ever make a problem stricter. Use it when the point of the problem is the
+complexity class — set it so the intended solution passes comfortably and the
+naive one does not, and **verify both**: write the slow version, confirm it
+times out, then write the fast one.
+
+`npm run verify:problems` runs every case for the solution and for the starter,
+and reports the first failure by case name.
+
+### Sizing a judge problem
+
+The runner compiles at `-O0` with sanitizers, which is roughly five times slower
+than a release build, and the whole submission is recompiled for **every** case.
+Six cases of a second each is a slow, annoying problem. Keep the total under a
+few seconds: prefer four to six cases sized so each runs in well under a second,
+and make the largest case big enough to separate the complexity classes but no
+bigger.

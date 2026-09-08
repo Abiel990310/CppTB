@@ -50,6 +50,8 @@ function exercisePayload(e: Exercise) {
     standard: e.standard,
     check: e.check,
     stdin: e.stdin,
+    cases: e.cases,
+    timeLimitMs: e.timeLimitMs,
     promptHtml: e.promptHtml,
     starter: e.starter,
     tests: e.tests,
