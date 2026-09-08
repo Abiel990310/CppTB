@@ -52,7 +52,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 4.1 std::string and text
 - [x] 4.2 Sequence containers
 - [x] 4.3 Associative containers
-- [ ] 4.5 Algorithms
+- [x] 4.5 Algorithms
 - [ ] 4.4 Iterators
 - [ ] 4.8 optional, variant, and expected
 - [ ] 4.9 Input, output, and formatting
