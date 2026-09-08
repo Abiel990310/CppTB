@@ -268,7 +268,7 @@ struct TerribleHash {
 
 template <class Hash>
 long long time_lookups(const char* label) {
-    constexpr int n = 20'000;
+    constexpr int n = 3'000;
     std::unordered_map<Key, int, Hash> table;
     for (int i = 0; i < n; ++i) table.emplace(Key{i}, i);
 
@@ -289,8 +289,9 @@ int main() {
 }
 ```
 
-Every key in one bucket turns O(1) into O(n), and the same 20,000 lookups go
-from instant to noticeably slow. A hash table's guarantee is *average* O(1), and
+Every key in one bucket turns O(1) into O(n): three thousand lookups go from
+around a millisecond to around six hundred, a factor of several hundred, on an
+input small enough that the good hash does not register at all. A hash table's guarantee is *average* O(1), and
 the average is over a hash that spreads keys out.
 
 :::warning

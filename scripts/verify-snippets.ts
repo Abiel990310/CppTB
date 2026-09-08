@@ -1,8 +1,12 @@
 /**
  * Compiles every runnable code sample in the book.
  *
- * A sample marked `run` or `asm` must compile; one marked `expect-error` must
- * not. Samples with neither flag are illustrative fragments and are skipped.
+ * A sample marked `run` or `asm` must compile, run, and exit cleanly; one
+ * marked `expect-error` must not compile; one marked `expect-ub` must trip a
+ * sanitizer; one marked `expect-abort` must call std::terminate or abort; one
+ * marked `expect-failure` runs to completion but reports failure through a
+ * non-zero exit status, the way a test binary does.
+ * Samples with none of those flags are illustrative fragments and are skipped.
  *
  *   node --experimental-strip-types scripts/verify-snippets.ts [chapter-slug]
  */
@@ -12,6 +16,9 @@ import { compileAndRun } from '../server/compile.ts';
 
 /** What a sanitizer's output looks like, as opposed to a program's own stderr. */
 const SANITIZER_REPORT = /Sanitizer|runtime error:|ERROR: |SUMMARY: /;
+
+/** How a deliberate std::terminate or abort announces itself. */
+const ABORT_REPORT = /terminate called|Assertion .* failed|std::terminate/;
 
 interface Snippet {
   file: string;
@@ -63,6 +70,8 @@ for (const file of files.sort()) {
     checked += 1;
     const expectError = snippet.flags.has('expect-error');
     const expectUb = snippet.flags.has('expect-ub');
+    const expectAbort = snippet.flags.has('expect-abort');
+    const expectFailure = snippet.flags.has('expect-failure');
     const result = await compileAndRun({
       source: snippet.source,
       standard: snippet.standard,
@@ -87,6 +96,30 @@ for (const file of files.sort()) {
       continue;
     }
 
+    // A test-harness demonstration signals failure the way a real one does.
+    if (expectFailure) {
+      if (result.exitCode !== 0) {
+        console.log(`  ok   ${label} (exits ${result.exitCode}, as intended)`);
+      } else {
+        failures += 1;
+        console.log(`FAIL   ${label}: marked expect-failure but it exited 0`);
+      }
+      continue;
+    }
+
+    // A sample marked expect-abort exists to show a program dying on purpose:
+    // a joinable thread destroyed, a failed assert, an uncaught exception. If
+    // it starts exiting cleanly, the prose around it has become a lie.
+    if (expectAbort) {
+      if (result.exitCode !== 0 && ABORT_REPORT.test(result.stderr)) {
+        console.log(`  ok   ${label} (terminates on purpose, as intended)`);
+      } else {
+        failures += 1;
+        console.log(`FAIL   ${label}: marked expect-abort but it exited cleanly`);
+      }
+      continue;
+    }
+
     // A sample marked expect-ub exists to be caught. If the sanitizers stay
     // quiet, the demonstration silently stopped demonstrating anything.
     if (expectUb) {
@@ -104,6 +137,14 @@ for (const file of files.sort()) {
     if (SANITIZER_REPORT.test(result.stderr)) {
       failures += 1;
       console.log(`FAIL   ${label}: sanitizers reported ${result.stderr.split('\n')[0]}`);
+      continue;
+    }
+    // An ordinary sample is expected to finish. A non-zero exit means it
+    // crashed, aborted, or threw — none of which the prose is claiming.
+    if (result.exitCode !== 0 && !snippet.flags.has('asm')) {
+      failures += 1;
+      const why = result.stderr.trim().split('\n')[0] || `exit code ${result.exitCode}`;
+      console.log(`FAIL   ${label}: exited with ${result.exitCode}: ${why}`);
       continue;
     }
     if (result.diagnostics.trim()) {

@@ -63,7 +63,6 @@ worth watching:
 int main() {
     int uninitialised;                    // no value
     std::cout << uninitialised << '\n';   // reading it is undefined behaviour
-    return uninitialised;
 }
 ```
 

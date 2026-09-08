@@ -87,6 +87,8 @@ so that a topic that needs more room gets its own chapter instead.
 ```cpp run asm                  Adds an Assembly button too
 ```cpp run expect-error         Asserts it must NOT compile
 ```cpp run expect-ub            Asserts it compiles, runs, and trips a sanitizer
+```cpp run expect-abort         Asserts it dies on purpose (terminate/abort)
+```cpp run expect-failure       Asserts it finishes but exits non-zero
 ```cpp run std=c++23            Sets the standard for this sample
 ```cpp run title="Label"        Caption above the block
 ````
@@ -98,6 +100,19 @@ Both assertions are verified. `npm run verify:snippets` fails if an
 `expect-error` sample compiles by accident, and equally if an `expect-ub` sample
 runs clean — a demonstration of undefined behaviour that no longer demonstrates
 anything is worse than none, because the prose still claims it does.
+
+**An ordinary `run` sample must exit 0.** The verifier checks the exit status,
+so a sample that crashes, aborts, or throws is a failure — it used to slip
+through, and it hid a sample that had been timing out on the live site for
+weeks. When a sample is *meant* to die, say which way: `expect-abort` for
+`std::terminate` or a failed `assert`, `expect-failure` for a program that
+finishes and reports failure through its exit code, the way a test binary does.
+
+**Watch the runner's six-second limit.** Samples run at `-O0` with sanitizers,
+which is roughly five times slower than `-O2` and more for allocation-heavy
+code. A timing demonstration that takes a second locally can exceed the limit
+here, and a reader just sees it hang. Size the work so the sanitized build
+finishes in about a second.
 
 Use `expect-ub` for every sample whose purpose is to be caught. The runner then
 labels the sanitizer output "which is the point" rather than presenting it as an

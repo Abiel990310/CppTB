@@ -49,7 +49,7 @@ check you need in production; Chapter 6.6 draws that line.
 
 A slightly better harness reports every failure and returns a useful exit code:
 
-```cpp run title="A harness in fifteen lines" std=c++20
+```cpp run expect-failure title="A harness in fifteen lines" std=c++20
 #include <iostream>
 #include <string>
 
