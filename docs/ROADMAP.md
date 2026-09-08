@@ -157,7 +157,7 @@ independent cases. Before writing chapter 10.1:
 ### Wave A — foundations of problem solving
 
 - [x] 10.1 How to read a problem and its limits
-- [ ] 10.2 Complexity, read off the constraints
+- [x] 10.2 Counting the work you actually do
 - [ ] 10.3 The contest template and fast I/O
 - [ ] 10.4 Sorting, comparators, and coordinate compression
 - [ ] 10.5 Binary search: on a range, and on the answer
