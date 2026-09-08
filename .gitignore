@@ -3,4 +3,4 @@ dist/
 .vite/
 *.log
 .DS_Store
-shot.tmp.mjs
+shot*.tmp.mjs
