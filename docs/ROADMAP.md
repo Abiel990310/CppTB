@@ -107,6 +107,129 @@ The assembly view earns its keep here; use it in every chapter of this part.
 
 ---
 
+## Part 10 — Problem solving and algorithms (after the 60)
+
+Agreed with the author on 2026-09-08, when Part 5 and half of Part 7 were done.
+Read this section before starting it; the two decisions below are settled and
+are not to be relitigated.
+
+**Decision 1 — every chapter carries two kinds of problem.**
+
+- **2 function-style problems** (`check: unit`), which isolate the technique.
+  You implement `int solve(const std::vector<int>&)` and the checks name exactly
+  what broke. This is how the technique is taught.
+- **2–3 judge-style problems** (`check: output`), which read stdin and write
+  stdout against several fixed test cases, exactly like AtCoder or ZeroJudge.
+  This is how the technique is drilled: constraints in the statement, edge cases
+  in the data, no partial credit.
+
+**Decision 2 — the scope is comprehensive: 40 chapters, in eight waves of five.**
+
+### Engine work this needs first
+
+The `output` check mode currently supports a **single** `stdin` string and one
+expected stdout (`build/types.ts`, `CheckMode`). A judge problem needs several
+independent cases. Before writing chapter 10.1:
+
+- [ ] Extend `output` problems to carry a list of `(stdin, expected stdout)`
+      cases, and report which case failed rather than just "wrong output".
+- [ ] Give each case an optional time limit, so a quadratic solution to a linear
+      problem fails the way it would on a real judge instead of timing out the
+      whole page.
+- [ ] Teach `scripts/verify-exercises.ts` the new shape: the solution must pass
+      every case, the starter must fail at least one.
+- [ ] Decide how a judge problem's statement renders — constraints block, sample
+      input/output pair, and the hidden cases kept out of the page.
+
+### Wave A — foundations of problem solving
+
+- [ ] 10.1 How to read a problem and its limits
+- [ ] 10.2 Complexity, read off the constraints
+- [ ] 10.3 The contest template and fast I/O
+- [ ] 10.4 Sorting, comparators, and coordinate compression
+- [ ] 10.5 Binary search: on a range, and on the answer
+
+### Wave B — sequences
+
+- [ ] 10.6 Two pointers and sliding windows
+- [ ] 10.7 Prefix sums and difference arrays
+- [ ] 10.8 Monotonic stacks
+- [ ] 10.9 Deques and sliding-window extrema
+- [ ] 10.10 Hashing, frequency maps, and multisets
+
+### Wave C — search and greedy
+
+- [ ] 10.11 Recursion and backtracking
+- [ ] 10.12 Subsets, permutations, and pruning
+- [ ] 10.13 Greedy, and proving it with an exchange argument
+- [ ] 10.14 Divide and conquer
+- [ ] 10.15 Meet in the middle
+
+### Wave D — graphs
+
+- [ ] 10.16 Representing graphs
+- [ ] 10.17 BFS, 0–1 BFS, and multi-source BFS
+- [ ] 10.18 DFS: components, cycles, bridges
+- [ ] 10.19 Topological order and DAG DP
+- [ ] 10.20 Union-Find
+
+### Wave E — shortest paths and trees
+
+- [ ] 10.21 Dijkstra
+- [ ] 10.22 Bellman–Ford and Floyd–Warshall
+- [ ] 10.23 Minimum spanning trees
+- [ ] 10.24 Tree DP and rerooting
+- [ ] 10.25 LCA, binary lifting, and Euler tours
+
+### Wave F — dynamic programming
+
+- [ ] 10.26 DP: state, transition, order
+- [ ] 10.27 Knapsack and coin change
+- [ ] 10.28 LIS, LCS, and edit distance
+- [ ] 10.29 Interval DP
+- [ ] 10.30 Bitmask DP
+
+### Wave G — data structures
+
+- [ ] 10.31 Fenwick trees
+- [ ] 10.32 Segment trees
+- [ ] 10.33 Lazy propagation
+- [ ] 10.34 Sparse tables and RMQ
+- [ ] 10.35 Heavy-light and centroid decomposition
+
+### Wave H — maths, strings, geometry, flows
+
+- [ ] 10.36 Number theory: gcd, sieve, modular arithmetic
+- [ ] 10.37 Combinatorics, inclusion–exclusion, matrix exponentiation
+- [ ] 10.38 String matching: KMP, Z, and hashing
+- [ ] 10.39 Computational geometry
+- [ ] 10.40 Max flow, min cut, and matching
+
+### The stretch shelf
+
+Real techniques, genuinely rarer. Add them only once all forty are written, and
+only if the author still wants them — each is a chapter that a small number of
+readers will ever need:
+
+suffix automata and suffix arrays · FFT and NTT · persistent segment trees ·
+digit DP · convex hull trick and divide-and-conquer DP optimisation ·
+Sprague–Grundy and impartial games · Mo's algorithm · link-cut trees.
+
+### Rules specific to this part
+
+- **A technique is not taught until a program demonstrates it failing without
+  it.** Show the quadratic solution timing out before showing the prefix sum.
+  The whole part is about recognising which tool a constraint is asking for.
+- **Every judge problem states its constraints**, and the constraints must be
+  the ones that make the intended solution necessary. A problem with n ≤ 100
+  does not teach anything about complexity.
+- **No filler.** No problem that is another problem with the numbers changed, no
+  chapter that is a list of library calls. If a chapter cannot justify five
+  problems that each teach something different, it should be merged with its
+  neighbour.
+
+---
+
 ## Standing work, not tied to a wave
 
 - **Problems.** The bank is thin (9 problems). Every written chapter should end
