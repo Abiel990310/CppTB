@@ -64,6 +64,25 @@ One chapter per session is a good pace. Do not batch five half-written chapters;
 a finished chapter is worth more than five outlines, and the outlines already
 exist.
 
+## This book writes itself on a schedule
+
+A Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`, every 3 hours) spawns a fresh
+session that takes the top unticked chapter from `docs/ROADMAP.md`, writes it,
+verifies it, and pushes. That is why the roadmap and the authoring guide have
+to stay accurate: they are the entire brief a cold session gets.
+
+Consequences worth knowing:
+
+- **Another session may be working right now.** Before pushing, `git pull
+  --rebase origin <branch>`. A rejected push means someone else got there
+  first; rebase and re-run `npm run verify` rather than forcing.
+- **Do not create a second Routine** for the same job. Check with
+  `list_triggers` first; edit the existing one with `update_trigger`.
+- **Pushing `main` deploys the site.** `.github/workflows/deploy.yml` builds
+  with the Pages sub-path base and force-pushes `dist/` to `gh-pages`, which
+  GitHub serves at https://abiel990310.github.io/CppTB/. The `gh-pages` branch
+  is generated output — never edit or commit to it by hand.
+
 ## Invariants that are easy to break
 
 - **Every chapter's front-matter needs `objectives`.** `/reference/` and
