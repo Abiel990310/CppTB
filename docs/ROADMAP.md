@@ -21,7 +21,7 @@ within a chapter or two.
 - [x] 1.2 Values, types, and names
 - [x] 1.3 Making decisions
 - [x] 1.4 Repetition
-- [ ] 1.5 Functions
+- [x] 1.5 Functions
 - [ ] 1.6 Your toolchain
 - [x] 2.1 Objects and storage
 - [x] 2.2 Pointers
