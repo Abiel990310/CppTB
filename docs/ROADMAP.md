@@ -86,7 +86,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 The assembly view earns its keep here; use it in every chapter of this part.
 
 - [x] 7.1 What the compiler does for you
-- [ ] 7.2 Measuring, not guessing
+- [x] 7.2 Measuring, not guessing
 - [ ] 7.3 Cache and data layout
 - [ ] 7.5 Copies, moves, and elision
 - [ ] 7.4 Zero-cost abstraction, examined
