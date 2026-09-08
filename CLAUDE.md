@@ -66,16 +66,23 @@ exist.
 
 ## This book writes itself on a schedule
 
-A Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`, every 3 hours) spawns a fresh
-session that takes the top unticked chapter from `docs/ROADMAP.md`, writes it,
-verifies it, and pushes. That is why the roadmap and the authoring guide have
-to stay accurate: they are the entire brief a cold session gets.
+A Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`, **hourly**) spawns a fresh session
+that takes the top unticked chapter from `docs/ROADMAP.md`, writes it, verifies
+it, and pushes. That is why the roadmap and the authoring guide have to stay
+accurate: they are the entire brief a cold session gets.
 
 Consequences worth knowing:
 
-- **Another session may be working right now.** Before pushing, `git pull
-  --rebase origin <branch>`. A rejected push means someone else got there
-  first; rebase and re-run `npm run verify` rather than forcing.
+- **Another session is probably working right now.** At an hourly cadence, runs
+  overlap: a chapter takes a while, mostly in `npm run verify`. Always `git pull
+  --rebase origin <branch>` immediately before pushing, and if the rebase brings
+  in anything, re-run `npm run verify` before you push — a clean rebase does not
+  prove the combined tree still builds. A rejected push means someone got there
+  first; rebase, never force.
+- **Re-read `docs/ROADMAP.md` right before you start writing**, not from memory.
+  Another run may have ticked your chapter while you were reading the
+  neighbours. If your chapter is already `status: complete`, take the next
+  unticked one instead of duplicating the work.
 - **Do not create a second Routine** for the same job. Check with
   `list_triggers` first; edit the existing one with `update_trigger`.
 - **Pushing `main` deploys the site.** `.github/workflows/deploy.yml` builds
