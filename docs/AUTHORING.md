@@ -86,6 +86,7 @@ so that a topic that needs more room gets its own chapter instead.
 ```cpp run                      Adds a Run button
 ```cpp run asm                  Adds an Assembly button too
 ```cpp run expect-error         Asserts it must NOT compile
+```cpp run expect-ub            Asserts it compiles, runs, and trips a sanitizer
 ```cpp run std=c++23            Sets the standard for this sample
 ```cpp run title="Label"        Caption above the block
 ````
@@ -93,8 +94,14 @@ so that a topic that needs more room gets its own chapter instead.
 A line ending in `// [hidden]` is compiled but not shown — use it for the
 `#include`s and `main` that make a fragment complete without cluttering it.
 
-`expect-error` samples are verified too: `npm run verify:snippets` fails if one
-compiles by accident.
+Both assertions are verified. `npm run verify:snippets` fails if an
+`expect-error` sample compiles by accident, and equally if an `expect-ub` sample
+runs clean — a demonstration of undefined behaviour that no longer demonstrates
+anything is worse than none, because the prose still claims it does.
+
+Use `expect-ub` for every sample whose purpose is to be caught. The runner then
+labels the sanitizer output "which is the point" rather than presenting it as an
+error, so the reader is not left wondering whether they broke something.
 
 ### Callouts
 

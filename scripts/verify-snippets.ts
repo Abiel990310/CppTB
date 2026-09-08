@@ -59,6 +59,7 @@ for (const file of files.sort()) {
   for (const snippet of snippets) {
     checked += 1;
     const expectError = snippet.flags.has('expect-error');
+    const expectUb = snippet.flags.has('expect-ub');
     const result = await compileAndRun({
       source: snippet.source,
       standard: snippet.standard,
@@ -82,6 +83,19 @@ for (const file of files.sort()) {
       console.log(`FAIL   ${label}: ${result.diagnostics.split('\n').slice(0, 3).join('\n         ')}`);
       continue;
     }
+
+    // A sample marked expect-ub exists to be caught. If the sanitizers stay
+    // quiet, the demonstration silently stopped demonstrating anything.
+    if (expectUb) {
+      if (result.stderr.trim()) {
+        console.log(`  ok   ${label} (sanitizers catch it, as intended)`);
+      } else {
+        failures += 1;
+        console.log(`FAIL   ${label}: marked expect-ub but nothing was reported`);
+      }
+      continue;
+    }
+
     if (result.stderr.trim()) {
       failures += 1;
       console.log(`FAIL   ${label}: sanitizers reported ${result.stderr.split('\n')[0]}`);

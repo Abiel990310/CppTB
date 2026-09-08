@@ -214,10 +214,15 @@ export class CppRunner extends HTMLElement {
     }
     if (result.stderr.trim()) {
       const looksLikeSanitizer = /Sanitizer|runtime error:|LeakSanitizer/.test(result.stderr);
+      const expected = this.dataset.expectUb === '1' && looksLikeSanitizer;
       this.output.append(
         this.panel(
-          looksLikeSanitizer ? 'error' : 'warn',
-          looksLikeSanitizer ? 'The sanitizers caught something' : 'Standard error',
+          expected ? 'expected' : looksLikeSanitizer ? 'error' : 'warn',
+          expected
+            ? 'The sanitizers caught it — which is the point'
+            : looksLikeSanitizer
+              ? 'The sanitizers caught something'
+              : 'Standard error',
           result.stderr,
         ),
       );

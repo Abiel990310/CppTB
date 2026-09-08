@@ -225,6 +225,7 @@ export async function createRenderer(): Promise<(src: string) => RenderResult> {
       meta.standard ? `data-std="${escapeHtml(meta.standard)}"` : '',
       meta.flags.has('autorun') ? 'data-autorun="1"' : '',
       meta.flags.has('expect-error') ? 'data-expect-error="1"' : '',
+      meta.flags.has('expect-ub') ? 'data-expect-ub="1"' : '',
     ]
       .filter(Boolean)
       .join(' ');
