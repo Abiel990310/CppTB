@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import matter from 'gray-matter';
 import { createRenderer } from './markdown.ts';
+import { url } from './base.ts';
 import type { Book, Chapter, CheckMode, Difficulty, Exercise, NavEntry, Part } from './types.ts';
 
 export const CONTENT_DIR = 'content';
@@ -154,7 +155,7 @@ export function toNav(book: Book): NavEntry[] {
       slug: ch.slug,
       title: ch.title,
       part: part.title,
-      url: `/${part.slug}/${ch.slug}/`,
+      url: url(`${part.slug}/${ch.slug}/`),
     })),
   );
 }

@@ -33,6 +33,9 @@ export interface CompileResult {
   backend: 'local' | 'hosted';
 }
 
+/** The local compile endpoint, if this deployment has one. */
+const LOCAL_ENDPOINT = `${import.meta.env.BASE_URL}api/compile`;
+
 const GODBOLT = 'https://godbolt.org/api';
 /** Compiler Explorer's id for a recent GCC. */
 const GODBOLT_COMPILER = 'g142';
@@ -42,7 +45,7 @@ let localAvailable: boolean | null = null;
 async function probeLocal(): Promise<boolean> {
   if (localAvailable !== null) return localAvailable;
   try {
-    const res = await fetch('/api/compile', {
+    const res = await fetch(LOCAL_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: 'int main(){}', action: 'run' }),
@@ -56,7 +59,7 @@ async function probeLocal(): Promise<boolean> {
 }
 
 async function compileLocal(req: CompileRequest): Promise<CompileResult> {
-  const res = await fetch('/api/compile', {
+  const res = await fetch(LOCAL_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(req),

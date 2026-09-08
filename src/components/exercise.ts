@@ -28,7 +28,7 @@ const cache = new Map<string, Promise<ExerciseData>>();
 function fetchExercise(id: string): Promise<ExerciseData> {
   let pending = cache.get(id);
   if (!pending) {
-    pending = fetch(`/data/exercises/${id}.json`).then((r) => {
+    pending = fetch(`${import.meta.env.BASE_URL}data/exercises/${id}.json`).then((r) => {
       if (!r.ok) throw new Error(`No problem with id "${id}"`);
       return r.json() as Promise<ExerciseData>;
     });

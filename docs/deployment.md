@@ -10,6 +10,24 @@ npm run build
 index, and ~12 KB of gzipped JavaScript. Serve it from anywhere — GitHub Pages,
 Netlify, S3, nginx. No server-side anything is required.
 
+### If it is not served from the domain root
+
+Every link, asset, and runtime fetch is written with an absolute path, so a site
+deployed under a sub-path needs to be built with that prefix:
+
+```bash
+CPPTB_BASE=/CppTB/ npm run build
+```
+
+A GitHub Pages *project* site is exactly this case — it lives at
+`https://<user>.github.io/<repo>/`. The deploy workflow sets `CPPTB_BASE` from
+the repository name automatically, so nothing needs changing there. A custom
+domain or a user site (`<user>.github.io`) serves from the root, and needs no
+base at all.
+
+Forgetting this produces a page that loads with no styling and every link
+404ing, because each one resolves against the domain root instead.
+
 Readers still get working Run buttons: with no `/api/compile` on the origin, the
 client falls back to Compiler Explorer's public API
 (`src/lib/compile-client.ts`). That is someone else's free service, so if this

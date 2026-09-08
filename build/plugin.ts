@@ -11,6 +11,7 @@ import {
   renderStatus,
 } from './pages.ts';
 import type { Book, Exercise } from './types.ts';
+import { BASE, url } from './base.ts';
 
 const DEV_ASSETS: Assets = { js: ['/src/main.ts'], css: ['/src/styles/index.css'] };
 
@@ -124,10 +125,15 @@ export function bookPlugin(): Plugin {
 
       return () => {
         server.middlewares.use(async (req, res, next) => {
-          const url = (req.url ?? '/').split('?')[0];
-          if (url.startsWith('/@') || url.startsWith('/src/') || url.startsWith('/node_modules')) {
+          const raw = (req.url ?? '/').split('?')[0];
+          if (raw.startsWith('/@') || raw.startsWith('/src/') || raw.startsWith('/node_modules')) {
             return next();
           }
+          // Strip the deployment base so dev and production resolve alike.
+          const url =
+            BASE !== '/' && raw.startsWith(BASE.slice(0, -1))
+              ? raw.slice(BASE.length - 1) || '/'
+              : raw;
 
           try {
             const b = await book();
@@ -173,8 +179,8 @@ export function bookPlugin(): Plugin {
         const entry = Object.values(manifest).find((v) => v.isEntry);
         if (entry) {
           assets = {
-            js: [`/${entry.file}`],
-            css: (entry.css ?? []).map((c) => `/${c}`),
+            js: [url(entry.file)],
+            css: (entry.css ?? []).map((c) => url(c)),
           };
         }
       } catch {

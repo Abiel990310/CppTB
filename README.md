@@ -47,9 +47,14 @@ every sample in the book and every problem's solution and starter.
 
 ## Deploying
 
+Pushing to `main` builds and publishes to GitHub Pages via
+`.github/workflows/deploy.yml`. This needs Pages enabled once, by hand:
+**Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
 `npm run build` produces a fully static `dist/`, deployable to any static host.
-The compile endpoint is optional; without it readers get the hosted compiler
-fallback.
+If it will not be served from the domain root, build with the prefix —
+`CPPTB_BASE=/CppTB/ npm run build`. The compile endpoint is optional; without it
+readers get the hosted compiler fallback.
 
 To self-host the compiler as well, run `npm run serve` behind a reverse proxy.
 **Read `docs/deployment.md` first** — it executes reader-supplied C++, and the

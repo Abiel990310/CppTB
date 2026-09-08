@@ -28,7 +28,7 @@ let index: Entry[] | null = null;
 
 async function loadIndex(): Promise<Entry[]> {
   if (index) return index;
-  const res = await fetch('/data/book.json');
+  const res = await fetch(`${import.meta.env.BASE_URL}data/book.json`);
   const data = (await res.json()) as { search: Entry[] };
   index = data.search;
   return index;

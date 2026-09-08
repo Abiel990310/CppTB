@@ -24,7 +24,14 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npx vite build
+
+      # A GitHub Pages project site is served from /<repo>/, so every link and
+      # asset needs that prefix. Derive it from the repository name rather than
+      # hardcoding it, so a rename or a fork still builds correctly.
+      - name: Build for the Pages sub-path
+        run: npx vite build
+        env:
+          CPPTB_BASE: /${{ github.event.repository.name }}/
       # Pages serves static files only: readers get the hosted compiler
       # fallback, since there is no /api/compile on this origin.
       - uses: actions/configure-pages@v5

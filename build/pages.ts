@@ -1,4 +1,5 @@
 import { escapeHtml } from './markdown.ts';
+import { url } from './base.ts';
 import { shell, readingMinutes, type Assets } from './render.ts';
 import type { Book, Exercise } from './types.ts';
 
@@ -18,14 +19,14 @@ export function renderHome(book: Book, assets: Assets): string {
       (part) => `<li class="toc-part">
         <div class="toc-part__head">
           <span class="toc-part__num">Part ${part.order}</span>
-          <h3><a href="/${part.slug}/">${escapeHtml(part.title)}</a></h3>
+          <h3><a href="${url(`${part.slug}/`)}">${escapeHtml(part.title)}</a></h3>
           <p>${escapeHtml(part.summary)}</p>
         </div>
         <ol class="toc-part__chapters">
           ${part.chapters
             .map(
               (ch) =>
-                `<li><a href="/${part.slug}/${ch.slug}/"><span class="toc-num">${part.order}.${ch.order}</span> ${escapeHtml(ch.navTitle)}</a>${
+                `<li><a href="${url(`${part.slug}/${ch.slug}/`)}"><span class="toc-num">${part.order}.${ch.order}</span> ${escapeHtml(ch.navTitle)}</a>${
                   ch.status === 'draft' ? '<span class="nav__badge">outline</span>' : ''
                 }</li>`,
             )
@@ -40,8 +41,8 @@ export function renderHome(book: Book, assets: Assets): string {
       <h1>A complete, working C++</h1>
       <p class="hero__lede">Every code sample on this site compiles and runs in your browser. Every hard idea &mdash; ownership, lifetime, moves, templates &mdash; comes with a diagram of what the machine is actually doing, and problems that check your answer by running it.</p>
       <div class="hero__actions">
-        <a class="button button--primary" href="/foundations/hello-machine/">Start at the beginning</a>
-        <a class="button" href="/practice/">Jump to problems</a>
+        <a class="button button--primary" href="${url('foundations/hello-machine/')}">Start at the beginning</a>
+        <a class="button" href="${url('practice/')}">Jump to problems</a>
         <button class="button" id="resume-button" hidden>Resume where you left off</button>
       </div>
       <p class="hero__stats">${chapters.length} chapters · ${complete} written · ${book.exercises.length} problems</p>
@@ -53,17 +54,17 @@ export function renderHome(book: Book, assets: Assets): string {
         <div class="path">
           <h3>New to programming</h3>
           <p>Read Parts 1&ndash;4 in order. They assume nothing: no compiler installed, no terminal experience, no maths beyond arithmetic.</p>
-          <a href="/foundations/hello-machine/">Begin &rarr;</a>
+          <a href="${url('foundations/hello-machine/')}">Begin &rarr;</a>
         </div>
         <div class="path">
           <h3>You know another language</h3>
           <p>Skim Part 1, then start at the memory model. That is where C++ stops resembling Python or Java and starts asking you to make decisions.</p>
-          <a href="/memory/objects-and-storage/">Start with memory &rarr;</a>
+          <a href="${url('memory/objects-and-storage/')}">Start with memory &rarr;</a>
         </div>
         <div class="path">
           <h3>You want the problems</h3>
           <p>The problem bank is filterable by topic and difficulty, and each problem compiles and tests your submission. Your progress is saved in this browser.</p>
-          <a href="/practice/">Open the bank &rarr;</a>
+          <a href="${url('practice/')}">Open the bank &rarr;</a>
         </div>
       </div>
     </section>
@@ -94,7 +95,7 @@ export function renderPractice(book: Book, assets: Assets): string {
   const rows = book.exercises
     .map(
       (ex) => `<li class="problem" data-difficulty="${ex.difficulty}" data-topics="${escapeHtml(ex.topics.join(' '))}" data-id="${escapeHtml(ex.id)}">
-        <a href="/practice/${escapeHtml(ex.id)}/">
+        <a href="${url(`practice/${escapeHtml(ex.id)}/`)}">
           <span class="problem__status" data-status-for="${escapeHtml(ex.id)}"></span>
           <span class="problem__title">${escapeHtml(ex.title)}</span>
           <span class="problem__chapter">${escapeHtml(chapterTitle.get(ex.chapter) ?? ex.chapter)}</span>
@@ -148,7 +149,7 @@ export function renderPractice(book: Book, assets: Assets): string {
 
 export function renderExercisePage(book: Book, exercise: Exercise, assets: Assets): string {
   const main = `<article class="prose" data-exercise-page="${escapeHtml(exercise.id)}">
-    <p class="chapter-eyebrow"><a href="/practice/">Practice</a> · ${DIFFICULTY_LABEL[exercise.difficulty]}</p>
+    <p class="chapter-eyebrow"><a href="${url('practice/')}">Practice</a> · ${DIFFICULTY_LABEL[exercise.difficulty]}</p>
     <h1>${escapeHtml(exercise.title)}</h1>
     <cpp-exercise data-id="${escapeHtml(exercise.id)}" data-standalone="1"></cpp-exercise>
   </article>`;
@@ -192,7 +193,7 @@ export function renderStatus(book: Book, assets: Assets): string {
               ? '<span class="state state--done">written</span>'
               : '<span class="state state--todo">outline</span>';
           return `<tr>
-            <td><a href="/${part.slug}/${ch.slug}/">${escapeHtml(ch.navTitle)}</a></td>
+            <td><a href="${url(`${part.slug}/${ch.slug}/`)}">${escapeHtml(ch.navTitle)}</a></td>
             <td>${state}</td>
             <td class="num">${ch.status === 'complete' ? ch.words.toLocaleString('en') : '—'}</td>
             <td class="num">${ch.exercises.length || '—'}</td>
@@ -249,7 +250,7 @@ export function renderReference(book: Book, assets: Assets): string {
             ${part.chapters
               .map(
                 (ch) => `<tr>
-                  <td><a href="/${part.slug}/${ch.slug}/">${escapeHtml(ch.navTitle)}</a></td>
+                  <td><a href="${url(`${part.slug}/${ch.slug}/`)}">${escapeHtml(ch.navTitle)}</a></td>
                   <td><ul>${ch.objectives.map((o) => `<li>${escapeHtml(o)}</li>`).join('') || '<li class="muted">—</li>'}</ul></td>
                   <td><code>${escapeHtml(ch.standard)}</code></td>
                 </tr>`,

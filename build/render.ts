@@ -1,4 +1,5 @@
 import { escapeHtml } from './markdown.ts';
+import { url } from './base.ts';
 import type { Book, Chapter, NavEntry, Part } from './types.ts';
 
 export interface Assets {
@@ -39,7 +40,7 @@ function sidebar(book: Book, currentSlug?: string): string {
         .map((ch) => {
           const active = ch.slug === currentSlug ? ' class="is-active" aria-current="page"' : '';
           const draft = ch.status === 'draft' ? '<span class="nav__badge">draft</span>' : '';
-          return `<li><a href="/${part.slug}/${ch.slug}/"${active}><span class="nav__num">${part.order}.${ch.order}</span><span class="nav__text">${escapeHtml(ch.navTitle)}</span>${draft}</a></li>`;
+          return `<li><a href="${url(`${part.slug}/${ch.slug}/`)}"${active}><span class="nav__num">${part.order}.${ch.order}</span><span class="nav__text">${escapeHtml(ch.navTitle)}</span>${draft}</a></li>`;
         })
         .join('');
       return `<details class="nav__part"${open}><summary><span class="nav__part-num">Part ${part.order}</span>${escapeHtml(part.title)}</summary><ul class="nav__list">${items}</ul></details>`;
@@ -48,10 +49,10 @@ function sidebar(book: Book, currentSlug?: string): string {
 
   return `<nav class="sidebar" id="sidebar" aria-label="Book contents">
   <div class="sidebar__inner">
-    <a class="sidebar__link" href="/">Start here</a>
-    <a class="sidebar__link" href="/practice/">Practice problems</a>
-    <a class="sidebar__link" href="/reference/">Quick reference</a>
-    <a class="sidebar__link" href="/progress/">Progress</a>
+    <a class="sidebar__link" href="${url('')}">Start here</a>
+    <a class="sidebar__link" href="${url('practice/')}">Practice problems</a>
+    <a class="sidebar__link" href="${url('reference/')}">Quick reference</a>
+    <a class="sidebar__link" href="${url('progress/')}">Progress</a>
     <hr class="sidebar__rule">
     ${parts}
   </div>
@@ -63,7 +64,7 @@ function header(book: Book): string {
   <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
     <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
   </button>
-  <a class="topbar__brand" href="/">${escapeHtml(book.title)}</a>
+  <a class="topbar__brand" href="${url('')}">${escapeHtml(book.title)}</a>
   <div class="topbar__spacer"></div>
   <button class="search-trigger" id="search-trigger" aria-label="Search the book">
     <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -87,7 +88,7 @@ export function shell(o: ShellOptions): string {
   <title>${escapeHtml(o.title)}</title>
   <meta name="description" content="${escapeHtml(o.description)}">
   <meta name="color-scheme" content="light dark">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="${url('favicon.svg')}" type="image/svg+xml">
   <script>${THEME_SCRIPT}</script>
   ${css}
 </head>
@@ -166,7 +167,7 @@ export function renderChapter(
 
   const main = `<article class="prose" data-chapter="${escapeHtml(chapter.slug)}">
     <div class="chapter-head">
-      <p class="chapter-eyebrow"><a href="/${part.slug}/">Part ${part.order} · ${escapeHtml(part.title)}</a></p>
+      <p class="chapter-eyebrow"><a href="${url(`${part.slug}/`)}">Part ${part.order} · ${escapeHtml(part.title)}</a></p>
       <h1>${escapeHtml(chapter.title)}</h1>
       ${chapter.summary ? `<p class="chapter-lede">${escapeHtml(chapter.summary)}</p>` : ''}
     </div>
@@ -191,7 +192,7 @@ export function renderPart(book: Book, part: Part, assets: Assets): string {
   const cards = part.chapters
     .map(
       (ch) => `<li class="card">
-        <a href="/${part.slug}/${ch.slug}/">
+        <a href="${url(`${part.slug}/${ch.slug}/`)}">
           <span class="card__num">${part.order}.${ch.order}</span>
           <h3>${escapeHtml(ch.title)}</h3>
           <p>${escapeHtml(ch.summary)}</p>
