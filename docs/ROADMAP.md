@@ -87,7 +87,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 
 - [x] 7.1 What the compiler does for you
 - [x] 7.2 Measuring, not guessing
-- [ ] 7.3 Cache and data layout
+- [x] 7.3 Cache and data layout
 - [ ] 7.5 Copies, moves, and elision
 - [ ] 7.4 Zero-cost abstraction, examined
 - [ ] 7.6 Inlining, linking, and layout
