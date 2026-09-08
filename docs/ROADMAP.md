@@ -34,7 +34,7 @@ within a chapter or two.
 The part of C++ that no other language teaches you. Chapter 3.2 (RAII) is the
 single most important chapter in the book; give it room.
 
-- [ ] 2.6 Arrays, and why they decay
+- [x] 2.6 Arrays, and why they decay
 - [ ] 2.7 const and constness
 - [ ] 3.1 Structs and classes
 - [ ] 3.2 Constructors, destructors, and RAII
