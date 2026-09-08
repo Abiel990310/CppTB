@@ -103,7 +103,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 - [x] 9.3 Build systems and CMake
 - [x] 9.2 Modules
 - [x] 9.4 Dependencies and packaging
-- [ ] 9.5 Project: a small search index
+- [x] 9.5 Project: a small search index
 
 ---
 
