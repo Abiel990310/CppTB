@@ -18,7 +18,7 @@ page's "Begin" and "Start with memory" links both run out of written material
 within a chapter or two.
 
 - [x] 1.1 Hello, machine
-- [ ] 1.2 Values, types, and names
+- [x] 1.2 Values, types, and names
 - [ ] 1.3 Making decisions
 - [ ] 1.4 Repetition
 - [ ] 1.5 Functions
