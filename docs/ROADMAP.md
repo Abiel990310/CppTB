@@ -25,7 +25,7 @@ within a chapter or two.
 - [ ] 1.6 Your toolchain
 - [x] 2.1 Objects and storage
 - [x] 2.2 Pointers
-- [ ] 2.3 References
+- [x] 2.3 References
 - [ ] 2.4 Lifetime and scope
 - [ ] 2.5 The stack and the heap
 
