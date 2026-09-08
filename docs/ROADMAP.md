@@ -64,7 +64,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 3.6 Operator overloading
 - [x] 3.7 Inheritance and virtual functions
 - [x] 3.8 When not to use inheritance
-- [ ] 6.1 Exceptions
+- [x] 6.1 Exceptions
 - [ ] 6.2 Error handling without exceptions
 - [ ] 6.4 Testing
 - [ ] 6.5 Debugging
