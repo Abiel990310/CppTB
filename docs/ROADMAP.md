@@ -36,7 +36,7 @@ single most important chapter in the book; give it room.
 
 - [x] 2.6 Arrays, and why they decay
 - [x] 2.7 const and constness
-- [ ] 3.1 Structs and classes
+- [x] 3.1 Structs and classes
 - [ ] 3.2 Constructors, destructors, and RAII
 - [ ] 3.3 Copying
 - [ ] 3.4 Moving
