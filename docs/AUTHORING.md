@@ -214,6 +214,16 @@ problem is about ownership.
 npm run verify
 ```
 
+While writing, the targeted forms are much faster and check exactly what you
+changed:
+
+```bash
+npm run verify:snippets 04-library/03-associative   # one chapter's samples
+npm run verify:problems map-lookup custom-hash      # named problems only
+```
+
+Run the full `npm run verify` before committing regardless — it is what CI runs.
+
 This compiles every runnable sample, asserts the `expect-error` ones fail,
 compiles each problem's solution (must pass) and starter (must fail), and
 typechecks the site. It takes a couple of minutes because it is really invoking

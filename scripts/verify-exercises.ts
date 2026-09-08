@@ -5,15 +5,32 @@
  * problem is broken — so this runs in CI and before any content change lands.
  *
  *   node --experimental-strip-types scripts/verify-exercises.ts
+ *   node --experimental-strip-types scripts/verify-exercises.ts trim-whitespace split-on-delimiter
+ *
+ * Naming ids checks only those, which is what you want while writing a chapter;
+ * the unfiltered run is what CI does.
  */
 import { loadBook } from '../build/content.ts';
 import { compileAndRun } from '../server/compile.ts';
 import { buildSubmission, parseCheckOutput, compareOutput } from '../src/lib/harness.ts';
 
 const book = await loadBook(process.cwd());
+
+const only = new Set(process.argv.slice(2));
+const selected = only.size
+  ? book.exercises.filter((e) => only.has(e.id))
+  : book.exercises;
+
+for (const id of only) {
+  if (!book.exercises.some((e) => e.id === id)) {
+    console.log(`FAIL   no problem with id "${id}"`);
+    process.exit(1);
+  }
+}
+
 let failures = 0;
 
-for (const exercise of book.exercises) {
+for (const exercise of selected) {
   const attempt = async (code: string) => {
     const submission = buildSubmission(code, exercise.tests, exercise.check);
     const result = await compileAndRun({
@@ -64,7 +81,7 @@ for (const exercise of book.exercises) {
 
 console.log(
   failures === 0
-    ? `\nAll ${book.exercises.length} problems verified.`
-    : `\n${failures} of ${book.exercises.length} problems are broken.`,
+    ? `\nAll ${selected.length} problems verified.`
+    : `\n${failures} of ${selected.length} problems are broken.`,
 );
 process.exit(failures === 0 ? 0 : 1);
