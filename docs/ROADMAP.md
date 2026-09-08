@@ -1,10 +1,19 @@
 # Roadmap
 
-**Start each session here.** Take the top unwritten chapter from the current
-wave, write it, verify it, commit it, and tick it off below.
+**Start each session here.** Take the top unwritten item, write it, verify it,
+commit it, and tick it off below.
 
-The order is not the book's reading order. It is the order that makes the book
-useful soonest: each wave completes a path a real reader is already on.
+## The sixty chapters are done
+
+Parts 1–9 are complete: 60 chapters, 397 runnable samples and 110 problems, all
+verified by `npm run verify`. The wave lists below are kept as a record of the
+order they were written in and of what each chapter covers; there is nothing
+left to take from them.
+
+**The work now is Part 10** — forty chapters of problem solving and algorithms,
+planned near the bottom of this file. It has engine work to do first: the
+`output` check mode holds a single stdin and a single expected stdout, and a
+judge-style problem needs several cases. That checklist is the top of the queue.
 
 Progress is also visible, without reading this file, at `/progress/`.
 
