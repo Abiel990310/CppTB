@@ -68,7 +68,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 6.2 Error handling without exceptions
 - [x] 6.4 Testing
 - [x] 6.5 Debugging
-- [ ] 6.6 Invariants and assertions
+- [x] 6.6 Invariants and assertions
 
 ## Wave 5 — generic programming
 
