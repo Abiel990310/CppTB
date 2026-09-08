@@ -27,7 +27,7 @@ within a chapter or two.
 - [x] 2.2 Pointers
 - [x] 2.3 References
 - [x] 2.4 Lifetime and scope
-- [ ] 2.5 The stack and the heap
+- [x] 2.5 The stack and the heap
 
 ## Wave 2 — ownership
 
