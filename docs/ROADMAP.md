@@ -73,7 +73,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 ## Wave 5 — generic programming
 
 - [x] 5.1 Function templates
-- [ ] 5.2 Class templates
+- [x] 5.2 Class templates
 - [ ] 5.4 Concepts and constraints
 - [ ] 5.3 Deduction and forwarding
 - [ ] 5.5 Compile-time computation
