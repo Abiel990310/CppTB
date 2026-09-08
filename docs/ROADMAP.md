@@ -54,7 +54,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 4.3 Associative containers
 - [x] 4.5 Algorithms
 - [x] 4.4 Iterators
-- [ ] 4.8 optional, variant, and expected
+- [x] 4.8 optional, variant, and expected
 - [ ] 4.9 Input, output, and formatting
 - [ ] 4.6 Ranges and views
 
