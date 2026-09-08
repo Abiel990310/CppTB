@@ -95,7 +95,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 ## Wave 7 — concurrency and shipping
 
 - [x] 9.1 Headers, translation units, and linking
-- [ ] 8.1 Threads
+- [x] 8.1 Threads
 - [ ] 8.2 Data races and mutexes
 - [ ] 8.3 Atomics and the memory model
 - [ ] 8.4 Futures, promises, and tasks
