@@ -198,6 +198,12 @@ values. The reader writes declarations only, no `main`.
 the exact stdout it must produce. Use `stdin:` in the front-matter to feed it
 input.
 
+The harness includes `<cstdio>`, `<cmath>`, `<ostream>`, `<sstream>`,
+`<string>`, and `<type_traits>` before the reader's code. `<cmath>` drags the C
+math functions into the global namespace, so a global named `log`, `abs`, `y1`,
+or `remainder` will collide. Prefix or rename globals in starters — `event_log`,
+not `log`.
+
 Problems run under AddressSanitizer with leak detection on, so a memory leak
 fails a problem even when every assertion passes. Say so in the prompt when the
 problem is about ownership.
