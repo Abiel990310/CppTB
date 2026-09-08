@@ -1,7 +1,12 @@
 # CppTB — working notes for Claude
 
-An interactive C++ textbook. 60 chapters across 9 parts, every code sample
-compiled by a real compiler, every practice problem auto-graded.
+An interactive C++ textbook. Every code sample is compiled by a real compiler
+and every practice problem is auto-graded.
+
+**Parts 1–9 are finished**: 60 chapters, 397 samples, 110 problems, all
+verified. The work now is **Part 10** — forty chapters of problem solving and
+algorithms — planned near the bottom of `docs/ROADMAP.md`, with engine work
+listed there that comes first.
 
 **Read `docs/AUTHORING.md` before writing any chapter.** It holds the voice,
 the chapter template, and the widget syntax. This file is the map; that one is
@@ -49,42 +54,44 @@ run.
 
 ## How a session should go
 
-1. Open `docs/ROADMAP.md`; take the top unwritten chapter.
-2. Read the two neighbouring chapters so the voice and the assumed knowledge
-   carry over. Read the chapter's own front-matter: the objectives are already
-   fixed and are a contract.
+1. Open `docs/ROADMAP.md`; take the top unticked item. For Parts 1–9 there is
+   nothing left; the queue is the Part 10 plan and the engine work above it.
+2. For a chapter: read its neighbours so the voice and the assumed knowledge
+   carry over, and read its front-matter — the objectives are fixed and are a
+   contract.
 3. Write it against the template in `docs/AUTHORING.md`.
-4. Add 2–4 problems to `content/exercises/` for it.
-5. `npm run verify`. Fix what it reports. It is never wrong about compilation.
-6. Flip `status: draft` to `status: complete` in the front-matter — that is what
-   moves the bar on `/progress/`.
-7. Commit one chapter per commit, message `content: write <chapter title>`.
+4. Add its problems. Part 10 chapters carry both kinds: two function-style
+   (`check: unit`) and two or three judge-style (`check: output`).
+5. `npm run verify`. Fix what it reports. It is never wrong about compilation —
+   when it contradicts the prose, the prose is wrong.
+6. Flip `status: draft` to `status: complete` — that is what moves the bar on
+   `/progress/`.
+7. Commit one chapter per commit, message `content: write "<chapter title>"`.
 
 One chapter per session is a good pace. Do not batch five half-written chapters;
 a finished chapter is worth more than five outlines, and the outlines already
 exist.
 
-## This book writes itself on a schedule
+## Scheduling
 
-A Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`, **hourly**) spawns a fresh session
-that takes the top unticked chapter from `docs/ROADMAP.md`, writes it, verifies
-it, and pushes. That is why the roadmap and the authoring guide have to stay
-accurate: they are the entire brief a cold session gets.
+One Routine is active: **`trig_017zYznE5wwj44ZGRirzmBRL`**, every three hours,
+which resumes the *existing* long-running session rather than spawning a new
+one — so it keeps its context instead of re-reading everything.
+
+An older hourly Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`) that spawned a fresh
+session per run is **disabled**, and should stay that way: a cold start re-reads
+this file, the authoring guide and two neighbouring chapters before writing a
+line, which cost far more than it produced.
 
 Consequences worth knowing:
 
-- **Another session is probably working right now.** At an hourly cadence, runs
-  overlap: a chapter takes a while, mostly in `npm run verify`. Always `git pull
-  --rebase origin <branch>` immediately before pushing, and if the rebase brings
-  in anything, re-run `npm run verify` before you push — a clean rebase does not
-  prove the combined tree still builds. A rejected push means someone got there
-  first; rebase, never force.
-- **Re-read `docs/ROADMAP.md` right before you start writing**, not from memory.
-  Another run may have ticked your chapter while you were reading the
-  neighbours. If your chapter is already `status: complete`, take the next
-  unticked one instead of duplicating the work.
+- **No other session is currently writing.** If you re-enable the hourly
+  Routine, runs will overlap, and then you must `git pull --rebase origin
+  <branch>` immediately before pushing and re-run `npm run verify` if the rebase
+  brought anything in. A rejected push means someone got there first; rebase,
+  never force.
 - **Do not create a second Routine** for the same job. Check with
-  `list_triggers` first; edit the existing one with `update_trigger`.
+  `list_triggers` first and edit the existing one with `update_trigger`.
 - **Pushing `main` deploys the site.** `.github/workflows/deploy.yml` builds
   with the Pages sub-path base and force-pushes `dist/` to `gh-pages`, which
   GitHub serves at https://abiel990310.github.io/CppTB/. The `gh-pages` branch
