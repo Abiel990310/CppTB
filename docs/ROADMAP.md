@@ -29,7 +29,7 @@ within a chapter or two.
 - [x] 2.4 Lifetime and scope
 - [x] 2.5 The stack and the heap
 
-## Wave 2 — ownership
+## Wave 2 — ownership ✅ complete
 
 The part of C++ that no other language teaches you. Chapter 3.2 (RAII) is the
 single most important chapter in the book; give it room.
@@ -40,11 +40,13 @@ single most important chapter in the book; give it room.
 - [x] 3.2 Constructors, destructors, and RAII
 - [x] 3.3 Copying
 - [x] 3.4 Moving
-- [ ] 3.5 The rule of zero, three, and five
+- [x] 3.5 The rule of zero, three, and five
 
-## Wave 3 — the library you actually use
+## Wave 3 — the library you actually use ← **you are here**
 
 After this wave a reader can write useful programs without touching `new`.
+Start with smart pointers: it finishes the sentence Wave 2 began, since the
+ownership chapters keep pointing at `unique_ptr` as the answer.
 
 - [ ] 4.7 Smart pointers        (out of order deliberately: it completes Wave 2's story)
 - [ ] 4.1 std::string and text
