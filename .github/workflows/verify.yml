@@ -1,0 +1,35 @@
+name: Verify
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # The verifiers invoke a real compiler; g++ is preinstalled on the runner.
+      - name: Compiler version
+        run: g++ --version
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Every runnable sample compiles
+        run: npm run verify:snippets
+
+      - name: Every problem grades correctly
+        run: npm run verify:problems
+
+      - name: Build the site
+        run: npx vite build

@@ -1,0 +1,91 @@
+# Deploying
+
+## Static, no compiler (the simple case)
+
+```bash
+npm run build
+```
+
+`dist/` is a complete static site: pre-rendered HTML for every chapter, a search
+index, and ~12 KB of gzipped JavaScript. Serve it from anywhere — GitHub Pages,
+Netlify, S3, nginx. No server-side anything is required.
+
+Readers still get working Run buttons: with no `/api/compile` on the origin, the
+client falls back to Compiler Explorer's public API
+(`src/lib/compile-client.ts`). That is someone else's free service, so if this
+book ever gets real traffic, either self-host the compiler or talk to them
+first.
+
+## Self-hosting the compiler
+
+`npm run serve` starts `server/standalone.ts`, which serves `dist/` and answers
+`POST /api/compile` by invoking `g++` locally.
+
+**This executes arbitrary C++ submitted by anyone who can reach the page.**
+
+What `server/compile.ts` already does:
+
+- a fresh temporary directory per request, removed afterwards
+- a 15 s compile timeout and a 6 s run timeout, both enforced by `SIGKILL`
+- `ulimit -f` (8 MB file writes) and `ulimit -c 0` (no core dumps)
+- `ASAN_OPTIONS=hard_rss_limit_mb=1024:max_allocation_size_mb=512`, which is how
+  memory is bounded — `ulimit -v` cannot be used, because AddressSanitizer maps
+  terabytes of shadow memory at startup and refuses to run under an
+  address-space cap
+- output truncated at 96 KB
+- a token bucket of 12 compilations per minute per IP
+- a fixed argument list: the standard and optimisation level are matched against
+  an allowlist, and nothing else from the request reaches the command line
+
+What it does **not** do, and what you must add before exposing it:
+
+- **No filesystem isolation.** The compiled program runs as the server's user
+  and can read anything that user can read.
+- **No network isolation.** The program can open sockets.
+- **No process limit.** `ulimit -u` is per-user, not per-request, so setting it
+  would throttle the server itself. A fork bomb is contained only by the 6 s
+  timeout.
+
+The supported way to run this is inside a throwaway container, one that has the
+toolchain and nothing else:
+
+```dockerfile
+FROM gcc:14
+RUN useradd --no-create-home --shell /usr/sbin/nologin runner
+WORKDIR /srv
+COPY dist ./dist
+COPY server ./server
+COPY package.json ./
+USER runner
+ENV NODE_ENV=production
+CMD ["node", "--experimental-strip-types", "server/standalone.ts"]
+```
+
+Run it with `--network=none` for the container that compiles, a read-only root
+filesystem, a memory cap, and a pids limit:
+
+```bash
+docker run --rm --network=none --read-only --tmpfs /tmp:size=64m \
+  --memory=2g --pids-limit=128 --cpus=1 -p 4173:4173 cpptb
+```
+
+For a public deployment, prefer a purpose-built sandbox — nsjail, gVisor, or
+Firecracker — with one throwaway sandbox per compilation. That is what Compiler
+Explorer and Godbolt-alikes do, and it is not a corner worth cutting.
+
+## Choosing a compiler
+
+`CPPTB_COMPILER` selects the binary; it defaults to `g++`.
+
+```bash
+CPPTB_COMPILER=clang++ npm run serve
+```
+
+Clang gives better diagnostics for teaching, GCC is more widely installed. The
+verify scripts respect the same variable, so a chapter can be checked against
+both:
+
+```bash
+npm run verify:snippets
+CPPTB_COMPILER=clang++ npm run verify:snippets
+```
