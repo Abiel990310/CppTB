@@ -47,14 +47,12 @@ every sample in the book and every problem's solution and starter.
 
 ## Deploying
 
-Pushing to `main` builds and publishes to GitHub Pages via
-`.github/workflows/deploy.yml`.
+Pushing to `main` builds the site and force-pushes it to the `gh-pages`
+branch, which GitHub Pages serves. Nothing needs enabling by hand: pushing a
+`gh-pages` branch to a public repository turns Pages on by itself.
 
-**Pages has to be switched on once, by hand:** Settings → Pages → Build and
-deployment → Source: **GitHub Actions**. The workflow passes
-`enablement: true`, but `GITHUB_TOKEN` is not permitted to create a Pages site
-("Resource not accessible by integration"), so the first deploy fails until a
-human enables it. After that the flag is a no-op and deploys are automatic.
+`gh-pages` is generated output. Never edit it — edit `content/` on `main` and
+let the workflow republish.
 
 `npm run build` produces a fully static `dist/`, deployable to any static host.
 If it will not be served from the domain root, build with the prefix —

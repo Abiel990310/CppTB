@@ -23,12 +23,17 @@ A GitHub Pages *project* site is exactly this case — it lives at
 `https://<user>.github.io/<repo>/`. The deploy workflow sets `CPPTB_BASE` from
 the repository name automatically, so nothing needs changing there.
 
-Pages itself must be enabled once by a human: **Settings → Pages → Build and
-deployment → Source: GitHub Actions**. The workflow asks for it with
-`enablement: true`, but the Actions token cannot create a Pages site — it fails
-with `Resource not accessible by integration` — so the first deploy will not
-succeed until that switch is flipped. Once it is, re-run the failed job from
-the Actions tab; no new commit is needed. A custom
+Pages needs no manual setup here, but the route matters. The obvious one —
+`actions/configure-pages` plus `upload-pages-artifact` — fails on a fresh
+repository with `Resource not accessible by integration`: `GITHUB_TOKEN` is not
+permitted to create a Pages site, even with `pages: write`, so someone has to
+flip **Settings → Pages → Source: GitHub Actions** first.
+
+`deploy.yml` avoids that by force-pushing the built site to a `gh-pages`
+branch. Pushing that branch to a public repository enables Pages on its own,
+and `GITHUB_TOKEN` can push a branch with plain `contents: write`. The
+trade-off is that the built output lives in the repository's history on that
+branch; it is force-pushed each time, so it does not accumulate. A custom
 domain or a user site (`<user>.github.io`) serves from the root, and needs no
 base at all.
 
