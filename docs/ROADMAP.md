@@ -60,7 +60,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 
 ## Wave 4 — writing correct code
 
-- [ ] 6.3 Undefined behaviour   (early: it explains the sanitizers already running)
+- [x] 6.3 Undefined behaviour
 - [ ] 3.6 Operator overloading
 - [ ] 3.7 Inheritance and virtual functions
 - [ ] 3.8 When not to use inheritance
