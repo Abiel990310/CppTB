@@ -76,7 +76,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 5.2 Class templates
 - [x] 5.4 Concepts and constraints
 - [x] 5.3 Deduction and forwarding
-- [ ] 5.5 Compile-time computation
+- [x] 5.5 Compile-time computation
 - [ ] 5.6 Variadic templates
 - [ ] 5.7 Type traits and metaprogramming
 - [ ] 5.8 Static polymorphism
