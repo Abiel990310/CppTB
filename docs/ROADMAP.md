@@ -79,7 +79,7 @@ ownership chapters keep pointing at `unique_ptr` as the answer.
 - [x] 5.5 Compile-time computation
 - [x] 5.6 Variadic templates
 - [x] 5.7 Type traits and metaprogramming
-- [ ] 5.8 Static polymorphism
+- [x] 5.8 Static polymorphism
 
 ## Wave 6 — performance
 
