@@ -49,7 +49,7 @@ Start with smart pointers: it finishes the sentence Wave 2 began, since the
 ownership chapters keep pointing at `unique_ptr` as the answer.
 
 - [x] 4.7 Smart pointers
-- [ ] 4.1 std::string and text
+- [x] 4.1 std::string and text
 - [ ] 4.2 Sequence containers
 - [ ] 4.3 Associative containers
 - [ ] 4.5 Algorithms
