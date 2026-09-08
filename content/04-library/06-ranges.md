@@ -325,6 +325,7 @@ type. Many pipelines are not common, and `take` over an unbounded range is the
 usual way to meet one:
 
 ```cpp run title="When the two-iterator constructor does not apply" std=c++20
+#include <algorithm>   // std::ranges::copy
 #include <iostream>
 #include <iterator>
 #include <ranges>
