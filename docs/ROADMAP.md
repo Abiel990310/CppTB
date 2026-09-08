@@ -39,7 +39,7 @@ single most important chapter in the book; give it room.
 - [x] 3.1 Structs and classes
 - [x] 3.2 Constructors, destructors, and RAII
 - [x] 3.3 Copying
-- [ ] 3.4 Moving
+- [x] 3.4 Moving
 - [ ] 3.5 The rule of zero, three, and five
 
 ## Wave 3 — the library you actually use
