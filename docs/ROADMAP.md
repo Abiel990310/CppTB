@@ -101,7 +101,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 - [x] 8.4 Futures, promises, and tasks
 - [x] 8.5 Coroutines
 - [x] 9.3 Build systems and CMake
-- [ ] 9.2 Modules
+- [x] 9.2 Modules
 - [ ] 9.4 Dependencies and packaging
 - [ ] 9.5 Project: a small search index
 
