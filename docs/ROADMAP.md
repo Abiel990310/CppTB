@@ -97,7 +97,7 @@ The assembly view earns its keep here; use it in every chapter of this part.
 - [x] 9.1 Headers, translation units, and linking
 - [x] 8.1 Threads
 - [x] 8.2 Data races and mutexes
-- [ ] 8.3 Atomics and the memory model
+- [x] 8.3 Atomics and the memory model
 - [ ] 8.4 Futures, promises, and tasks
 - [ ] 8.5 Coroutines
 - [ ] 9.3 Build systems and CMake
