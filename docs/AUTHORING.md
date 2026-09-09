@@ -333,6 +333,26 @@ times out, then write the fast one.
 `npm run verify:problems` runs every case for the solution and for the starter,
 and reports the first failure by case name.
 
+### What a judge problem can and cannot enforce
+
+Cases live inline in the problem's Markdown, so an input is at most a few
+hundred values before the file becomes unreadable. That has a consequence worth
+planning around: **a time limit can only enforce a complexity class when the
+input is compact.**
+
+- A problem whose input is a *bound* — `n ≤ 10^18`, "the n-th Fibonacci number"
+  — can carry a case that a quadratic or exponential solution cannot finish.
+  `judge-fib` and `judge-count-in-range` do exactly this.
+- A problem whose input is a *list* cannot. Timing out a quadratic solution over
+  a list needs tens of thousands of values, which is tens of kilobytes of digits
+  in the file.
+
+So: use compact-input problems to enforce complexity, and list-input problems to
+enforce correctness — edge cases, off-by-ones, the wrong bound. Say so in the
+problem's notes when the statement's constraints are stricter than its cases
+can check; claiming a limit you do not enforce is the kind of quiet dishonesty
+this book exists to avoid.
+
 ### Sizing a judge problem
 
 The runner compiles at `-O0` with sanitizers, which is roughly five times slower

@@ -159,7 +159,7 @@ independent cases. Before writing chapter 10.1:
 - [x] 10.1 How to read a problem and its limits
 - [x] 10.2 Counting the work you actually do
 - [x] 10.3 The contest template and fast I/O
-- [ ] 10.4 Sorting, comparators, and coordinate compression
+- [x] 10.4 Sorting, comparators, and coordinate compression
 - [ ] 10.5 Binary search: on a range, and on the answer
 
 ### Wave B — sequences
