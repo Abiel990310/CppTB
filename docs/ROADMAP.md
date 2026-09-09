@@ -185,7 +185,7 @@ independent cases. Before writing chapter 10.1:
 ### Wave D — graphs
 
 - [x] 10.16 Representing graphs
-- [ ] 10.17 BFS, 0–1 BFS, and multi-source BFS
+- [x] 10.17 BFS, 0–1 BFS, and multi-source BFS
 - [ ] 10.18 DFS: components, cycles, bridges
 - [ ] 10.19 Topological order and DAG DP
 - [ ] 10.20 Union-Find
