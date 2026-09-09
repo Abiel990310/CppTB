@@ -172,7 +172,7 @@ independent cases. Before writing chapter 10.1:
 
 ### Wave C — search and greedy
 
-- [ ] 10.11 Recursion and backtracking
+- [x] 10.11 Recursion and backtracking
 - [ ] 10.12 Subsets, permutations, and pruning
 - [ ] 10.13 Greedy, and proving it with an exchange argument
 - [ ] 10.14 Divide and conquer
