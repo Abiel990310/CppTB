@@ -80,24 +80,25 @@ exist.
 
 ## Scheduling
 
-**No Routine is active.** Writing is paused at the author's request, and both
-Routines are disabled:
+**No Routine points at this book.** C++ writing is paused at the author's
+request; the work moved to **JavaTB** (`Abiel990310/JavaTB`), a Java textbook on
+the same engine.
 
-- **`trig_017zYznE5wwj44ZGRirzmBRL`** — every three hours, resumed the
-  *existing* long-running session rather than spawning a new one, so it kept its
-  context instead of re-reading everything. This is the one to re-enable if the
-  author restarts the work.
+- **`trig_017zYznE5wwj44ZGRirzmBRL`** — every three hours, resumes the
+  *existing* long-running session so it keeps its context. It used to drive this
+  book and is now **retargeted at JavaTB**. Do not point it back here without
+  the author saying so; do not create a second Routine alongside it.
 - **`trig_01SZHxiCeEjK5AB26FfzDjQH`** — hourly, spawned a fresh session per run.
-  Leave this one disabled: a cold start re-reads this file, the authoring guide
-  and two neighbouring chapters before writing a line, which cost far more than
-  it produced.
+  Disabled, and should stay that way: a cold start re-reads this file, the
+  authoring guide and two neighbouring chapters before writing a line, which
+  cost far more than it produced.
 
 Consequences worth knowing:
 
-- **No other session is currently writing.** If two Routines are ever enabled at
-  once, runs will overlap, and then you must `git pull --rebase origin <branch>`
-  immediately before pushing and re-run `npm run verify` if the rebase brought
-  anything in. A rejected push means someone got there first; rebase, never
+- **No other session is currently writing.** If a Routine is ever pointed back
+  at this book while another is writing, runs will overlap, and then you must
+  `git pull --rebase origin <branch>` immediately before pushing and re-run
+  `npm run verify` if the rebase brought anything in. A rejected push means someone got there first; rebase, never
   force.
 - **Do not create a second Routine** for the same job. Check with
   `list_triggers` first and edit the existing one with `update_trigger`.
