@@ -192,7 +192,7 @@ independent cases. Before writing chapter 10.1:
 
 ### Wave E — shortest paths and trees
 
-- [ ] 10.21 Dijkstra
+- [x] 10.21 Dijkstra
 - [ ] 10.22 Bellman–Ford and Floyd–Warshall
 - [ ] 10.23 Minimum spanning trees
 - [ ] 10.24 Tree DP and rerooting
