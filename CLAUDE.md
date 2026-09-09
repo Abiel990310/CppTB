@@ -4,9 +4,10 @@ An interactive C++ textbook. Every code sample is compiled by a real compiler
 and every practice problem is auto-graded.
 
 **Parts 1–9 are finished** (60 chapters), and **Part 10 is under way**: 10.1
-through 10.19 are written, which is Waves A–D of the forty-chapter plan near the
-bottom of `docs/ROADMAP.md`. The engine work listed there is done. As of the last
-full run: 466 samples and 183 problems, all verified.
+through 10.22 are written — Waves A–D of the forty-chapter plan near the bottom
+of `docs/ROADMAP.md`, plus the first two chapters of Wave E. The engine work
+listed there is done. As of the last full run: 482 samples and 197 problems, all
+verified. The next unticked chapter is 10.23, Minimum spanning trees.
 
 Take the top unticked chapter in the earliest incomplete wave. Where a planned
 title turns out to overlap a chapter already written, retitle it in the roadmap
@@ -79,22 +80,25 @@ exist.
 
 ## Scheduling
 
-One Routine is active: **`trig_017zYznE5wwj44ZGRirzmBRL`**, every three hours,
-which resumes the *existing* long-running session rather than spawning a new
-one — so it keeps its context instead of re-reading everything.
+**No Routine is active.** Writing is paused at the author's request, and both
+Routines are disabled:
 
-An older hourly Routine (`trig_01SZHxiCeEjK5AB26FfzDjQH`) that spawned a fresh
-session per run is **disabled**, and should stay that way: a cold start re-reads
-this file, the authoring guide and two neighbouring chapters before writing a
-line, which cost far more than it produced.
+- **`trig_017zYznE5wwj44ZGRirzmBRL`** — every three hours, resumed the
+  *existing* long-running session rather than spawning a new one, so it kept its
+  context instead of re-reading everything. This is the one to re-enable if the
+  author restarts the work.
+- **`trig_01SZHxiCeEjK5AB26FfzDjQH`** — hourly, spawned a fresh session per run.
+  Leave this one disabled: a cold start re-reads this file, the authoring guide
+  and two neighbouring chapters before writing a line, which cost far more than
+  it produced.
 
 Consequences worth knowing:
 
-- **No other session is currently writing.** If you re-enable the hourly
-  Routine, runs will overlap, and then you must `git pull --rebase origin
-  <branch>` immediately before pushing and re-run `npm run verify` if the rebase
-  brought anything in. A rejected push means someone got there first; rebase,
-  never force.
+- **No other session is currently writing.** If two Routines are ever enabled at
+  once, runs will overlap, and then you must `git pull --rebase origin <branch>`
+  immediately before pushing and re-run `npm run verify` if the rebase brought
+  anything in. A rejected push means someone got there first; rebase, never
+  force.
 - **Do not create a second Routine** for the same job. Check with
   `list_triggers` first and edit the existing one with `update_trigger`.
 - **Pushing `main` deploys the site.** `.github/workflows/deploy.yml` builds
