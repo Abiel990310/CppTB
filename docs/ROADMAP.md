@@ -178,7 +178,7 @@ independent cases. Before writing chapter 10.1:
       pruning and the recursive generators, so this chapter is the bitmask
       representation, the bit intrinsics, submask enumeration, and duplicate
       handling. It is what 10.15 and 10.30 build on.)*
-- [ ] 10.13 Greedy, and proving it with an exchange argument
+- [x] 10.13 Greedy, and proving it with an exchange argument
 - [ ] 10.14 Divide and conquer
 - [ ] 10.15 Meet in the middle
 
