@@ -3,10 +3,15 @@
 An interactive C++ textbook. Every code sample is compiled by a real compiler
 and every practice problem is auto-graded.
 
-**Parts 1–9 are finished**: 60 chapters, 397 samples, 110 problems, all
-verified. The work now is **Part 10** — forty chapters of problem solving and
-algorithms — planned near the bottom of `docs/ROADMAP.md`, with engine work
-listed there that comes first.
+**Parts 1–9 are finished** (60 chapters), and **Part 10 is under way**: 10.1
+through 10.19 are written, which is Waves A–D of the forty-chapter plan near the
+bottom of `docs/ROADMAP.md`. The engine work listed there is done. As of the last
+full run: 466 samples and 183 problems, all verified.
+
+Take the top unticked chapter in the earliest incomplete wave. Where a planned
+title turns out to overlap a chapter already written, retitle it in the roadmap
+with a one-line reason rather than writing a redundant chapter — 10.12 is the
+precedent.
 
 **Read `docs/AUTHORING.md` before writing any chapter.** It holds the voice,
 the chapter template, and the widget syntax. This file is the map; that one is
