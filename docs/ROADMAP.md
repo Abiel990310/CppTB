@@ -167,7 +167,7 @@ independent cases. Before writing chapter 10.1:
 - [x] 10.6 Two pointers and sliding windows
 - [x] 10.7 Prefix sums and difference arrays
 - [x] 10.8 Monotonic stacks
-- [ ] 10.9 Deques and sliding-window extrema
+- [x] 10.9 Deques and sliding-window extrema
 - [ ] 10.10 Hashing, frequency maps, and multisets
 
 ### Wave C — search and greedy
