@@ -180,7 +180,7 @@ independent cases. Before writing chapter 10.1:
       handling. It is what 10.15 and 10.30 build on.)*
 - [x] 10.13 Greedy, and proving it with an exchange argument
 - [x] 10.14 Divide and conquer
-- [ ] 10.15 Meet in the middle
+- [x] 10.15 Meet in the middle
 
 ### Wave D — graphs
 
