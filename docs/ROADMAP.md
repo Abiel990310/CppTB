@@ -173,7 +173,11 @@ independent cases. Before writing chapter 10.1:
 ### Wave C — search and greedy
 
 - [x] 10.11 Recursion and backtracking
-- [ ] 10.12 Subsets, permutations, and pruning
+- [x] 10.12 Bitmasks: enumerating subsets and permutations
+      *(retitled from "Subsets, permutations, and pruning" — 10.11 already covers
+      pruning and the recursive generators, so this chapter is the bitmask
+      representation, the bit intrinsics, submask enumeration, and duplicate
+      handling. It is what 10.15 and 10.30 build on.)*
 - [ ] 10.13 Greedy, and proving it with an exchange argument
 - [ ] 10.14 Divide and conquer
 - [ ] 10.15 Meet in the middle
