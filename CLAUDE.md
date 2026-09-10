@@ -85,10 +85,10 @@ for both books to be maintained slowly from there: plan in the morning, then do
 one item. This book is **no longer paused**, and is no longer written at speed
 either.
 
-- **`trig_017zYznE5wwj44ZGRirzmBRL`** — once a day at 07:00 UTC, resumes the
-  *existing* long-running session so it keeps its context. It drove this book,
-  then JavaTB, and now covers **both**. Do not create a second Routine
-  alongside it.
+- **`trig_017zYznE5wwj44ZGRirzmBRL`** — once a day at 23:00 UTC, which is 07:00
+  in the author's timezone (UTC+8). It resumes the *existing* long-running
+  session so it keeps its context. It drove this book, then JavaTB, and now
+  covers **both**. Do not create a second Routine alongside it.
 - Each run takes **one** item — the top unticked chapter here (10.23 onward),
   or something from the standing-work list below, or an item from JavaTB's
   maintenance queue — finishes it, verifies it, and pushes. One item, not three.
