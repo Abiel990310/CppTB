@@ -80,14 +80,18 @@ exist.
 
 ## Scheduling
 
-**No Routine points at this book.** C++ writing is paused at the author's
-request; the work moved to **JavaTB** (`Abiel990310/JavaTB`), a Java textbook on
-the same engine.
+**Maintenance mode.** JavaTB reached Parts 1–9 complete, and the author asked
+for both books to be maintained slowly from there: plan in the morning, then do
+one item. This book is **no longer paused**, and is no longer written at speed
+either.
 
-- **`trig_017zYznE5wwj44ZGRirzmBRL`** — every three hours, resumes the
-  *existing* long-running session so it keeps its context. It used to drive this
-  book and is now **retargeted at JavaTB**. Do not point it back here without
-  the author saying so; do not create a second Routine alongside it.
+- **`trig_017zYznE5wwj44ZGRirzmBRL`** — once a day at 07:00 UTC, resumes the
+  *existing* long-running session so it keeps its context. It drove this book,
+  then JavaTB, and now covers **both**. Do not create a second Routine
+  alongside it.
+- Each run takes **one** item — the top unticked chapter here (10.23 onward),
+  or something from the standing-work list below, or an item from JavaTB's
+  maintenance queue — finishes it, verifies it, and pushes. One item, not three.
 - **`trig_01SZHxiCeEjK5AB26FfzDjQH`** — hourly, spawned a fresh session per run.
   Disabled, and should stay that way: a cold start re-reads this file, the
   authoring guide and two neighbouring chapters before writing a line, which
@@ -95,8 +99,8 @@ the same engine.
 
 Consequences worth knowing:
 
-- **No other session is currently writing.** If a Routine is ever pointed back
-  at this book while another is writing, runs will overlap, and then you must
+- **No other session is currently writing.** If a second session is ever
+  started against either book, runs will overlap, and then you must
   `git pull --rebase origin <branch>` immediately before pushing and re-run
   `npm run verify` if the rebase brought anything in. A rejected push means someone got there first; rebase, never
   force.
