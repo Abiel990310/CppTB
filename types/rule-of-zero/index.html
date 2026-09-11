@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The rule of zero, three, and five · The C++ Textbook</title>
+  <meta name="description" content="How many special member functions you actually need to write.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/" class="is-active" aria-current="page"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="rule-of-zero">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/types/">Part 3 · Types you make</a></p>
+      <h1>The rule of zero, three, and five</h1>
+      <p class="chapter-lede">How many special member functions you actually need to write.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Apply the rule of zero to a class that owns nothing</li><li>List the five special member functions and when each is generated</li><li>Explain why declaring a destructor suppresses move operations</li></ul>
+  </section>
+    <p>You now have all the pieces: constructors, destructors, copying, moving. This
+chapter is the short set of rules that tells you which of them to write, and the
+answer is usually <em>none</em>.</p>
+<h2 id="the-five-special-member-functions" tabindex="-1">The five special member functions</h2>
+<p>The compiler can generate five functions for you:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Signature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Destructor</td>
+<td><code>~T()</code></td>
+</tr>
+<tr>
+<td>Copy constructor</td>
+<td><code>T(const T&amp;)</code></td>
+</tr>
+<tr>
+<td>Copy assignment</td>
+<td><code>T&amp; operator=(const T&amp;)</code></td>
+</tr>
+<tr>
+<td>Move constructor</td>
+<td><code>T(T&amp;&amp;)</code></td>
+</tr>
+<tr>
+<td>Move assignment</td>
+<td><code>T&amp; operator=(T&amp;&amp;)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Whether each is generated depends on what else you have declared, and the rules
+are not intuitive. They exist for backward compatibility: code written before
+C++11 had no move operations, and adding them silently to every old class would
+have changed behaviour.</p>
+<h2 id="the-rule-of-zero" tabindex="-1">The rule of zero</h2>
+<p><strong>If your class does not directly own a resource, declare none of the five.</strong></p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">A class with no special members at all</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">memory</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Widget</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> id </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Workspace</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Workspace</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> name</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> name_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">name</span><span style="--sh-light:#999999;--sh-dark:#666666">))</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> id</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> widgets_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">push_back</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Widget{id}</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> set_active</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> id</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> active_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">make_unique</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Widget</span><span style="--sh-light:#999999;--sh-dark:#666666">>(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Widget{id}</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> count</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> widgets_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    const</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> name</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> name_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    bool</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> has_active</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> active_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">!=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string name_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Widget</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> widgets_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">unique_ptr</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Widget</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> active_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Workspace a</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">main</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">2</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">set_active</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Workspace moved </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // move: generated, and correct</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> moved</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">name</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> has </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> moved</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">count</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> widgets, active: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> moved</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">has_active</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Workspace copy = moved;           // would not compile: unique_ptr</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                                         // is not copyable, so neither is this</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+struct Widget {
+    int id = 0;
+};
+
+class Workspace {
+public:
+    Workspace(std::string name) : name_(std::move(name)) {}
+
+    void add(int id) { widgets_.push_back(Widget{id}); }
+    void set_active(int id) { active_ = std::make_unique&lt;Widget&gt;(Widget{id}); }
+
+    std::size_t count() const { return widgets_.size(); }
+    const std::string&amp; name() const { return name_; }
+    bool has_active() const { return active_ != nullptr; }
+
+private:
+    std::string name_;
+    std::vector&lt;Widget&gt; widgets_;
+    std::unique_ptr&lt;Widget&gt; active_;
+};
+
+int main() {
+    Workspace a{&quot;main&quot;};
+    a.add(1);
+    a.add(2);
+    a.set_active(1);
+
+    Workspace moved = std::move(a);      // move: generated, and correct
+    std::cout &lt;&lt; moved.name() &lt;&lt; &quot; has &quot; &lt;&lt; moved.count()
+              &lt;&lt; &quot; widgets, active: &quot; &lt;&lt; moved.has_active() &lt;&lt; '\n';
+
+    // Workspace copy = moved;           // would not compile: unique_ptr
+                                         // is not copyable, so neither is this
+}</template></cpp-runner></figure>
+<p><code>Workspace</code> manages a string, a vector, and a heap object — and declares none of
+the five. Every member already knows how to destroy, copy, and move itself, so
+the generated versions do exactly the right thing. The class is also
+automatically non-copyable, because <code>unique_ptr</code> is, which is very likely what
+you want for a type holding a unique resource.</p>
+<p>This is the target. A class written this way cannot have a double-free bug, a
+leak, a broken self-assignment, or a missing <code>noexcept</code>, because it has no code
+in which to have one.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>When you catch yourself writing a destructor, ask what resource it releases and
+whether a standard type already owns that kind of resource. Memory →
+<code>unique_ptr</code> or <code>vector</code>. A file → <code>fstream</code>. A lock → <code>lock_guard</code>. Something
+exotic → <code>unique_ptr</code> with a custom deleter. If the answer is yes, use it, and
+delete the destructor you were about to write.</p>
+</aside>
+<h2 id="the-rule-of-three-and-then-five" tabindex="-1">The rule of three, and then five</h2>
+<p>Sometimes you <em>are</em> the building block. Then:</p>
+<p><strong>If you write any one of the destructor, copy constructor, or copy assignment,
+you almost certainly need all three.</strong> That is the rule of three, and the reason
+is that all three exist for the same purpose — managing an owned resource — so
+needing one implies the others.</p>
+<p>C++11 added moves, extending it to the <strong>rule of five</strong>: if you write any of the
+five, consider all five.</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">All five, written out once</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstddef</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">utility</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    explicit</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">new</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">{}</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    ~Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> delete[]</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">new</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">]),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">    Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> operator</span><span style="--sh-light:#59873A;--sh-dark:#80A665">=</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">this</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> !=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">            int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> fresh </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> new</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">            for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> fresh</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">            delete[]</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">            data_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> fresh</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">            size_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">        }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">this</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> noexcept</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">    Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> operator</span><span style="--sh-light:#59873A;--sh-dark:#80A665">=</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> noexcept</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">this</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> !=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">            delete[]</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">            data_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">            size_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">            other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data_</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">            other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">size_</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">        }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">this</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> size_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer a</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">               // copy ctor</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer c </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // move ctor</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                      // copy assign</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">c</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">           // move assign</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">b.size() = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, c.size() = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+class Buffer {
+public:
+    explicit Buffer(std::size_t n) : data_(new int[n]{}), size_(n) {}
+
+    ~Buffer() { delete[] data_; }
+
+    Buffer(const Buffer&amp; other) : data_(new int[other.size_]), size_(other.size_) {
+        for (std::size_t i = 0; i &lt; size_; ++i) data_[i] = other.data_[i];
+    }
+
+    Buffer&amp; operator=(const Buffer&amp; other) {
+        if (this != &amp;other) {
+            int* fresh = new int[other.size_];
+            for (std::size_t i = 0; i &lt; other.size_; ++i) fresh[i] = other.data_[i];
+            delete[] data_;
+            data_ = fresh;
+            size_ = other.size_;
+        }
+        return *this;
+    }
+
+    Buffer(Buffer&amp;&amp; other) noexcept : data_(other.data_), size_(other.size_) {
+        other.data_ = nullptr;
+        other.size_ = 0;
+    }
+
+    Buffer&amp; operator=(Buffer&amp;&amp; other) noexcept {
+        if (this != &amp;other) {
+            delete[] data_;
+            data_ = other.data_;
+            size_ = other.size_;
+            other.data_ = nullptr;
+            other.size_ = 0;
+        }
+        return *this;
+    }
+
+    std::size_t size() const { return size_; }
+
+private:
+    int* data_;
+    std::size_t size_;
+};
+
+int main() {
+    Buffer a{4};
+    Buffer b = a;               // copy ctor
+    Buffer c = std::move(a);    // move ctor
+    b = c;                      // copy assign
+    b = std::move(c);           // move assign
+
+    std::cout &lt;&lt; &quot;b.size() = &quot; &lt;&lt; b.size() &lt;&lt; &quot;, c.size() = &quot; &lt;&lt; c.size() &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Sixty lines to manage one pointer. Now compare:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">The same thing, following the rule of zero</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">utility</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    explicit</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer a</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer c </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">c</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">b.size() = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, c.size() = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+class Buffer {
+public:
+    explicit Buffer(std::size_t n) : data_(n) {}
+
+    std::size_t size() const { return data_.size(); }
+
+private:
+    std::vector&lt;int&gt; data_;
+};
+
+int main() {
+    Buffer a{4};
+    Buffer b = a;
+    Buffer c = std::move(a);
+    b = c;
+    b = std::move(c);
+
+    std::cout &lt;&lt; &quot;b.size() = &quot; &lt;&lt; b.size() &lt;&lt; &quot;, c.size() = &quot; &lt;&lt; c.size() &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Identical behaviour, all five operations correct, and nothing to review. Unless
+you are implementing <code>std::vector</code>, the second version is the one to write.</p>
+<h2 id="the-trap-a-destructor-suppresses-moves" tabindex="-1">The trap: a destructor suppresses moves</h2>
+<p>This is the rule that costs real programs real performance, silently.</p>
+<p>Declaring a destructor <strong>prevents the compiler from generating the move
+constructor and move assignment operator.</strong> Copy operations are still generated
+(deprecated, but generated), so the class still compiles and still works — it
+just copies everywhere you expected a move.</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">One empty destructor, and the moves are gone</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">utility</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Fine</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    explicit</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> Fine</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Spoiled</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    explicit</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> Spoiled</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    ~Spoiled</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {}</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                       // does nothing at all</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Fine a</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Fine b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Fine:    source left with </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> elements (moved)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Spoiled c</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Spoiled d </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">c</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Spoiled: source left with </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> elements (copied!)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+struct Fine {
+    std::vector&lt;int&gt; data;
+    explicit Fine(std::size_t n) : data(n) {}
+};
+
+struct Spoiled {
+    std::vector&lt;int&gt; data;
+    explicit Spoiled(std::size_t n) : data(n) {}
+    ~Spoiled() {}                       // does nothing at all
+};
+
+int main() {
+    Fine a{5};
+    Fine b = std::move(a);
+    std::cout &lt;&lt; &quot;Fine:    source left with &quot; &lt;&lt; a.data.size()
+              &lt;&lt; &quot; elements (moved)\n&quot;;
+
+    Spoiled c{5};
+    Spoiled d = std::move(c);
+    std::cout &lt;&lt; &quot;Spoiled: source left with &quot; &lt;&lt; c.data.size()
+              &lt;&lt; &quot; elements (copied!)\n&quot;;
+}</template></cpp-runner></figure>
+<p><code>Spoiled</code>’s destructor does nothing. Its presence alone means <code>std::move</code> on a
+<code>Spoiled</code> performs a copy — the source still has its five elements, because
+nothing was taken from it. For a vector of five ints that is invisible; for a
+class holding a large buffer, in a <code>std::vector</code> that reallocates, it is a
+silent order-of-magnitude cost.</p>
+<aside class="callout callout--pitfall"><p class="callout__label">Pitfall</p>
+<p>The most common way this happens in practice is an empty virtual destructor
+added to a base class — <code>virtual ~Base() = default;</code> — which you genuinely need
+for safe polymorphic deletion. It is correct and necessary, and it costs you the
+implicit moves for that type. The fix is to declare them explicitly, as below.</p>
+</aside>
+<h2 id="saying-what-you-mean-with-default-and-delete" tabindex="-1">Saying what you mean with <code>= default</code> and <code>= delete</code></h2>
+<p>You do not have to write a function body to declare one:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">Declaring all five without implementing any</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Resource</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Resource</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> default</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    virtual</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> ~Resource</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> default</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">             // needed for polymorphic deletion</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Because the destructor is declared, these would not be generated.</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Ask for them back explicitly:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Resource</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;&#x26;</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> noexcept</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> default</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">    Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> operator</span><span style="--sh-light:#59873A;--sh-dark:#80A665">=</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;&#x26;</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> noexcept</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> default</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // And be explicit that copying is not wanted:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Resource</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> delete</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">    Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> operator</span><span style="--sh-light:#59873A;--sh-dark:#80A665">=</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Resource</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> delete</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Resource a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Resource b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">move</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // moves, because we asked for it back</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">b has </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, a has </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Resource c = b;              // compile error, and deliberately so</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+class Resource {
+public:
+    Resource() = default;
+    virtual ~Resource() = default;             // needed for polymorphic deletion
+
+    // Because the destructor is declared, these would not be generated.
+    // Ask for them back explicitly:
+    Resource(Resource&amp;&amp;) noexcept = default;
+    Resource&amp; operator=(Resource&amp;&amp;) noexcept = default;
+
+    // And be explicit that copying is not wanted:
+    Resource(const Resource&amp;) = delete;
+    Resource&amp; operator=(const Resource&amp;) = delete;
+
+    std::vector&lt;int&gt; data;
+};
+
+int main() {
+    Resource a;
+    a.data = {1, 2, 3};
+
+    Resource b = std::move(a);      // moves, because we asked for it back
+    std::cout &lt;&lt; &quot;b has &quot; &lt;&lt; b.data.size() &lt;&lt; &quot;, a has &quot; &lt;&lt; a.data.size() &lt;&lt; '\n';
+
+    // Resource c = b;              // compile error, and deliberately so
+}</template></cpp-runner></figure>
+<p><code>= default</code> asks for the compiler’s version, which is both shorter and less
+error-prone than writing it out. <code>= delete</code> states that an operation must not
+exist, turning a run-time disaster into a compile error.</p>
+<p>Declaring all five explicitly, even as <code>= default</code> or <code>= delete</code>, is worth doing
+for any class that declares one of them. It makes the intent visible and removes
+the need for the reader to remember the suppression rules.</p>
+<h2 id="the-generation-rules-for-reference" tabindex="-1">The generation rules, for reference</h2>
+<p>You do not need to memorise this table, but you should know it exists:</p>
+<table>
+<thead>
+<tr>
+<th>If you declare…</th>
+<th>Copy ctor</th>
+<th>Copy assign</th>
+<th>Move ctor</th>
+<th>Move assign</th>
+<th>Destructor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nothing</td>
+<td>generated</td>
+<td>generated</td>
+<td>generated</td>
+<td>generated</td>
+<td>generated</td>
+</tr>
+<tr>
+<td>a destructor</td>
+<td>generated¹</td>
+<td>generated¹</td>
+<td><strong>suppressed</strong></td>
+<td><strong>suppressed</strong></td>
+<td>yours</td>
+</tr>
+<tr>
+<td>a copy operation</td>
+<td>generated¹</td>
+<td>generated¹</td>
+<td><strong>suppressed</strong></td>
+<td><strong>suppressed</strong></td>
+<td>generated</td>
+</tr>
+<tr>
+<td>a move operation</td>
+<td><strong>deleted</strong></td>
+<td><strong>deleted</strong></td>
+<td>—</td>
+<td>—</td>
+<td>generated</td>
+</tr>
+</tbody>
+</table>
+<p>¹ Generated, but deprecated: relying on it is a smell.</p>
+<p>The row that matters most is the last: <strong>declaring any move operation deletes
+both copy operations.</strong> That one is usually what you want — a type with a
+hand-written move is usually an owner that should not be silently copied — but
+it can surprise you.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A class has a `std::string`, a `std::vector&lt;int&gt;`, and an empty destructor `~C() {}`. What is the consequence?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;None — an empty destructor does nothing&quot;, &quot;why&quot;: &quot;Its body does nothing, but its *declaration* changes what the compiler generates. That is the trap.&quot; },
+    { &quot;text&quot;: &quot;Move operations are not generated, so the class copies where it would have moved&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Exactly. Copy operations are still generated, so everything compiles and works — just slower, silently. Deleting the destructor, or defaulting the moves explicitly, fixes it.&quot; },
+    { &quot;text&quot;: &quot;Copy operations are deleted, so the class cannot be copied&quot;, &quot;why&quot;: &quot;That is what declaring a *move* operation does. A destructor suppresses moves and leaves copies in place.&quot; },
+    { &quot;text&quot;: &quot;The class leaks, because the destructor does not free the members&quot;, &quot;why&quot;: &quot;Members are destroyed after the destructor body runs regardless of what the body contains. There is no leak.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;When should you write all five special member functions by hand?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;For every class, to be explicit&quot;, &quot;why&quot;: &quot;For a class whose members already manage themselves, five hand-written functions are five places for a bug that the generated versions cannot have.&quot; },
+    { &quot;text&quot;: &quot;Only when the class directly owns a raw resource that no member type manages&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;The rule of zero. Hand-written resource management belongs in the small number of types that *are* the building blocks — and most of those already exist in the standard library.&quot; },
+    { &quot;text&quot;: &quot;Whenever the class has a pointer member&quot;, &quot;why&quot;: &quot;Only if the class *owns* what the pointer refers to. A non-owning observer pointer needs none of the five — copying the address is exactly right.&quot; },
+    { &quot;text&quot;: &quot;Whenever the class is used in a std::vector&quot;, &quot;why&quot;: &quot;vector requires only that the type be destructible and either movable or copyable, which the generated versions provide.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="rule-of-zero-refactor"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/types/moving/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Moving</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/types/operator-overloading/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Operator overloading</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#the-five-special-member-functions">The five special member functions</a></li><li class="rail__item rail__item--h2"><a href="#the-rule-of-zero">The rule of zero</a></li><li class="rail__item rail__item--h2"><a href="#the-rule-of-three-and-then-five">The rule of three, and then five</a></li><li class="rail__item rail__item--h2"><a href="#the-trap-a-destructor-suppresses-moves">The trap: a destructor suppresses moves</a></li><li class="rail__item rail__item--h2"><a href="#saying-what-you-mean-with-default-and-delete">Saying what you mean with = default and = delete</a></li><li class="rail__item rail__item--h2"><a href="#the-generation-rules-for-reference">The generation rules, for reference</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>7 min</p>
+        <p><span>Problems</span>1</p>
+      </div>
+      <button class="rail__done" data-chapter="rule-of-zero" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

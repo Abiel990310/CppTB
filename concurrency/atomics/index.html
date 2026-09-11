@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atomics and the memory model · The C++ Textbook</title>
+  <meta name="description" content="The guarantees the hardware and the standard actually give you.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/" class="is-active" aria-current="page"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="atomics">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/concurrency/">Part 8 · Concurrency</a></p>
+      <h1>Atomics and the memory model</h1>
+      <p class="chapter-lede">The guarantees the hardware and the standard actually give you.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Use an atomic counter correctly</li><li>Explain sequential consistency versus acquire-release</li><li>Recognise when lock-free code is the wrong answer</li></ul>
+  </section>
+    <p>The previous chapter fixed a racing counter with a mutex, and noted that
+locking four hundred thousand times to protect one addition is the wrong shape.
+<code>std::atomic</code> is the right shape: an operation the hardware performs
+indivisibly, with no lock and no waiting.</p>
+<p>It is also the point where “just be careful” stops working. Atomics come with a
+memory model — a set of rules about what one thread is guaranteed to see of
+another’s writes — and getting it wrong produces code that is correct on your
+machine and broken on a phone.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Three ways to count to eight hundred thousand</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">chrono</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">mutex</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">thread</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">constexpr</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> threads </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">constexpr</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> per_thread </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 200</span><span style="--sh-light:#999999;--sh-dark:#666666">'</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">000</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">mutex mutex</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> guarded </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> sequential</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">template</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Body</span><span style="--sh-light:#999999;--sh-dark:#666666">></span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">double</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> time_threads</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Body</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> body</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    auto</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> start </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">chrono</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">steady_clock</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">now</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">jthread</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> workers</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> threads</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> workers</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">emplace_back</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">body</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    auto</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> end </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">chrono</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">steady_clock</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">now</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">chrono</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">duration</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">double</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">milli</span><span style="--sh-light:#999999;--sh-dark:#666666">>(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">end </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">-</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> start</span><span style="--sh-light:#999999;--sh-dark:#666666">).</span><span style="--sh-light:#59873A;--sh-dark:#80A665">count</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    double</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_mutex </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> time_threads</span><span style="--sh-light:#999999;--sh-dark:#666666">([]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> per_thread</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">k</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">scoped_lock </span><span style="--sh-light:#59873A;--sh-dark:#80A665">lock</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">mutex</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">guarded</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    });</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    double</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_seq_cst </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> time_threads</span><span style="--sh-light:#999999;--sh-dark:#666666">([]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> per_thread</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">k</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">sequential</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    });</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    double</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_relaxed </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> time_threads</span><span style="--sh-light:#999999;--sh-dark:#666666">([]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> k </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> per_thread</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">k</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">fetch_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">mutex          </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%7.1f</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ms  ->  </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%lld\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_mutex</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> guarded</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic seq_cst </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%7.1f</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ms  ->  </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%lld\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> sequential</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic relaxed </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%7.1f</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ms  ->  </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%lld\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> with_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">expected                     </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> threads </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> per_thread</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;chrono&gt;
+#include &lt;cstdio&gt;
+#include &lt;mutex&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+constexpr int threads = 4;
+constexpr int per_thread = 200'000;
+
+std::mutex mutex;
+long long guarded = 0;
+std::atomic&lt;long long&gt; sequential{0};
+std::atomic&lt;long long&gt; relaxed{0};
+
+template &lt;class Body&gt;
+double time_threads(Body body) {
+    auto start = std::chrono::steady_clock::now();
+    {
+        std::vector&lt;std::jthread&gt; workers;
+        for (int i = 0; i &lt; threads; ++i) workers.emplace_back(body);
+    }
+    auto end = std::chrono::steady_clock::now();
+    return std::chrono::duration&lt;double, std::milli&gt;(end - start).count();
+}
+
+int main() {
+    double with_mutex = time_threads([] {
+        for (int k = 0; k &lt; per_thread; ++k) { std::scoped_lock lock(mutex); ++guarded; }
+    });
+    double with_seq_cst = time_threads([] {
+        for (int k = 0; k &lt; per_thread; ++k) ++sequential;
+    });
+    double with_relaxed = time_threads([] {
+        for (int k = 0; k &lt; per_thread; ++k) relaxed.fetch_add(1, std::memory_order_relaxed);
+    });
+
+    std::printf(&quot;mutex          %7.1f ms  -&gt;  %lld\n&quot;, with_mutex, guarded);
+    std::printf(&quot;atomic seq_cst %7.1f ms  -&gt;  %lld\n&quot;, with_seq_cst, sequential.load());
+    std::printf(&quot;atomic relaxed %7.1f ms  -&gt;  %lld\n&quot;, with_relaxed, relaxed.load());
+    std::printf(&quot;expected                     %d\n&quot;, threads * per_thread);
+}</template></cpp-runner></figure>
+<p>All three give 800,000. On this machine the mutex takes around 90 ms and both
+atomic versions around 20 ms — about five times faster — and <code>relaxed</code> is barely
+distinguishable from <code>seq_cst</code>. The last part is not an accident, and the rest
+of this chapter explains it.</p>
+<h2 id="what-stdatomic-guarantees" tabindex="-1">What <code>std::atomic</code> guarantees</h2>
+<p><code>std::atomic&lt;T&gt;</code> makes every operation on the value <strong>indivisible</strong>: no other
+thread can observe it half-done, and two concurrent modifications cannot lose
+one another. Accessing an atomic from several threads is not a data race, so it
+is not undefined behaviour — which is the whole point.</p>
+<p>The operations worth knowing:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>load()</code>, <code>store(v)</code></td>
+<td>read, write</td>
+</tr>
+<tr>
+<td><code>exchange(v)</code></td>
+<td>store and return the previous value</td>
+</tr>
+<tr>
+<td><code>fetch_add(n)</code>, <code>fetch_sub(n)</code></td>
+<td>add or subtract, returning the <strong>previous</strong> value</td>
+</tr>
+<tr>
+<td><code>compare_exchange_weak(expected, desired)</code></td>
+<td>if the value is <code>expected</code>, replace it; otherwise write the actual value into <code>expected</code>. Returns whether it succeeded</td>
+</tr>
+<tr>
+<td><code>++</code>, <code>--</code>, <code>+=</code></td>
+<td>shorthand for the <code>fetch_</code> forms</td>
+</tr>
+</tbody>
+</table>
+<p><code>fetch_add</code> returning the old value is what makes it useful for handing out
+tickets: every caller gets a distinct number, with no lock.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">fetch_add hands out unique numbers</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">thread</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> next_id</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> ids</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">8</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">jthread</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> workers</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 8</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">            workers</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">emplace_back</span><span style="--sh-light:#999999;--sh-dark:#666666">([</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">ids</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> i</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> ids</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> next_id</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">fetch_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> });</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;bool></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> seen</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">8</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> false</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> id </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> ids</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> seen</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">static_cast&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t></span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">id</span><span style="--sh-light:#999999;--sh-dark:#666666">)]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> true</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> distinct </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">bool</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> s </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> seen</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> distinct </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> s </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">?</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> :</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">handed out </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ids, </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> distinct, next is </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                static_cast&#x3C;int></span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">ids</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()),</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> distinct</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> next_id</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;cstdio&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+std::atomic&lt;int&gt; next_id{0};
+
+int main() {
+    std::vector&lt;int&gt; ids(8);
+    {
+        std::vector&lt;std::jthread&gt; workers;
+        for (int i = 0; i &lt; 8; ++i)
+            workers.emplace_back([&amp;ids, i] { ids[i] = next_id.fetch_add(1); });
+    }
+
+    std::vector&lt;bool&gt; seen(8, false);
+    for (int id : ids) seen[static_cast&lt;std::size_t&gt;(id)] = true;
+
+    int distinct = 0;
+    for (bool s : seen) distinct += s ? 1 : 0;
+    std::printf(&quot;handed out %d ids, %d distinct, next is %d\n&quot;,
+                static_cast&lt;int&gt;(ids.size()), distinct, next_id.load());
+}</template></cpp-runner></figure>
+<p>Eight threads, eight distinct ids, every time.</p>
+<h2 id="lock-free-is-a-property-you-must-check" tabindex="-1">“Lock-free” is a property you must check</h2>
+<p><code>std::atomic&lt;T&gt;</code> works for any trivially copyable <code>T</code>. When the hardware has no
+instruction for that size, the library falls back to a hidden lock — so the type
+still behaves atomically, and the performance argument evaporates.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Which atomics are actually lock-free</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Pair</span><span style="--sh-light:#999999;--sh-dark:#666666">  {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> };</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                 // 8 bytes</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Wide</span><span style="--sh-light:#999999;--sh-dark:#666666">  {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> d</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> e</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> f</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> };</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">         // 24 bytes</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic&#x3C;int>      lock-free: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   size </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%zu\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                int</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_always_lock_free</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic&#x3C;double>   lock-free: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   size </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%zu\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                int</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">double</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_always_lock_free</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;double></span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic&#x3C;int*>     lock-free: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   size </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%zu\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                int</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_always_lock_free</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int*></span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic&#x3C;Pair>     lock-free: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   size </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%zu\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                int</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Pair</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_always_lock_free</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Pair</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic&#x3C;Wide>     lock-free: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   size </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%zu\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">                int</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">Wide</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_always_lock_free</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Wide</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;cstdio&gt;
+
+struct Pair  { int a; int b; };                 // 8 bytes
+struct Wide  { int a, b, c, d, e, f; };         // 24 bytes
+
+int main() {
+    std::printf(&quot;atomic&lt;int&gt;      lock-free: %d   size %zu\n&quot;,
+                int(std::atomic&lt;int&gt;::is_always_lock_free), sizeof(std::atomic&lt;int&gt;));
+    std::printf(&quot;atomic&lt;double&gt;   lock-free: %d   size %zu\n&quot;,
+                int(std::atomic&lt;double&gt;::is_always_lock_free), sizeof(std::atomic&lt;double&gt;));
+    std::printf(&quot;atomic&lt;int*&gt;     lock-free: %d   size %zu\n&quot;,
+                int(std::atomic&lt;int*&gt;::is_always_lock_free), sizeof(std::atomic&lt;int*&gt;));
+    std::printf(&quot;atomic&lt;Pair&gt;     lock-free: %d   size %zu\n&quot;,
+                int(std::atomic&lt;Pair&gt;::is_always_lock_free), sizeof(std::atomic&lt;Pair&gt;));
+    std::printf(&quot;atomic&lt;Wide&gt;     lock-free: %d   size %zu\n&quot;,
+                int(std::atomic&lt;Wide&gt;::is_always_lock_free), sizeof(std::atomic&lt;Wide&gt;));
+}</template></cpp-runner></figure>
+<p>Everything up to the machine’s word size is lock-free; the 24-byte struct is
+not. <code>is_always_lock_free</code> is a <code>constexpr bool</code>, so you can <code>static_assert</code> on
+it — and you should, in any code whose design depends on the answer.</p>
+<h2 id="the-memory-model" tabindex="-1">The memory model</h2>
+<p>Here is the part that is genuinely hard, stated as plainly as it can be.</p>
+<p>Both your compiler and your CPU <strong>reorder memory operations</strong>. The compiler does
+it to keep the pipeline full; the CPU does it because a store may sit in a
+buffer for a while before other cores see it. Within one thread, none of this is
+observable — the reordering is required to preserve what the thread itself sees.
+Across threads, it is very observable.</p>
+<p>So: <code>std::atomic</code> guarantees each <em>individual</em> operation is indivisible. The
+<strong>memory order</strong> argument is a separate question — what other, ordinary memory
+accesses are guaranteed to be visible around it.</p>
+<p>Three orderings matter in practice.</p>
+<p><strong><code>memory_order_seq_cst</code></strong> — the default, and what you get if you write nothing.
+Every <code>seq_cst</code> operation in the whole program appears to happen in one single
+total order that every thread agrees on. This is the model your intuition
+already has, and it is the one to use until you have a measured reason not to.</p>
+<p><strong><code>memory_order_acquire</code> / <code>memory_order_release</code></strong> — a one-way pairing. A
+<em>release</em> store publishes everything the thread wrote before it; an <em>acquire</em>
+load on the same variable, if it reads that value, sees all of it. Nothing is
+promised about threads not participating in that handshake.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Publishing data with release, reading it with acquire</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">thread</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string payload</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                 // ordinary, non-atomic data</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;bool></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> ready</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">false</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">jthread </span><span style="--sh-light:#59873A;--sh-dark:#80A665">producer</span><span style="--sh-light:#999999;--sh-dark:#666666">([]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        payload </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">the answer is 42</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">              // (1) ordinary write</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        ready</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">store</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">true</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_release</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">  // (2) publishes (1)</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">jthread </span><span style="--sh-light:#59873A;--sh-dark:#80A665">consumer</span><span style="--sh-light:#999999;--sh-dark:#666666">([]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        while</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">!</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">ready</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_acquire</span><span style="--sh-light:#999999;--sh-dark:#666666">))</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // (3) waits for (2)</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">            std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">this_thread</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">yield</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">        }</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">consumer read: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%s\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> payload</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">c_str</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // (4) sees (1)</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    });</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;cstdio&gt;
+#include &lt;string&gt;
+#include &lt;thread&gt;
+
+std::string payload;                 // ordinary, non-atomic data
+std::atomic&lt;bool&gt; ready{false};
+
+int main() {
+    std::jthread producer([] {
+        payload = &quot;the answer is 42&quot;;              // (1) ordinary write
+        ready.store(true, std::memory_order_release);  // (2) publishes (1)
+    });
+
+    std::jthread consumer([] {
+        while (!ready.load(std::memory_order_acquire)) {   // (3) waits for (2)
+            std::this_thread::yield();
+        }
+        std::printf(&quot;consumer read: %s\n&quot;, payload.c_str());   // (4) sees (1)
+    });
+}</template></cpp-runner></figure>
+<p>The consumer reads a plain <code>std::string</code> with no lock and no atomic, and it is
+not a data race — because the release store and the acquire load establish
+<em>happens-before</em> between (1) and (4). Take the orderings off, make <code>ready</code> a
+plain <code>bool</code>, and it is undefined behaviour with a plausible-looking output.</p>
+<p><strong><code>memory_order_relaxed</code></strong> — indivisible, and nothing else. Other threads will
+see the value eventually, in some order, with no guarantee about anything else
+the thread wrote. It is correct for a statistics counter that nobody uses to
+decide anything, and for very little else.</p>
+<h2 id="what-the-orderings-cost-on-this-machine" tabindex="-1">What the orderings cost, on this machine</h2>
+<p>x86-64 has a strong memory model, and you can see exactly what each ordering
+costs by looking at the generated code.</p>
+<figure class="widget"><cpp-runner data-run="1" data-asm="1"><figcaption class="code__title">One instruction of difference</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> store_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">store</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">v</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> store_release</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">store</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">v</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_release</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665">  load_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666">       {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665">  load_acquire</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666">       {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_acquire</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665">  add_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666">        {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">fetch_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665">  add_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666">        {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> flag</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">fetch_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    store_release</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> %d</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> %d</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> %d\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> load_acquire</span><span style="--sh-light:#999999;--sh-dark:#666666">(),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> load_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">(),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add_seq_cst</span><span style="--sh-light:#999999;--sh-dark:#666666">(),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;cstdio&gt;
+
+std::atomic&lt;int&gt; flag{0};
+
+void store_seq_cst(int v) { flag.store(v, std::memory_order_seq_cst); }
+void store_release(int v) { flag.store(v, std::memory_order_release); }
+int  load_seq_cst()       { return flag.load(std::memory_order_seq_cst); }
+int  load_acquire()       { return flag.load(std::memory_order_acquire); }
+int  add_seq_cst()        { return flag.fetch_add(1); }
+int  add_relaxed()        { return flag.fetch_add(1, std::memory_order_relaxed); }
+
+int main() {
+    store_release(1);
+    std::printf(&quot;%d %d %d %d\n&quot;, load_acquire(), load_seq_cst(), add_seq_cst(), add_relaxed());
+}</template></cpp-runner></figure>
+<p>At <code>-O2</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>store_seq_cst</code></td>
+<td><code>xchgl flag(%rip), %edi</code> — a locked read-modify-write</td>
+</tr>
+<tr>
+<td><code>store_release</code></td>
+<td><code>movl %edi, flag(%rip)</code> — an ordinary store</td>
+</tr>
+<tr>
+<td><code>load_seq_cst</code></td>
+<td><code>movl flag(%rip), %eax</code></td>
+</tr>
+<tr>
+<td><code>load_acquire</code></td>
+<td><code>movl flag(%rip), %eax</code> — identical</td>
+</tr>
+<tr>
+<td><code>add_seq_cst</code></td>
+<td><code>lock xaddl %eax, flag(%rip)</code></td>
+</tr>
+<tr>
+<td><code>add_relaxed</code></td>
+<td><code>lock xaddl %eax, flag(%rip)</code> — identical</td>
+</tr>
+</tbody>
+</table>
+<p>On x86-64, loads are already acquire and stores are already release, for free.
+The <strong>only</strong> thing sequential consistency costs is on stores, where it needs a
+locked instruction rather than a plain one. And a read-modify-write is a locked
+instruction whatever ordering you ask for — which is why <code>relaxed</code> bought
+essentially nothing in the counter benchmark at the top of the chapter.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>Do not generalise from that table. On ARM, POWER, and RISC-V the orderings
+compile to genuinely different instructions with genuinely different costs, and
+a program that is accidentally correct because x86 does not reorder loads will
+fail on a phone. Reason about your code against <strong>the standard’s model</strong>, not
+against the machine in front of you. The assembly here is worth looking at to
+understand what the orderings mean, not to decide which one is safe.</p>
+</aside>
+<h2 id="building-something-out-of-compare-exchange" tabindex="-1">Building something out of compare-exchange</h2>
+<p>Some operations have no single instruction. An atomic maximum, for instance:
+read, compare, and store only if bigger — three steps that must not be
+interrupted.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">An atomic maximum, by retrying</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">atomic</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">thread</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> record_max</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">atomic</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#999999;--sh-dark:#666666">></span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> highest</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> candidate</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> current </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> highest</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">memory_order_relaxed</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // If nobody changed it, store; if somebody did, `current` is updated</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // to their value and we go round again.</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    while</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">candidate </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> current </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;&#x26;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">           !</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">highest</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">compare_exchange_weak</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">current</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> candidate</span><span style="--sh-light:#999999;--sh-dark:#666666">))</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">atomic</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> highest</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">jthread</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> workers</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> t </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> t </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">t</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">            workers</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">emplace_back</span><span style="--sh-light:#999999;--sh-dark:#666666">([</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">highest</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> t</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">                for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1000</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> record_max</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">highest</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">t </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">            });</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">highest recorded: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> (expected 4000)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> highest</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">load</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;atomic&gt;
+#include &lt;cstdio&gt;
+#include &lt;thread&gt;
+#include &lt;vector&gt;
+
+void record_max(std::atomic&lt;int&gt;&amp; highest, int candidate) {
+    int current = highest.load(std::memory_order_relaxed);
+    // If nobody changed it, store; if somebody did, `current` is updated
+    // to their value and we go round again.
+    while (candidate &gt; current &amp;&amp;
+           !highest.compare_exchange_weak(current, candidate)) {
+    }
+}
+
+int main() {
+    std::atomic&lt;int&gt; highest{0};
+    {
+        std::vector&lt;std::jthread&gt; workers;
+        for (int t = 0; t &lt; 4; ++t)
+            workers.emplace_back([&amp;highest, t] {
+                for (int i = 1; i &lt;= 1000; ++i) record_max(highest, i * (t + 1));
+            });
+    }
+    std::printf(&quot;highest recorded: %d (expected 4000)\n&quot;, highest.load());
+}</template></cpp-runner></figure>
+<p>This is the <strong>compare-and-swap loop</strong>, and it is the foundation of every
+lock-free algorithm. Read the current value, compute the new one, and swap it in
+only if nothing changed underneath you; if something did, you are handed the new
+current value and you try again.</p>
+<p>Two details of <code>compare_exchange_weak</code>. Its first argument is an <strong>in-out
+parameter</strong> — on failure it is overwritten with the actual value, which is what
+makes the loop work without a second load. And it is allowed to fail
+<em>spuriously</em>, returning false even when the values matched, which is free on
+some architectures and is fine because it is always used in a loop.
+<code>compare_exchange_strong</code> never fails spuriously, costs more on those
+architectures, and is for when you are not looping.</p>
+<h2 id="when-lock-free-is-the-wrong-answer" tabindex="-1">When lock-free is the wrong answer</h2>
+<p>Almost always, is the honest answer.</p>
+<p><strong>A mutex is not slow.</strong> An uncontended <code>std::mutex</code> lock is an atomic operation
+and nothing else — no system call, no context switch. The cost appears only
+under contention, and under contention a lock-free algorithm is usually <em>also</em>
+slow, because its CAS loop keeps failing and retrying. Chapter 8.2’s mutexed
+counter was three times slower than the racy version and about five times slower
+than the atomic; those ratios only matter when the critical section is one
+instruction.</p>
+<p><strong>Lock-free does not mean wait-free.</strong> A CAS loop can retry indefinitely under
+heavy contention. The guarantee is that <em>some</em> thread makes progress, not that
+yours does.</p>
+<p><strong>The hard part is not the atomics.</strong> Consider popping from a lock-free stack:
+read <code>head</code>, read <code>head-&gt;next</code>, CAS <code>head</code> to <code>next</code>. Between the two reads,
+another thread can pop A and B and push A back. Your CAS now succeeds — <code>head</code>
+is A again, exactly as expected — and sets <code>head</code> to a node that has been freed.
+This is the <strong>ABA problem</strong>, and defending against it needs tagged pointers,
+hazard pointers, or epoch reclamation. None of it is checkable by a test suite,
+because the failure is a specific interleaving in a specific order.</p>
+<p><strong>Memory reclamation is unsolved in the standard library.</strong> When can you delete
+a node no thread has a pointer to? There is no portable answer in C++20, which
+is why there is no <code>std::lock_free_queue</code>.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>The order to try things in: <strong>one thread</strong>, then a <strong>mutex</strong>, then a
+<strong>standard-library concurrency tool</strong> (<code>std::atomic</code> counters and flags,
+<code>std::async</code>, a queue with a mutex and a condition variable), and only then
+a hand-written lock-free structure — with a benchmark proving it was necessary
+and, ideally, someone else’s reviewed implementation. Almost nobody gets past
+step two, and that is the correct outcome.</p>
+</aside>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;You change a shared counter from `fetch_add(1)` to `fetch_add(1, std::memory_order_relaxed)` and see no speed-up on x86-64. Why?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;A read-modify-write compiles to a `lock`-prefixed instruction whatever ordering you request — on x86 the ordering only changes what stores cost&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;`lock xaddl` is the same instruction for both. The one place seq_cst costs extra on x86 is a plain store, which becomes an `xchg`.&quot; },
+    { &quot;text&quot;: &quot;The compiler ignores relaxed ordering&quot;, &quot;why&quot;: &quot;It does not — it changes what reordering is permitted around the operation, which can matter a great deal on other architectures.&quot; },
+    { &quot;text&quot;: &quot;Relaxed ordering is only faster with more than four threads&quot;, &quot;why&quot;: &quot;The instruction is identical regardless of thread count.&quot; },
+    { &quot;text&quot;: &quot;`std::atomic&lt;long long&gt;` is not lock-free&quot;, &quot;why&quot;: &quot;It is on any 64-bit platform, and `is_always_lock_free` confirms it.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A thread writes a `std::string`, then does `ready.store(true, std::memory_order_release)`. Another spins on `ready.load(std::memory_order_acquire)` and then reads the string. Is that a data race?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;No — the release store and the acquire load establish happens-before, so the ordinary write is visible to the ordinary read&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;This is exactly what acquire-release is for: publishing non-atomic data through one atomic handshake. Everything written before the release is visible after a matching acquire.&quot; },
+    { &quot;text&quot;: &quot;Yes, because `std::string` is not atomic&quot;, &quot;why&quot;: &quot;It does not need to be. The ordering on the flag creates the happens-before relationship that removes the race.&quot; },
+    { &quot;text&quot;: &quot;No, but only because x86 does not reorder stores&quot;, &quot;why&quot;: &quot;It is guaranteed by the standard's model on every platform, not by the hardware being forgiving.&quot; },
+    { &quot;text&quot;: &quot;Yes, unless the string is also `const`&quot;, &quot;why&quot;: &quot;Constness has nothing to do with the memory model; one thread does write it.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="atomic-statistics"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/concurrency/races-and-mutexes/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Data races and mutexes</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/concurrency/futures-and-tasks/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Futures, promises, and tasks</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#what-stdatomic-guarantees">What std::atomic guarantees</a></li><li class="rail__item rail__item--h2"><a href="#lock-free-is-a-property-you-must-check">“Lock-free” is a property you must check</a></li><li class="rail__item rail__item--h2"><a href="#the-memory-model">The memory model</a></li><li class="rail__item rail__item--h2"><a href="#what-the-orderings-cost-on-this-machine">What the orderings cost, on this machine</a></li><li class="rail__item rail__item--h2"><a href="#building-something-out-of-compare-exchange">Building something out of compare-exchange</a></li><li class="rail__item rail__item--h2"><a href="#when-lock-free-is-the-wrong-answer">When lock-free is the wrong answer</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>11 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="atomics" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pointers · The C++ Textbook</title>
+  <meta name="description" content="An address in a variable, and every consequence that follows.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/" class="is-active" aria-current="page"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="pointers">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/memory/">Part 2 · Memory and objects</a></p>
+      <h1>Pointers</h1>
+      <p class="chapter-lede">An address in a variable, and every consequence that follows.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Read and write pointer declarations without hesitating</li><li>Explain what dereferencing a null or dangling pointer does</li><li>Use pointer arithmetic correctly within an array</li></ul>
+  </section>
+    <p>A pointer is a variable whose value is an address. That is the entire idea.
+Everything difficult about pointers comes from what you are allowed to do with
+an address, and from the fact that the language will not stop you doing the rest.</p>
+<p>The previous chapter showed that every object has an address. A pointer is how
+you keep one.</p>
+<h2 id="two-operators" tabindex="-1">Two operators</h2>
+<p><code>&amp;x</code> yields the address of the object <code>x</code>. <code>*p</code> yields the object that <code>p</code>
+points at — <em>dereferencing</em>. They are inverses: <code>*&amp;x</code> is <code>x</code>.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Taking an address, and following it</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">  value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 42</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p     </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">value</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // p holds the address of value</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">value    = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value  </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">p        = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p      </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   (an address)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">*p       = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p     </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   (what lives there)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 99</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">               // write through the pointer</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">value is now </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int  value = 42;
+    int* p     = &amp;value;   // p holds the address of value
+
+    std::cout &lt;&lt; &quot;value    = &quot; &lt;&lt; value  &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;p        = &quot; &lt;&lt; p      &lt;&lt; &quot;   (an address)\n&quot;;
+    std::cout &lt;&lt; &quot;*p       = &quot; &lt;&lt; *p     &lt;&lt; &quot;   (what lives there)\n&quot;;
+
+    *p = 99;               // write through the pointer
+
+    std::cout &lt;&lt; &quot;value is now &quot; &lt;&lt; value &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Writing through <code>p</code> changed <code>value</code>, because <code>p</code> did not hold a copy of 42 — it
+held directions to the object that holds 42.</p>
+<figure class="widget"><cpp-memviz><template data-role="spec">{
+  &quot;title&quot;: &quot;A pointer holds directions, not a copy&quot;,
+  &quot;code&quot;: &quot;int  value = 42;\nint* p     = &amp;value;\n\n*p = 99;&quot;,
+  &quot;steps&quot;: [
+    {
+      &quot;caption&quot;: &quot;`value` is an ordinary int, four bytes of stack storage holding 42.&quot;,
+      &quot;line&quot;: 1,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;value&quot;, &quot;name&quot;: &quot;value&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;42&quot; }
+      ]
+    },
+    {
+      &quot;caption&quot;: &quot;`p` is its own object — eight bytes on a 64-bit machine — and what it stores is where `value` lives.&quot;,
+      &quot;line&quot;: 2,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;value&quot;, &quot;name&quot;: &quot;value&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;42&quot; },
+        { &quot;id&quot;: &quot;p&quot;, &quot;name&quot;: &quot;p&quot;, &quot;type&quot;: &quot;int*&quot;, &quot;state&quot;: &quot;new&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;value&quot;, &quot;anchor&quot;: &quot;p.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;p.ptr&quot;, &quot;to&quot;: &quot;value&quot; }]
+    },
+    {
+      &quot;caption&quot;: &quot;`*p = 99` follows the arrow and writes at the far end. `p` itself does not change — it still points at the same object.&quot;,
+      &quot;line&quot;: 4,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;value&quot;, &quot;name&quot;: &quot;value&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;99&quot;, &quot;state&quot;: &quot;new&quot; },
+        { &quot;id&quot;: &quot;p&quot;, &quot;name&quot;: &quot;p&quot;, &quot;type&quot;: &quot;int*&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;value&quot;, &quot;anchor&quot;: &quot;p.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;p.ptr&quot;, &quot;to&quot;: &quot;value&quot;, &quot;label&quot;: &quot;*p&quot; }]
+    }
+  ]
+}</template></cpp-memviz></figure>
+<h2 id="reading-a-declaration" tabindex="-1">Reading a declaration</h2>
+<p><code>int* p</code> declares <code>p</code> as a pointer to <code>int</code>. Read declarations from the name
+outwards: <em><code>p</code> is a pointer to <code>int</code></em>.</p>
+<p>Where the <code>*</code> sits is a matter of style — <code>int* p</code>, <code>int *p</code>, and <code>int * p</code> are
+the same declaration. But this is not:</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">One asterisk, one pointer</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> q</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // p is a pointer to int. q is a plain int!</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    p </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    q </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">*p = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, q = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> q </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">sizeof(p) = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, sizeof(q) = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">q</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int a = 1, b = 2;
+
+    int* p, q;      // p is a pointer to int. q is a plain int!
+    p = &amp;a;
+    q = b;
+
+    std::cout &lt;&lt; &quot;*p = &quot; &lt;&lt; *p &lt;&lt; &quot;, q = &quot; &lt;&lt; q &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;sizeof(p) = &quot; &lt;&lt; sizeof(p) &lt;&lt; &quot;, sizeof(q) = &quot; &lt;&lt; sizeof(q) &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>The <code>*</code> binds to the declarator, not to the type. <code>int* p, q;</code> declares one
+pointer and one <code>int</code> — which is why the convention in this book is one
+declaration per line.</p>
+<h2 id="the-null-pointer" tabindex="-1">The null pointer</h2>
+<p>A pointer that points at nothing should say so:</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">nullptr, and checking for it</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> find_first_even</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> first</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> count</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> count</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">first</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> %</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">first</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">             // nothing found</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> odds[] </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 5</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> mixed[] </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 5</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> found </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> find_first_even</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">mixed</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">))</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">found </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">found </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#59873A;--sh-dark:#80A665">find_first_even</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">odds</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">nothing even in odds</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int* find_first_even(int* first, int count) {
+    for (int i = 0; i &lt; count; ++i) {
+        if (first[i] % 2 == 0) return &amp;first[i];
+    }
+    return nullptr;             // nothing found
+}
+
+int main() {
+    int odds[] = {1, 3, 5};
+    int mixed[] = {1, 4, 5};
+
+    if (int* found = find_first_even(mixed, 3)) {
+        std::cout &lt;&lt; &quot;found &quot; &lt;&lt; *found &lt;&lt; '\n';
+    }
+    if (find_first_even(odds, 3) == nullptr) {
+        std::cout &lt;&lt; &quot;nothing even in odds\n&quot;;
+    }
+}</template></cpp-runner></figure>
+<p><code>nullptr</code> is a distinct null-pointer constant, introduced in C++11. Older code
+uses <code>NULL</code> or plain <code>0</code>, both of which are integers in disguise and cause
+overload-resolution surprises. Use <code>nullptr</code>.</p>
+<p>Dereferencing a null pointer is undefined behaviour. In practice it usually
+segfaults, because address zero is deliberately left unmapped — but “usually
+crashes” is not a guarantee, and the optimizer is entitled to assume it never
+happens:</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-ub="1"><figcaption class="code__title">A crash you can watch</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">about to dereference a null pointer</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">       // undefined behaviour</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">this line is never reached</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int* p = nullptr;
+    std::cout &lt;&lt; &quot;about to dereference a null pointer\n&quot;;
+    std::cout &lt;&lt; *p &lt;&lt; '\n';       // undefined behaviour
+    std::cout &lt;&lt; &quot;this line is never reached\n&quot;;
+}</template></cpp-runner></figure>
+<p>The sanitizer names it precisely rather than leaving you with a bare
+<code>Segmentation fault</code>. That is the whole reason this book compiles its samples
+with sanitizers on.</p>
+<h2 id="dangling-pointers" tabindex="-1">Dangling pointers</h2>
+<p>A null pointer is honest about pointing nowhere. A <strong>dangling</strong> pointer is worse:
+it holds an address that was valid and no longer is. Nothing about the pointer
+changes when the object it points at dies.</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-ub="1"><figcaption class="code__title">Returning the address of a local</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> leak_an_address</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> local </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 7</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">local</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // local dies when this function returns</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> leak_an_address</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">reading through a dangling pointer: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int* leak_an_address() {
+    int local = 7;
+    return &amp;local;          // local dies when this function returns
+}
+
+int main() {
+    int* p = leak_an_address();
+    std::cout &lt;&lt; &quot;reading through a dangling pointer: &quot; &lt;&lt; *p &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Two things saved you there. The compiler warned — <code>-Wreturn-local-addr</code> catches
+this exact shape — and, having warned, GCC went further and made the function
+return <code>nullptr</code> instead of the doomed address. The program crashes immediately
+and loudly rather than reading stale memory.</p>
+<p>That is the <em>easy</em> case. The compiler could see the whole story in one function.
+Now take the same mistake and spread it across two:</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-ub="1"><figcaption class="code__title">The same bug, with no warning</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> escaped </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> stash</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> local </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 7</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    escaped </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">local</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">       // the address outlives `local`</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> unrelated_work</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    volatile</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // reuses the same stack space</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#999999;--sh-dark:#666666">)(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    stash</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    unrelated_work</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">reading through a dangling pointer: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">escaped </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int* escaped = nullptr;
+
+void stash() {
+    int local = 7;
+    escaped = &amp;local;       // the address outlives `local`
+}
+
+void unrelated_work() {
+    volatile int a = 1, b = 2, c = 3;   // reuses the same stack space
+    (void)(a + b + c);
+}
+
+int main() {
+    stash();
+    unrelated_work();
+    std::cout &lt;&lt; &quot;reading through a dangling pointer: &quot; &lt;&lt; *escaped &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>No warning this time. The compiler cannot see, from <code>stash</code> alone, that the
+address escapes into something outliving the function — that would take
+whole-program analysis. Only AddressSanitizer catches it, at run time, naming it
+<code>stack-use-after-return</code> and showing both where the memory was and where it was
+freed.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>This is undefined behaviour of the dangerous kind: without the sanitizer it
+often <em>appears</em> to work. The stack memory that held <code>local</code> still exists and may
+still contain 7, right up until some other call reuses it — which is exactly
+what <code>unrelated_work</code> does here. A program that reads dangling pointers can pass
+every test and fail in production.</p>
+</aside>
+<figure class="widget"><cpp-memviz><template data-role="spec">{
+  &quot;title&quot;: &quot;Why the pointer outlives what it points at&quot;,
+  &quot;code&quot;: &quot;int* escaped = nullptr;\n\nvoid stash() {\n    int local = 7;\n    escaped = &amp;local;\n}\n\nstash();\nunrelated_work();\nstd::cout &lt;&lt; *escaped;&quot;,
+  &quot;steps&quot;: [
+    {
+      &quot;caption&quot;: &quot;Inside `stash`, `local` is a live object in that function's frame, with a real address.&quot;,
+      &quot;line&quot;: 4,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;local&quot;, &quot;name&quot;: &quot;local&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;7&quot;,
+          &quot;note&quot;: &quot;frame of stash()&quot; },
+        { &quot;id&quot;: &quot;escaped&quot;, &quot;name&quot;: &quot;escaped&quot;, &quot;type&quot;: &quot;int*&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;nullptr&quot;, &quot;anchor&quot;: &quot;escaped.ptr&quot; }] }
+      ]
+    },
+    {
+      &quot;caption&quot;: &quot;The address is copied into a global. An address is just a number, so nothing here is illegal yet.&quot;,
+      &quot;line&quot;: 5,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;local&quot;, &quot;name&quot;: &quot;local&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;7&quot; },
+        { &quot;id&quot;: &quot;escaped&quot;, &quot;name&quot;: &quot;escaped&quot;, &quot;type&quot;: &quot;int*&quot;, &quot;state&quot;: &quot;new&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;local&quot;, &quot;anchor&quot;: &quot;escaped.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;escaped.ptr&quot;, &quot;to&quot;: &quot;local&quot; }]
+    },
+    {
+      &quot;caption&quot;: &quot;`stash` returns. Its frame is gone and `local` no longer exists — but nothing updated `escaped`. It still holds the same number.&quot;,
+      &quot;line&quot;: 8,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;local&quot;, &quot;name&quot;: &quot;local&quot;, &quot;type&quot;: &quot;int&quot;, &quot;value&quot;: &quot;?&quot;, &quot;state&quot;: &quot;freed&quot;,
+          &quot;note&quot;: &quot;frame popped; storage now unowned&quot; },
+        { &quot;id&quot;: &quot;escaped&quot;, &quot;name&quot;: &quot;escaped&quot;, &quot;type&quot;: &quot;int*&quot;, &quot;state&quot;: &quot;danger&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;local&quot;, &quot;anchor&quot;: &quot;escaped.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;escaped.ptr&quot;, &quot;to&quot;: &quot;local&quot;, &quot;state&quot;: &quot;dangling&quot; }]
+    },
+    {
+      &quot;caption&quot;: &quot;`unrelated_work` gets the same stack space and writes its own variables over it. The 7 is gone.&quot;,
+      &quot;line&quot;: 9,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;local&quot;, &quot;name&quot;: &quot;a, b, c&quot;, &quot;type&quot;: &quot;volatile int&quot;, &quot;value&quot;: &quot;1, 2, 3&quot;, &quot;state&quot;: &quot;new&quot;,
+          &quot;note&quot;: &quot;same addresses, different objects&quot; },
+        { &quot;id&quot;: &quot;escaped&quot;, &quot;name&quot;: &quot;escaped&quot;, &quot;type&quot;: &quot;int*&quot;, &quot;state&quot;: &quot;danger&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;local&quot;, &quot;anchor&quot;: &quot;escaped.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;escaped.ptr&quot;, &quot;to&quot;: &quot;local&quot;, &quot;state&quot;: &quot;dangling&quot; }]
+    },
+    {
+      &quot;caption&quot;: &quot;`*escaped` reads storage that belongs to something else entirely. Had `unrelated_work` not run, it might still have said 7 — and the bug would have survived your tests.&quot;,
+      &quot;line&quot;: 10,
+      &quot;stack&quot;: [
+        { &quot;id&quot;: &quot;local&quot;, &quot;name&quot;: &quot;a, b, c&quot;, &quot;type&quot;: &quot;volatile int&quot;, &quot;value&quot;: &quot;1, 2, 3&quot; },
+        { &quot;id&quot;: &quot;escaped&quot;, &quot;name&quot;: &quot;escaped&quot;, &quot;type&quot;: &quot;int*&quot;, &quot;state&quot;: &quot;danger&quot;,
+          &quot;fields&quot;: [{ &quot;k&quot;: &quot;holds&quot;, &quot;v&quot;: &quot;&amp;local&quot;, &quot;anchor&quot;: &quot;escaped.ptr&quot; }] }
+      ],
+      &quot;arrows&quot;: [{ &quot;from&quot;: &quot;escaped.ptr&quot;, &quot;to&quot;: &quot;local&quot;, &quot;state&quot;: &quot;dangling&quot;, &quot;label&quot;: &quot;undefined&quot; }]
+    }
+  ]
+}</template></cpp-memviz></figure>
+<p>The rule that prevents both versions: <strong>never let a pointer outlive what it
+points at</strong>. Returning the address of a local is the case a compiler can catch;
+storing one somewhere longer-lived is the case only you can. Chapter 2.4 makes
+“outlive” precise.</p>
+<h2 id="pointer-arithmetic" tabindex="-1">Pointer arithmetic</h2>
+<p>Adding an integer to a pointer moves it by that many <em>elements</em>, not bytes. The
+type is what makes this work.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Walking an array with a pointer</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">10</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 20</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 30</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 40</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 50</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> p </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">             // an array decays to a pointer to its first element</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">*p       = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p       </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">*(p + 2) = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">p[2]     = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> p</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">2</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">     &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">   (identical to the line above)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Walking to the end. `values + 5` is the one-past-the-end pointer:</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // legal to form and compare, but never to dereference.</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> it </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> it </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">!=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> values </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 5</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">it</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">it </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int values[5] = {10, 20, 30, 40, 50};
+
+    int* p = values;             // an array decays to a pointer to its first element
+    std::cout &lt;&lt; &quot;*p       = &quot; &lt;&lt; *p       &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;*(p + 2) = &quot; &lt;&lt; *(p + 2) &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;p[2]     = &quot; &lt;&lt; p[2]     &lt;&lt; &quot;   (identical to the line above)\n&quot;;
+
+    // Walking to the end. `values + 5` is the one-past-the-end pointer:
+    // legal to form and compare, but never to dereference.
+    for (int* it = values; it != values + 5; ++it) {
+        std::cout &lt;&lt; *it &lt;&lt; ' ';
+    }
+    std::cout &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p><code>p[i]</code> is <em>defined</em> as <code>*(p + i)</code>. Subscripting is pointer arithmetic wearing a
+friendlier syntax, which is why it works on pointers as well as arrays, and why
+it does no bounds checking on either.</p>
+<p>The loop above is the shape every standard-library algorithm takes: a pointer to
+the first element and a pointer one past the last. Forming that one-past-the-end
+pointer is explicitly legal; dereferencing it is not.</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-ub="1"><figcaption class="code__title">Reading one element too far</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">10</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 20</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 30</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 40</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 50</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">the last element: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">one past the end: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // out of bounds</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int values[5] = {10, 20, 30, 40, 50};
+    std::cout &lt;&lt; &quot;the last element: &quot; &lt;&lt; values[4] &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;one past the end: &quot; &lt;&lt; values[5] &lt;&lt; '\n';   // out of bounds
+}</template></cpp-runner></figure>
+<p>AddressSanitizer reports the read as <code>stack-buffer-overflow</code> and tells you the
+allocation it belongs to. Without it, this reads whatever is next in memory and
+carries on, which is how buffer overruns become security vulnerabilities.</p>
+<h2 id="const-and-pointers" tabindex="-1">const and pointers</h2>
+<p>Two things can be const — the pointer, or what it points at — and the position
+of <code>const</code> decides which:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">Three kinds of const</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> to_const   </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // cannot write *to_const; can repoint</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> const_ptr  </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // can write *const_ptr; cannot repoint</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int*</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> both </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // neither</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    to_const </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                // fine: the pointer itself is not const</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">const_ptr </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 10</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">              // fine: what it points at is not const</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">a = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, *to_const = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">to_const</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, *both = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">both </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int a = 1, b = 2;
+
+    const int* to_const   = &amp;a;   // cannot write *to_const; can repoint
+    int* const const_ptr  = &amp;a;   // can write *const_ptr; cannot repoint
+    const int* const both = &amp;a;   // neither
+
+    to_const = &amp;b;                // fine: the pointer itself is not const
+    *const_ptr = 10;              // fine: what it points at is not const
+
+    std::cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, *to_const = &quot; &lt;&lt; *to_const
+              &lt;&lt; &quot;, *both = &quot; &lt;&lt; *both &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Read right-to-left from the name: <code>const int* p</code> is “<code>p</code> is a pointer to an
+<code>int</code> that is const”; <code>int* const p</code> is “<code>p</code> is a const pointer to an <code>int</code>”.
+Chapter 2.7 comes back to this; for now, <code>const int*</code> is the one you will write
+almost every time, because it is how a function says <em>I will look at this and
+not change it</em>.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;After `int a = 5; int* p = &amp;a; *p = 7;`, what is `a`?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;5 — `p` holds a copy&quot;, &quot;why&quot;: &quot;A pointer holds an address, not a copy. Writing through it reaches the original object.&quot; },
+    { &quot;text&quot;: &quot;7&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;`*p` names the object `p` points at, which is `a`. Assigning to it assigns to `a`.&quot; },
+    { &quot;text&quot;: &quot;The address of `a`&quot;, &quot;why&quot;: &quot;That is the value of `p`, not of `a`. `*p = 7` writes 7 to the pointed-at object; it does not touch `p`.&quot; },
+    { &quot;text&quot;: &quot;Undefined — you cannot write through a pointer to a local&quot;, &quot;why&quot;: &quot;You certainly can, and it is the normal use of a pointer. It becomes undefined only once the pointed-at object's lifetime has ended.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;`int v[3]; int* p = v;` — which of these is undefined behaviour?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`p + 3`&quot;, &quot;why&quot;: &quot;Forming a one-past-the-end pointer is explicitly allowed, precisely so loops can use it as a stopping point.&quot; },
+    { &quot;text&quot;: &quot;`*(p + 3)`&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Forming the pointer is legal; dereferencing it is not. `v[3]` reads past the array, which AddressSanitizer reports as a buffer overflow.&quot; },
+    { &quot;text&quot;: &quot;`p + 2`&quot;, &quot;why&quot;: &quot;That points at `v[2]`, the last element, which is perfectly valid to form and to dereference.&quot; },
+    { &quot;text&quot;: &quot;Comparing `p != v + 3`&quot;, &quot;why&quot;: &quot;Comparing against the one-past-the-end pointer is exactly what the standard permits it for.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="sum-through-pointer"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/memory/objects-and-storage/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Objects and storage</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/memory/references/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">References</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#two-operators">Two operators</a></li><li class="rail__item rail__item--h2"><a href="#reading-a-declaration">Reading a declaration</a></li><li class="rail__item rail__item--h2"><a href="#the-null-pointer">The null pointer</a></li><li class="rail__item rail__item--h2"><a href="#dangling-pointers">Dangling pointers</a></li><li class="rail__item rail__item--h2"><a href="#pointer-arithmetic">Pointer arithmetic</a></li><li class="rail__item rail__item--h2"><a href="#const-and-pointers">const and pointers</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>9 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="pointers" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

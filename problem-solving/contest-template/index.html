@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The contest template and fast I/O · The C++ Textbook</title>
+  <meta name="description" content="The four lines every solution starts with, what they are worth, and the input shapes you will meet.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/" class="is-active" aria-current="page"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="contest-template">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/problem-solving/">Part 10 · Problem solving</a></p>
+      <h1>The contest template and fast I/O</h1>
+      <p class="chapter-lede">The four lines every solution starts with, what they are worth, and the input shapes you will meet.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Measure what C++ stream I/O costs and know when it matters</li><li>Read every input shape a contest uses, including one with no count</li><li>Write a template that does not get in your way</li></ul>
+  </section>
+    <p>Every solution in this part starts the same way, and it is worth knowing what
+those lines actually buy before you copy them for the next forty chapters.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">bits/stdc++.h</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // everything, on GCC and Clang</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">using</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> namespace</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    ios</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">sync_with_stdio</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">false</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    cin</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">tie</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    …</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p>Two of those four lines are performance, one is convenience, and one is a habit
+this book has spent nine parts arguing against. All four deserve a reason.</p>
+<h2 id="what-sync_with_stdiofalse-is-worth" tabindex="-1">What <code>sync_with_stdio(false)</code> is worth</h2>
+<p>By default, C++ streams are kept synchronised with C’s <code>stdio</code> — every
+<code>cin &gt;&gt;</code> is coordinated with anything that might have used <code>scanf</code>, so that
+mixing them works. Almost nobody mixes them, and the coordination is not free.</p>
+<p>One million integers, read three ways, best of three runs at <code>-O2</code>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cin &gt;&gt;</code>, default settings</td>
+<td>372 ms</td>
+</tr>
+<tr>
+<td><code>cin &gt;&gt;</code> after <code>sync_with_stdio(false)</code> and <code>cin.tie(nullptr)</code></td>
+<td><strong>96 ms</strong></td>
+</tr>
+<tr>
+<td><code>scanf(&quot;%d&quot;)</code></td>
+<td>118 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Nearly four times, for two lines. And note the third row: <strong>unsynchronised
+<code>cin</code> is faster than <code>scanf</code> here.</strong> The folklore that <code>scanf</code> is the fast
+option is out of date — it was true when the streams were slow, and what is
+actually slow is the synchronisation.</p>
+<p><code>cin.tie(nullptr)</code> is the second half. By default <code>cin</code> is <em>tied</em> to <code>cout</code>,
+meaning every read flushes pending output first — which is what makes an
+interactive prompt appear before the program waits. A contest program has
+nobody to prompt, and the flush per read is pure cost.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>Two conditions on <code>sync_with_stdio(false)</code>. After it, <strong>do not mix</strong> <code>cin</code>/<code>cout</code>
+with <code>scanf</code>/<code>printf</code> in the same program — the buffers are now independent and
+the interleaving is unspecified. And it must be called <strong>before any I/O
+happens</strong>, which is why it is the first line of <code>main</code>.</p>
+<p>For an <em>interactive</em> problem — where the judge responds to what you print — you
+must not untie the streams, and you must flush deliberately after each output.
+Those problems say so in the statement.</p>
+</aside>
+<h2 id="n-versus-stdendl" tabindex="-1"><code>'\n'</code> versus <code>std::endl</code></h2>
+<p><code>std::endl</code> writes a newline <strong>and flushes the stream</strong>. Flushing means a system
+call. Doing that once per line of a large output is the other common way to
+exceed a time limit.</p>
+<p>300,000 lines of output:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>To <code>/dev/null</code></th>
+<th>To a file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>std::endl</code></td>
+<td>114 ms</td>
+<td>210 ms</td>
+</tr>
+<tr>
+<td><code>'\n'</code></td>
+<td><strong>18 ms</strong></td>
+<td><strong>20 ms</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Ten times, writing to a file. The stream flushes when it is destroyed at the end
+of <code>main</code>, so nothing is lost by not flushing yourself.</p>
+<p>Use <code>'\n'</code>. Reach for <code>std::endl</code> only when you genuinely need the output to
+appear now — interactive problems, and debugging a program that crashes.</p>
+<h2 id="the-input-shapes" tabindex="-1">The input shapes</h2>
+<p>Four cover almost everything.</p>
+<p><strong>A count, then that many values.</strong> The common case.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">vector</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#999999;--sh-dark:#666666">></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">n</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int&#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span></code></pre></figure>
+<p><strong>Several test cases in one file.</strong> The first number is how many follow.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> tests</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> tests</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">while</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">tests</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">--</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // read and solve one case</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p><strong>Values until the end of input, with no count given.</strong></p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">Reading until there is nothing left</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">ios</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">sync_with_stdio</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">false</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">cin</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">tie</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> total </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> count </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    while</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // false when extraction fails or EOF</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        total </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">        ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">count</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> count </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> values, sum </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> total </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    long long value;
+    long long total = 0;
+    int count = 0;
+
+    while (std::cin &gt;&gt; value) {      // false when extraction fails or EOF
+        total += value;
+        ++count;
+    }
+
+    std::cout &lt;&lt; count &lt;&lt; &quot; values, sum &quot; &lt;&lt; total &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>With no input at all — which is what this page gives it — that prints
+<code>0 values, sum 0</code>, because the loop body never runs. That is the correct
+behaviour for an empty file, and it costs nothing to get right.</p>
+<p><strong>Lines, rather than whitespace-separated tokens.</strong> This is the one with a trap.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">The getline trap</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">sstream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Standing in for an input file containing "3\nhello world\n".</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">istringstream </span><span style="--sh-light:#59873A;--sh-dark:#80A665">input</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">3</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">hello world</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    input </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                       // reads 3, leaves the newline behind</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string first</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">getline</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">input</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> first</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">       // reads the rest of the line: nothing</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">n = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, first getline: [</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> first</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">] length </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> first</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string second</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">getline</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">input</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> second</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // now the line you wanted</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">second getline: [</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> second </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">]</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+
+int main() {
+    // Standing in for an input file containing &quot;3\nhello world\n&quot;.
+    std::istringstream input(&quot;3\nhello world\n&quot;);
+
+    int n;
+    input &gt;&gt; n;                       // reads 3, leaves the newline behind
+
+    std::string first;
+    std::getline(input, first);       // reads the rest of the line: nothing
+    std::cout &lt;&lt; &quot;n = &quot; &lt;&lt; n &lt;&lt; &quot;, first getline: [&quot; &lt;&lt; first
+              &lt;&lt; &quot;] length &quot; &lt;&lt; first.size() &lt;&lt; '\n';
+
+    std::string second;
+    std::getline(input, second);      // now the line you wanted
+    std::cout &lt;&lt; &quot;second getline: [&quot; &lt;&lt; second &lt;&lt; &quot;]\n&quot;;
+}</template></cpp-runner></figure>
+<p><code>cin &gt;&gt; n</code> stops at the newline and leaves it in the buffer. The next
+<code>getline</code> reads from there to the end of that line, which is an empty string.
+The fix is to consume the rest of the line first:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">cin</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">ignore</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">numeric_limits</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">streamsize</span><span style="--sh-light:#999999;--sh-dark:#666666">>::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">max</span><span style="--sh-light:#999999;--sh-dark:#666666">(),</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // discard to end of line</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">getline</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cin</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> line</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span></code></pre></figure>
+<p>or, more simply, use <code>&gt;&gt;</code> for everything when the input has no embedded spaces,
+and <code>getline</code> for everything when it does. Mixing them is what causes this.</p>
+<h2 id="include-bitsstdch" tabindex="-1"><code>#include &lt;bits/stdc++.h&gt;</code></h2>
+<p>A GCC and Clang implementation detail that includes the entire standard
+library in one line. It is not standard C++ and does not exist on MSVC.</p>
+<p>It is right for a contest and wrong for everything else. In a contest you are
+optimising for the twenty seconds it takes to remember whether <code>std::accumulate</code>
+is in <code>&lt;numeric&gt;</code> or <code>&lt;algorithm&gt;</code>, and nobody will ever compile your file
+again. Chapter 7.6 measured what it costs — seven unused standard headers took
+an empty program from 35 ms to over a second to compile, and <code>bits/stdc++.h</code> is
+all of them — which matters enormously in a project and not at all for a file
+compiled once.</p>
+<p>Every sample in this part includes what it uses, because they are teaching
+material and a reader should be able to see where a name comes from. Your
+contest template should use <code>bits/stdc++.h</code>. Both statements are true.</p>
+<h2 id="using-namespace-std" tabindex="-1"><code>using namespace std;</code></h2>
+<p>Chapter 4.9 argued against this, and that argument stands for any code that
+lives longer than a submission: it drags every standard name into the global
+namespace, where it can collide with yours, and the collisions are found at the
+worst moment.</p>
+<p>In a contest file the tradeoff genuinely reverses. Nothing else is in the file,
+nobody links against it, and <code>sort(all(a))</code> beats <code>std::sort(a.begin(), a.end())</code>
+when you are typing against a clock.</p>
+<p>The one thing to know is which names it captures, because these bite:</p>
+<table>
+<thead>
+<tr>
+<th>Your name</th>
+<th>Collides with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td><code>std::count</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>std::size</code></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>std::data</code></td>
+</tr>
+<tr>
+<td><code>begin</code>, <code>end</code></td>
+<td><code>std::begin</code>, <code>std::end</code></td>
+</tr>
+<tr>
+<td><code>next</code>, <code>prev</code></td>
+<td><code>std::next</code>, <code>std::prev</code></td>
+</tr>
+<tr>
+<td><code>swap</code>, <code>max</code>, <code>min</code></td>
+<td>the obvious ones</td>
+</tr>
+<tr>
+<td><code>y1</code>, <code>y0</code>, <code>j1</code></td>
+<td>POSIX Bessel functions in <code>&lt;cmath&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>That last row is the famous one: <code>int y1;</code> fails to compile on GCC with a
+message about a conflicting declaration, because <code>&lt;cmath&gt;</code> puts a function
+called <code>y1</code> in the global namespace. Chapter 5.5’s authoring notes hit the same
+thing with <code>gamma</code>. Name your variables <code>y_1</code>, or anything else.</p>
+<h2 id="a-template-worth-using" tabindex="-1">A template worth using</h2>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">bits/stdc++.h</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">using</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> namespace</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">using</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> ll</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> long</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    ios</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">sync_with_stdio</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">false</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    cin</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">tie</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> tests </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // cin >> tests;              // uncomment when the input has a case count</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    while</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">tests</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">--</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">        int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">ll</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">ll</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> cin </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">>></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">        // solve</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p>Short on purpose. Templates that arrive with two hundred lines of macros, a
+debug printer and a segment tree cost more than they save: you spend the first
+minute scrolling past code you are not using, and the macros make the compiler’s
+error messages worse at the moment you most need them.</p>
+<p>The two things worth having beyond the above are <code>using ll = long long;</code>,
+because you will type it constantly, and the multi-test-case loop, because
+switching a solution to it under time pressure is exactly when mistakes happen.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>Keep debugging output on <code>cerr</code>, never <code>cout</code>. A judge compares stdout only, so
+<code>cerr &lt;&lt; &quot;here\n&quot;</code> cannot cause a wrong answer and does not need removing before
+submission. It is still worth deleting — it is unbuffered and slow — but
+forgetting to costs nothing.</p>
+</aside>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A solution reads 10^6 integers with `cin &gt;&gt;` and times out. What is the first thing to try?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`ios::sync_with_stdio(false); cin.tie(nullptr);` at the top of main — measured here at 372 ms against 96 ms for the same reads&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Two lines, roughly four times faster, and no change to the rest of the program. Switching to scanf is not the answer; unsynchronised cin was faster than scanf in the same measurement.&quot; },
+    { &quot;text&quot;: &quot;Rewrite the input with `scanf`&quot;, &quot;why&quot;: &quot;Measured at 118 ms here — better than synchronised `cin`, worse than unsynchronised. The synchronisation was the cost, not the streams.&quot; },
+    { &quot;text&quot;: &quot;Read into a `std::string` and parse it by hand&quot;, &quot;why&quot;: &quot;That can help at the very top end, but it is a large change to make before trying the two-line one.&quot; },
+    { &quot;text&quot;: &quot;Increase the buffer with `cin.rdbuf()-&gt;pubsetbuf`&quot;, &quot;why&quot;: &quot;Little effect compared to removing the per-operation synchronisation, and easy to get wrong.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;`cin &gt;&gt; n;` followed immediately by `getline(cin, line);` gives an empty `line`. Why?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`&gt;&gt;` stops at the newline and leaves it in the buffer, so `getline` reads from there to the end of that same line — which is empty&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Consume the rest of the line first with `cin.ignore(numeric_limits&lt;streamsize&gt;::max(), '\\n')`, or avoid mixing `&gt;&gt;` and `getline` in one program.&quot; },
+    { &quot;text&quot;: &quot;`getline` needs the stream to be untied&quot;, &quot;why&quot;: &quot;Tying affects flushing of output before reads, not where the read position is.&quot; },
+    { &quot;text&quot;: &quot;`n` consumed the whole first line&quot;, &quot;why&quot;: &quot;It consumed the digits and stopped. The newline is still there, which is precisely the problem.&quot; },
+    { &quot;text&quot;: &quot;`getline` requires a `std::string` that has been sized in advance&quot;, &quot;why&quot;: &quot;It resizes the string itself.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="input-shapes"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/problem-solving/counting-the-work/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Counting the work you actually do</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/problem-solving/sorting-and-comparators/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Sorting, comparators, and coordinate compression</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#what-sync_with_stdiofalse-is-worth">What sync_with_stdio(false) is worth</a></li><li class="rail__item rail__item--h2"><a href="#n-versus-stdendl">'\n' versus std::endl</a></li><li class="rail__item rail__item--h2"><a href="#the-input-shapes">The input shapes</a></li><li class="rail__item rail__item--h2"><a href="#include-bitsstdch">#include &lt;bits/stdc++.h&gt;</a></li><li class="rail__item rail__item--h2"><a href="#using-namespace-std">using namespace std;</a></li><li class="rail__item rail__item--h2"><a href="#a-template-worth-using">A template worth using</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>9 min</p>
+        <p><span>Problems</span>3</p>
+      </div>
+      <button class="rail__done" data-chapter="contest-template" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

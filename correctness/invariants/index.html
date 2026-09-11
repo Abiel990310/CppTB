@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invariants and assertions · The C++ Textbook</title>
+  <meta name="description" content="Stating what must always be true, and checking it.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/" class="is-active" aria-current="page"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="invariants">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/correctness/">Part 6 · Correctness</a></p>
+      <h1>Invariants and assertions</h1>
+      <p class="chapter-lede">Stating what must always be true, and checking it.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Identify a class invariant and where it can break</li><li>Use assert appropriately in debug builds</li><li>Explain the difference between a precondition and an invariant</li></ul>
+  </section>
+    <p>Chapter 3.1 introduced invariants as the reason <code>private</code> exists. This chapter
+is about making them explicit — writing them down, checking them, and knowing
+which kind of check belongs where.</p>
+<h2 id="three-kinds-of-condition" tabindex="-1">Three kinds of condition</h2>
+<p>They are easy to confuse and they belong in different places.</p>
+<ul>
+<li>A <strong>precondition</strong> is what a function requires of its caller. <code>pop()</code> requires
+a non-empty stack. Violating it is the <em>caller’s</em> bug.</li>
+<li>A <strong>postcondition</strong> is what a function promises in return. <code>push()</code> promises
+the size grew by one. Violating it is the <em>function’s</em> bug.</li>
+<li>An <strong>invariant</strong> is what is always true of an object between operations. A
+<code>Fraction</code> always has a non-zero denominator. Violating it means some
+operation left the object broken.</li>
+</ul>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">All three, made explicit</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cassert</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Stack</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> push</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">        const</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> before </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">push_back</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">value</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> before </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;&#x26;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">postcondition: size grew by one</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> pop</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">!</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">empty</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;&#x26;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">precondition: pop on a non-empty stack</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">        const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">back</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">pop_back</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // The invariant: capacity is always at least size, and size is consistent.</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    bool</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">capacity</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> >=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Stack s</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    s</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">push</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    s</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">push</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">2</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">popped </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> s</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">pop</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">, size now </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> s</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+class Stack {
+public:
+    void push(int value) {
+        const std::size_t before = items_.size();
+
+        items_.push_back(value);
+
+        assert(items_.size() == before + 1 &amp;&amp; &quot;postcondition: size grew by one&quot;);
+        assert(invariant());
+    }
+
+    int pop() {
+        assert(!items_.empty() &amp;&amp; &quot;precondition: pop on a non-empty stack&quot;);
+
+        const int value = items_.back();
+        items_.pop_back();
+
+        assert(invariant());
+        return value;
+    }
+
+    std::size_t size() const { return items_.size(); }
+
+private:
+    // The invariant: capacity is always at least size, and size is consistent.
+    bool invariant() const { return items_.capacity() &gt;= items_.size(); }
+
+    std::vector&lt;int&gt; items_;
+};
+
+int main() {
+    Stack s;
+    s.push(1);
+    s.push(2);
+    std::cout &lt;&lt; &quot;popped &quot; &lt;&lt; s.pop() &lt;&lt; &quot;, size now &quot; &lt;&lt; s.size() &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Writing <code>assert(condition &amp;&amp; &quot;message&quot;)</code> is a small trick worth knowing: the
+string is always true, so it does not change the test, and it appears in the
+failure output — turning <code>assertion 'items_.size() == before + 1' failed</code> into
+something that says what was meant.</p>
+<h2 id="assert-and-what-it-is-for" tabindex="-1">assert, and what it is for</h2>
+<p><code>assert</code> from <code>&lt;cassert&gt;</code> aborts when its condition is false. It is compiled out
+entirely when <code>NDEBUG</code> is defined:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">What NDEBUG does</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cassert</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">ifdef</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> NDEBUG</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">NDEBUG is defined: assertions are compiled out</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">else</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">NDEBUG is not defined: assertions are active</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">endif</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 5</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">value </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;&#x26;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">value must be positive</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">value is </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+
+int main() {
+#ifdef NDEBUG
+    std::cout &lt;&lt; &quot;NDEBUG is defined: assertions are compiled out\n&quot;;
+#else
+    std::cout &lt;&lt; &quot;NDEBUG is not defined: assertions are active\n&quot;;
+#endif
+
+    int value = 5;
+    assert(value &gt; 0 &amp;&amp; &quot;value must be positive&quot;);
+    std::cout &lt;&lt; &quot;value is &quot; &lt;&lt; value &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>That behaviour decides what <code>assert</code> is for. It checks things that <strong>should be
+impossible</strong> — programming errors, broken invariants, violated preconditions
+inside your own code. It must never check something that can legitimately
+happen at run time.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>Never put a side effect inside an <code>assert</code>. It disappears in release builds, and
+the program silently changes behaviour:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">erase</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">key</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // in release, the erase never happens</span></span></code></pre></figure>
+<p>Write the operation first and assert on its result.</p>
+</aside>
+<aside class="callout callout--pitfall"><p class="callout__label">Pitfall</p>
+<p><code>assert</code> is also the wrong tool for anything derived from input, files, the
+network, or a user. Those failures are not impossible — they are expected, and
+they need a real check that survives into release. Chapter 6.2’s return-based
+errors are for that. The test: <em>could this condition be false in a correct
+program given hostile input?</em> If yes, it is not an assertion.</p>
+</aside>
+<h2 id="static_assert-checking-at-compile-time" tabindex="-1">static_assert: checking at compile time</h2>
+<p>When the condition is knowable at compile time, check it there — the cost is
+zero and the failure arrives before the program exists:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">Compile-time checks</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdint</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">type_traits</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">template</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> T</span><span style="--sh-light:#999999;--sh-dark:#666666">></span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    static_assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_trivially_copyable_v</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">T</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">                  "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Buffer requires a trivially copyable element type</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    T </span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">16</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // The layout assumptions this code depends on, stated and enforced.</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    static_assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">this code assumes 32-bit int</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    static_assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">sizeof</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int64_t</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 8</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> ok</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    ok</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#999999;--sh-dark:#666666"> =</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Buffer&#x3C;int> is fine: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> ok</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Buffer&#x3C;std::string> would fail to compile with the message above.</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">is_trivially_copyable&#x3C;std::string>: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">boolalpha</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_trivially_copyable_v</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cstdint&gt;
+#include &lt;iostream&gt;
+#include &lt;type_traits&gt;
+
+template &lt;class T&gt;
+struct Buffer {
+    static_assert(std::is_trivially_copyable_v&lt;T&gt;,
+                  &quot;Buffer requires a trivially copyable element type&quot;);
+    T data[16];
+};
+
+int main() {
+    // The layout assumptions this code depends on, stated and enforced.
+    static_assert(sizeof(int) == 4, &quot;this code assumes 32-bit int&quot;);
+    static_assert(sizeof(std::int64_t) == 8);
+
+    Buffer&lt;int&gt; ok;
+    ok.data[0] = 1;
+    std::cout &lt;&lt; &quot;Buffer&lt;int&gt; is fine: &quot; &lt;&lt; ok.data[0] &lt;&lt; '\n';
+
+    // Buffer&lt;std::string&gt; would fail to compile with the message above.
+    std::cout &lt;&lt; &quot;is_trivially_copyable&lt;std::string&gt;: &quot; &lt;&lt; std::boolalpha
+              &lt;&lt; std::is_trivially_copyable_v&lt;std::string&gt; &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p><code>static_assert</code> never reaches run time, never costs anything, and cannot be
+disabled by <code>NDEBUG</code>. Prefer it whenever the condition is a compile-time one —
+Chapter 5.4’s concepts are the more expressive version of the same idea.</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-error="1"><figcaption class="code__title">A static_assert doing its job</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">type_traits</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">template</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> T</span><span style="--sh-light:#999999;--sh-dark:#666666">></span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Buffer</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    static_assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">is_trivially_copyable_v</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">T</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">                  "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Buffer requires a trivially copyable element type</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    T </span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">data</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">16</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Buffer</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">string</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> bad</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // fails here, with that message</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">bad</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;type_traits&gt;
+#include &lt;string&gt;
+
+template &lt;class T&gt;
+struct Buffer {
+    static_assert(std::is_trivially_copyable_v&lt;T&gt;,
+                  &quot;Buffer requires a trivially copyable element type&quot;);
+    T data[16];
+};
+
+int main() {
+    Buffer&lt;std::string&gt; bad;      // fails here, with that message
+    (void)bad;
+}</template></cpp-runner></figure>
+<h2 id="checking-an-invariant-in-one-place" tabindex="-1">Checking an invariant in one place</h2>
+<p>An invariant that is checked in five places will eventually be checked in four.
+Give it a name:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">One function, called from every mutator</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cassert</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">numeric</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">stdexcept</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Fraction</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    Fraction</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> numerator</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> denominator</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">        :</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">numerator</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">denominator</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">denominator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> throw</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">invalid_argument</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">zero denominator</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        normalise</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">    Fraction</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> operator</span><span style="--sh-light:#59873A;--sh-dark:#80A665">*=</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Fraction</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x26;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        numerator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">        denominator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> other</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        normalise</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">());</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // every mutator ends the same way</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">this</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> numerator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> denominator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Written once, in the language of the class.</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    bool</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> invariant</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x26;&#x26;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">gcd</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> normalise</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">denominator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> numerator_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> -</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_ </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> -</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">        const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> divisor </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">gcd</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">divisor </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> numerator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">/=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> divisor</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_ </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">/=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> divisor</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> numerator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> denominator_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Fraction half</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> half</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">numerator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">/</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> half</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">denominator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    Fraction third</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    half </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> third</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> half</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">numerator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">/</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> half</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">denominator</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+#include &lt;numeric&gt;
+#include &lt;stdexcept&gt;
+
+class Fraction {
+public:
+    Fraction(int numerator, int denominator)
+        : numerator_(numerator), denominator_(denominator) {
+        if (denominator_ == 0) throw std::invalid_argument(&quot;zero denominator&quot;);
+        normalise();
+        assert(invariant());
+    }
+
+    Fraction&amp; operator*=(const Fraction&amp; other) {
+        numerator_ *= other.numerator_;
+        denominator_ *= other.denominator_;
+        normalise();
+        assert(invariant());          // every mutator ends the same way
+        return *this;
+    }
+
+    int numerator() const { return numerator_; }
+    int denominator() const { return denominator_; }
+
+private:
+    // Written once, in the language of the class.
+    bool invariant() const {
+        return denominator_ &gt; 0 &amp;&amp; std::gcd(numerator_, denominator_) == 1;
+    }
+
+    void normalise() {
+        if (denominator_ &lt; 0) { numerator_ = -numerator_; denominator_ = -denominator_; }
+        const int divisor = std::gcd(numerator_, denominator_);
+        if (divisor &gt; 1) { numerator_ /= divisor; denominator_ /= divisor; }
+    }
+
+    int numerator_;
+    int denominator_;
+};
+
+int main() {
+    Fraction half{2, 4};
+    std::cout &lt;&lt; half.numerator() &lt;&lt; '/' &lt;&lt; half.denominator() &lt;&lt; '\n';
+
+    Fraction third{1, 3};
+    half *= third;
+    std::cout &lt;&lt; half.numerator() &lt;&lt; '/' &lt;&lt; half.denominator() &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Note where the invariant is checked: at the <strong>end of every operation that
+modifies</strong>, and at the end of construction. Those are the only points where it
+can newly be violated. Const member functions cannot break it, so they need no
+check.</p>
+<p>Note also what is <em>not</em> an assertion: the zero denominator throws, because it
+comes from the caller’s argument and is a legitimate run-time failure. The
+<code>assert(invariant())</code> afterwards checks that <em>the class’s own logic</em> restored
+consistency — a different question, and the one <code>assert</code> is for.</p>
+<h2 id="invariants-you-cannot-check-cheaply" tabindex="-1">Invariants you cannot check cheaply</h2>
+<p>Some invariants are expensive — “this vector is sorted” is O(n) to verify. The
+usual compromise is to check them only in a dedicated debug mode:</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">An expensive check, behind a switch</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">algorithm</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cassert</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// Define CPPTB_EXPENSIVE_CHECKS to enable O(n) invariant verification.</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">ifdef</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> CPPTB_EXPENSIVE_CHECKS</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">  #</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">define</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> EXPENSIVE_ASSERT</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">x</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> assert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">x</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">else</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">  #</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">define</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> EXPENSIVE_ASSERT</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">x</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> ((</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">0</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">endif</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">class</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> SortedList</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">public</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> insert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">        items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">insert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">ranges</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">upper_bound</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">items_</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        EXPENSIVE_ASSERT</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">ranges</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">is_sorted</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">items_</span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> size</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> at</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> items_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">    SortedList list</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> v </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> {</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 9</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">}</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> list</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">insert</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">v</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> list</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">size</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> list</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">at</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;algorithm&gt;
+#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+// Define CPPTB_EXPENSIVE_CHECKS to enable O(n) invariant verification.
+#ifdef CPPTB_EXPENSIVE_CHECKS
+  #define EXPENSIVE_ASSERT(x) assert(x)
+#else
+  #define EXPENSIVE_ASSERT(x) ((void)0)
+#endif
+
+class SortedList {
+public:
+    void insert(int value) {
+        items_.insert(std::ranges::upper_bound(items_, value), value);
+        EXPENSIVE_ASSERT(std::ranges::is_sorted(items_));
+    }
+
+    std::size_t size() const { return items_.size(); }
+    int at(std::size_t i) const { return items_[i]; }
+
+private:
+    std::vector&lt;int&gt; items_;
+};
+
+int main() {
+    SortedList list;
+    for (int v : {5, 1, 9, 3}) list.insert(v);
+
+    for (std::size_t i = 0; i &lt; list.size(); ++i) std::cout &lt;&lt; list.at(i) &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>The <code>(void)0</code> in the disabled branch keeps the macro usable as a statement and
+avoids a warning about an empty expression.</p>
+<h2 id="writing-them-down-even-when-you-cannot-check" tabindex="-1">Writing them down even when you cannot check</h2>
+<p>Not every invariant is machine-checkable. “The <code>parent_</code> pointer of every child
+points back at this node” may be too expensive or too awkward to verify, and it
+is still worth stating in a comment next to the members:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">private</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // Invariant: children_ is sorted by id, and every child's parent_ == this.</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Node</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> children_</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span></code></pre></figure>
+<p>A stated invariant is a contract a future reader can check by inspection, and
+the first thing to re-read when something is behaving impossibly. An unstated
+one exists only in the head of whoever wrote the class.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Which of these belongs in an `assert` rather than a real run-time check?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;That a filename supplied by the user names an existing file&quot;, &quot;why&quot;: &quot;That can be false in a correct program with ordinary input. It needs a check that survives into release, and an error the caller can act on.&quot; },
+    { &quot;text&quot;: &quot;That a private helper was called with an index its caller already validated&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;It should be impossible if the class's own logic is right, and if it is wrong you want to know during development. That is exactly assert's job.&quot; },
+    { &quot;text&quot;: &quot;That a network response parsed successfully&quot;, &quot;why&quot;: &quot;Hostile or truncated input is expected, not impossible. Asserting on it means a release build proceeds with garbage.&quot; },
+    { &quot;text&quot;: &quot;That an allocation succeeded&quot;, &quot;why&quot;: &quot;Allocation failure is a real run-time condition; new throws bad_alloc for it. Asserting would remove the check in exactly the build that runs out of memory.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Why is `assert(list.erase(item) == 1);` a bug?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;erase returns void, so it does not compile&quot;, &quot;why&quot;: &quot;The count-returning overload exists on associative containers. It compiles, which is what makes the bug reachable.&quot; },
+    { &quot;text&quot;: &quot;The whole expression is compiled out under NDEBUG, so the erase never happens in release builds&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;assert removes its argument entirely. A side effect placed inside it silently disappears in exactly the build you ship. Do the work first, then assert on the result.&quot; },
+    { &quot;text&quot;: &quot;assert cannot take an expression returning a value&quot;, &quot;why&quot;: &quot;It takes any expression convertible to bool. The problem is not the type, it is the disappearance.&quot; },
+    { &quot;text&quot;: &quot;erase might throw, and assert cannot handle exceptions&quot;, &quot;why&quot;: &quot;That is unrelated to how assert works, and erase on these containers does not throw for a missing key.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="class-invariant"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/correctness/debugging/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Debugging</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/performance/what-the-compiler-does/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">What the compiler does for you</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#three-kinds-of-condition">Three kinds of condition</a></li><li class="rail__item rail__item--h2"><a href="#assert-and-what-it-is-for">assert, and what it is for</a></li><li class="rail__item rail__item--h2"><a href="#static_assert-checking-at-compile-time">static_assert: checking at compile time</a></li><li class="rail__item rail__item--h2"><a href="#checking-an-invariant-in-one-place">Checking an invariant in one place</a></li><li class="rail__item rail__item--h2"><a href="#invariants-you-cannot-check-cheaply">Invariants you cannot check cheaply</a></li><li class="rail__item rail__item--h2"><a href="#writing-them-down-even-when-you-cannot-check">Writing them down even when you cannot check</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>6 min</p>
+        <p><span>Problems</span>1</p>
+      </div>
+      <button class="rail__done" data-chapter="invariants" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

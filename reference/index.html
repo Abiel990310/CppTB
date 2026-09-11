@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quick reference · The C++ Textbook</title>
+  <meta name="description" content="Every chapter objective in one scannable table — find your level and continue.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose prose--wide">
+    <h1>Quick reference</h1>
+    <p class="chapter-lede">Every chapter's objectives in one place. Use it to find where you are: scan for the first row you cannot honestly claim, and start there.</p>
+    <section class="ref-part">
+        <h2>Foundations</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/foundations/hello-machine/">Hello, machine</a></td>
+                  <td><ul><li>Explain what the preprocessor, compiler, assembler, and linker each do</li><li>Read a compiler error and locate the line it refers to</li><li>Compile and run a program from source</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/foundations/values-and-types/">Values, types, and names</a></td>
+                  <td><ul><li>Choose an appropriate built-in type for a quantity</li><li>Predict the result of integer versus floating-point division</li><li>Explain what auto deduces and when to avoid it</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/foundations/making-decisions/">Making decisions</a></td>
+                  <td><ul><li>Write conditions that short-circuit correctly</li><li>Use switch without falling through by accident</li><li>Explain why comparing floating-point numbers with == is a trap</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/foundations/repetition/">Repetition</a></td>
+                  <td><ul><li>Write a range-based for loop over a container</li><li>Convert an index loop to a range loop and back</li><li>Identify the exit condition that makes a loop terminate</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/foundations/functions/">Functions</a></td>
+                  <td><ul><li>Choose between passing by value, by reference, and by const reference</li><li>Explain what overload resolution picks and why</li><li>Write a function with a default argument without creating ambiguity</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/foundations/your-toolchain/">Your toolchain</a></td>
+                  <td><ul><li>Compile with a warning set that catches real bugs</li><li>Run a program under AddressSanitizer and read its report</li><li>Step through a program in a debugger and inspect a variable</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Memory and objects</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/memory/objects-and-storage/">Objects and storage</a></td>
+                  <td><ul><li>Explain the difference between an object, a value, and a name</li><li>Predict sizeof for a struct given its members</li><li>Describe what padding is and why the compiler inserts it</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/pointers/">Pointers</a></td>
+                  <td><ul><li>Read and write pointer declarations without hesitating</li><li>Explain what dereferencing a null or dangling pointer does</li><li>Use pointer arithmetic correctly within an array</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/references/">References</a></td>
+                  <td><ul><li>Choose between a reference and a pointer for a given interface</li><li>Explain why a reference cannot be reseated</li><li>Identify when a reference outlives what it refers to</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/lifetime-and-scope/">Lifetime and scope</a></td>
+                  <td><ul><li>State the lifetime of automatic, static, and dynamic objects</li><li>Spot a returned reference to a local</li><li>Explain why destruction order is the reverse of construction</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/stack-and-heap/">The stack and the heap</a></td>
+                  <td><ul><li>Explain why stack allocation is nearly free and heap allocation is not</li><li>Use new and delete correctly, then explain why you should not</li><li>Predict when a stack overflow occurs</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/arrays-and-decay/">Arrays, and why they decay</a></td>
+                  <td><ul><li>Explain array-to-pointer decay and when it happens</li><li>Choose std::array or std::vector over a raw array</li><li>Pass an array to a function without losing its length</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/memory/const/">const and constness</a></td>
+                  <td><ul><li>Read a const declaration right-to-left without guessing</li><li>Explain the difference between a const pointer and a pointer to const</li><li>Decide where const belongs in an interface</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Types you make</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/types/structs-and-classes/">Structs and classes</a></td>
+                  <td><ul><li>Define a class with a clear public interface</li><li>Explain the only difference between struct and class</li><li>Choose what belongs in the interface and what does not</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/raii/">RAII</a></td>
+                  <td><ul><li>Explain RAII in terms of construction and destruction</li><li>Write a class that owns a resource and releases it exactly once</li><li>Identify a resource leak that RAII would have prevented</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/copying/">Copying</a></td>
+                  <td><ul><li>Distinguish a shallow copy from a deep copy</li><li>Write a correct copy constructor and copy assignment operator</li><li>Explain the self-assignment problem</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/moving/">Moving</a></td>
+                  <td><ul><li>Explain what std::move does and does not do</li><li>Write a move constructor that leaves the source valid</li><li>Predict when the compiler moves instead of copies</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/rule-of-zero/">Rule of zero, three, five</a></td>
+                  <td><ul><li>Apply the rule of zero to a class that owns nothing</li><li>List the five special member functions and when each is generated</li><li>Explain why declaring a destructor suppresses move operations</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/operator-overloading/">Operator overloading</a></td>
+                  <td><ul><li>Overload arithmetic and comparison operators idiomatically</li><li>Use the spaceship operator to generate comparisons</li><li>Explain when an operator should be a member and when a free function</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/inheritance/">Inheritance and virtual functions</a></td>
+                  <td><ul><li>Explain what a vtable is and what a virtual call costs</li><li>Write a base class that is safe to delete through</li><li>Explain why a non-virtual destructor in a base class is a bug</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/types/composition-over-inheritance/">When not to use inheritance</a></td>
+                  <td><ul><li>Recognise an is-a relationship that is really has-a</li><li>Replace an inheritance hierarchy with composition</li><li>Explain the Liskov substitution principle in concrete terms</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>The standard library</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/library/strings/">std::string and text</a></td>
+                  <td><ul><li>Use std::string and std::string_view appropriately</li><li>Explain why a string_view can dangle</li><li>Describe what a char actually holds in a UTF-8 world</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/sequence-containers/">Sequence containers</a></td>
+                  <td><ul><li>Predict the complexity of insertion for each sequence container</li><li>Explain vector's growth strategy and reallocation</li><li>Identify when an iterator is invalidated</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/associative-containers/">Associative containers</a></td>
+                  <td><ul><li>Choose between ordered and unordered containers</li><li>Explain what a hash collision costs</li><li>Use a custom comparator or hash correctly</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/iterators/">Iterators</a></td>
+                  <td><ul><li>Name the iterator categories and what each supports</li><li>Write a function that takes a pair of iterators</li><li>Explain why end() points past the last element</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/algorithms/">Algorithms</a></td>
+                  <td><ul><li>Replace a hand-written loop with a standard algorithm</li><li>Use the erase-remove idiom correctly</li><li>Explain what a projection is in a ranges algorithm</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/ranges/">Ranges and views</a></td>
+                  <td><ul><li>Compose a pipeline of views</li><li>Explain what makes a view lazy and cheap to copy</li><li>Identify when a view dangles</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/smart-pointers/">Smart pointers</a></td>
+                  <td><ul><li>Choose between unique_ptr, shared_ptr, and a raw pointer</li><li>Explain the cost of a shared_ptr's control block</li><li>Break a reference cycle with weak_ptr</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/vocabulary-types/">optional, variant, expected</a></td>
+                  <td><ul><li>Return an optional instead of a sentinel value</li><li>Use variant with a visitor</li><li>Explain when expected is better than an exception</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/library/io-and-formatting/">Input, output, formatting</a></td>
+                  <td><ul><li>Format values with std::format</li><li>Read input robustly and detect failure</li><li>Explain why iostreams are slow and when it matters</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Generic programming</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/generic/function-templates/">Function templates</a></td>
+                  <td><ul><li>Write a function template and explain how it is instantiated</li><li>Describe what template argument deduction does</li><li>Explain why template code usually lives in headers</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/class-templates/">Class templates</a></td>
+                  <td><ul><li>Write a class template with a type parameter</li><li>Use a deduction guide</li><li>Explain what a partial specialization does</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/deduction/">Deduction and forwarding</a></td>
+                  <td><ul><li>Explain the difference between auto and template deduction</li><li>Write a perfectly forwarding wrapper</li><li>Explain what a forwarding reference is and how to spot one</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/concepts/">Concepts and constraints</a></td>
+                  <td><ul><li>Write a concept that constrains a template parameter</li><li>Compare a concept error with an unconstrained template error</li><li>Use requires clauses to pick between overloads</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/constexpr/">Compile-time computation</a></td>
+                  <td><ul><li>Write a constexpr function and prove it runs at compile time</li><li>Explain the difference between constexpr, consteval, and constinit</li><li>Use static_assert to check an invariant at compile time</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/variadics/">Variadic templates</a></td>
+                  <td><ul><li>Write a variadic function template with a fold expression</li><li>Explain how a parameter pack is expanded</li><li>Implement a simple type-safe printf</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/type-traits/">Type traits</a></td>
+                  <td><ul><li>Use standard type traits to constrain or branch code</li><li>Write a trait with a partial specialization</li><li>Explain if constexpr and why it beats tag dispatch</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/generic/static-polymorphism/">Static polymorphism</a></td>
+                  <td><ul><li>Implement CRTP and explain what it replaces</li><li>Compare the cost of virtual dispatch with a template</li><li>Decide when runtime polymorphism is the right answer anyway</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Correctness</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/correctness/exceptions/">Exceptions</a></td>
+                  <td><ul><li>Throw and catch by the right types</li><li>Explain what the strong exception guarantee requires</li><li>Write a function that is exception-safe by construction</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/correctness/error-handling-without-exceptions/">Error handling without exceptions</a></td>
+                  <td><ul><li>Design an API around expected or an error code</li><li>Explain the trade-offs against exceptions</li><li>Handle errors without silently discarding them</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/correctness/undefined-behaviour/">Undefined behaviour</a></td>
+                  <td><ul><li>List the common sources of undefined behaviour</li><li>Explain how UB can make code disappear</li><li>Use sanitizers to catch UB before your users do</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/correctness/testing/">Testing</a></td>
+                  <td><ul><li>Write a unit test that fails for the right reason</li><li>Explain what property-based testing adds</li><li>Structure a project so tests run on every build</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/correctness/debugging/">Debugging</a></td>
+                  <td><ul><li>Reduce a failing case to a minimal reproduction</li><li>Use a debugger's watchpoints and backtraces</li><li>Read a stack trace from a crash</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/correctness/invariants/">Invariants and assertions</a></td>
+                  <td><ul><li>Identify a class invariant and where it can break</li><li>Use assert appropriately in debug builds</li><li>Explain the difference between a precondition and an invariant</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Performance</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/performance/what-the-compiler-does/">What the compiler does</a></td>
+                  <td><ul><li>Read simple optimized assembly</li><li>Explain constant folding, inlining, and dead-code elimination</li><li>Compare -O0 and -O2 output for the same function</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/performance/measuring/">Measuring</a></td>
+                  <td><ul><li>Write a microbenchmark that is not optimized away</li><li>Explain why timing one run tells you nothing</li><li>Profile a program and find where the time goes</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/performance/cache-and-layout/">Cache and layout</a></td>
+                  <td><ul><li>Explain what a cache line is and why locality matters</li><li>Compare array-of-structs with struct-of-arrays</li><li>Predict which of two loops is faster and verify it</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/performance/zero-cost/">Zero-cost, examined</a></td>
+                  <td><ul><li>Show that a range pipeline compiles to the same code as a loop</li><li>Identify an abstraction that does cost something</li><li>Explain what zero-cost does and does not promise</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/performance/copies-and-moves/">Copies and elision</a></td>
+                  <td><ul><li>Explain guaranteed copy elision and NRVO</li><li>Find an unnecessary copy in a code review</li><li>Explain why returning std::move(x) can be worse than returning x</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/performance/inlining-and-linking/">Inlining and linking</a></td>
+                  <td><ul><li>Explain what inline actually means</li><li>Describe link-time optimization and its cost</li><li>Reduce binary size and build time deliberately</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Concurrency</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/concurrency/threads/">Threads</a></td>
+                  <td><ul><li>Start and join a thread correctly</li><li>Explain what happens if a joinable thread is destroyed</li><li>Use jthread and stop tokens</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/concurrency/races-and-mutexes/">Races and mutexes</a></td>
+                  <td><ul><li>Define a data race precisely</li><li>Protect shared state with a mutex and a lock guard</li><li>Explain how a deadlock forms and how to avoid one</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/concurrency/atomics/">Atomics</a></td>
+                  <td><ul><li>Use an atomic counter correctly</li><li>Explain sequential consistency versus acquire-release</li><li>Recognise when lock-free code is the wrong answer</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/concurrency/futures-and-tasks/">Futures and tasks</a></td>
+                  <td><ul><li>Use std::async and futures appropriately</li><li>Explain why std::async's default launch policy is a trap</li><li>Structure work as tasks rather than threads</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/concurrency/coroutines/">Coroutines</a></td>
+                  <td><ul><li>Explain what co_await transforms a function into</li><li>Write a simple generator coroutine</li><li>Describe where the coroutine frame is allocated</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Building real software</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/engineering/translation-units/">Translation units</a></td>
+                  <td><ul><li>Explain the compile-then-link model</li><li>Fix a duplicate-symbol and an undefined-symbol error</li><li>State the one-definition rule and how to satisfy it</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/engineering/modules/">Modules</a></td>
+                  <td><ul><li>Write and consume a module</li><li>Explain what modules fix about headers</li><li>Assess whether your toolchain can use them yet</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/engineering/build-systems/">Build systems</a></td>
+                  <td><ul><li>Write a CMakeLists.txt for a small library and its tests</li><li>Explain target-based CMake and why globals are worse</li><li>Configure a debug and a release build</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/engineering/dependencies/">Dependencies</a></td>
+                  <td><ul><li>Add a dependency with FetchContent or a package manager</li><li>Explain the trade-offs of vendoring</li><li>Pin versions so a build is reproducible</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/engineering/project/">Project: search index</a></td>
+                  <td><ul><li>Design a program from an informal specification</li><li>Choose data structures against measured requirements</li><li>Ship it with tests, a build file, and a README</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section><section class="ref-part">
+        <h2>Problem solving</h2>
+        <table class="ref-table">
+          <thead><tr><th>Chapter</th><th>You should be able to</th><th>Standard</th></tr></thead>
+          <tbody>
+            <tr>
+                  <td><a href="/CppTB/problem-solving/reading-a-problem/">Reading a problem</a></td>
+                  <td><ul><li>Read a problem's constraints and derive the operation budget they imply</li><li>Identify the edge cases a statement implies but does not list</li><li>Write a solution that reads input and writes output in the format required</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/counting-the-work/">Counting the work</a></td>
+                  <td><ul><li>Derive the complexity of a loop nest and confirm it by doubling the input</li><li>Find the hidden cost in a standard-library call inside a loop</li><li>Recognise when the constant factor rather than the exponent is the problem</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/contest-template/">Template and fast I/O</a></td>
+                  <td><ul><li>Measure what C++ stream I/O costs and know when it matters</li><li>Read every input shape a contest uses, including one with no count</li><li>Write a template that does not get in your way</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/sorting-and-comparators/">Sorting and comparators</a></td>
+                  <td><ul><li>Write a comparator that is a valid strict weak ordering</li><li>Choose between sort and stable_sort on evidence</li><li>Compress a large value range into small indices</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/binary-search/">Binary search</a></td>
+                  <td><ul><li>Use lower_bound, upper_bound and equal_range correctly</li><li>Write a binary search whose invariant you can state</li><li>Recognise a problem where the answer itself can be searched for</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/two-pointers/">Two pointers</a></td>
+                  <td><ul><li>Explain why two forward-moving indices give O(n) rather than O(n²)</li><li>Write a variable-size window that maintains a condition</li><li>Recognise the precondition a sliding window needs</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/prefix-sums/">Prefix sums</a></td>
+                  <td><ul><li>Answer range-sum queries in O(1) after an O(n) precomputation</li><li>Get the half-open index convention right, in one and two dimensions</li><li>Apply many range updates in O(1) each with a difference array</li><li>Recognise a sweep as a difference array over sparse coordinates</li><li>Use prefix sums where a sliding window is invalid</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/monotonic-stacks/">Monotonic stacks</a></td>
+                  <td><ul><li>Recognise the &quot;nearest greater or smaller element&quot; shape in a problem</li><li>State and maintain the invariant a monotonic stack keeps</li><li>Explain why the nested while loop is O(n) in total</li><li>Use previous-smaller and next-smaller spans to count subarrays</li><li>Choose the tie-breaking rule that avoids double counting</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/deques-and-window-extrema/">Monotonic deques</a></td>
+                  <td><ul><li>Maintain the maximum of a sliding window in O(1) amortised per step</li><li>State the two reasons an index leaves a monotonic deque</li><li>Compare the deque against a multiset and know what the log factor costs</li><li>Combine two deques to bound a window's spread</li><li>Use a deque over prefix sums where a window is invalid</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/hashing-and-frequency/">Hashing and counting</a></td>
+                  <td><ul><li>Choose between an array, a hash map, an ordered map, and sorting</li><li>Explain why std::unordered_map can degrade to O(n) per operation</li><li>Write a custom hash that resists an anti-hash test</li><li>Use a custom hash or a packed key for pair and tuple keys</li><li>Know what std::multiset's two erase overloads do</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/recursion-and-backtracking/">Recursion</a></td>
+                  <td><ul><li>Write a search as choose / explore / un-choose and keep the state consistent</li><li>Prune a search at the moment a partial solution becomes invalid</li><li>Measure the cost of a recursive frame and know your depth budget</li><li>Recognise when overlapping subproblems make memoisation apply</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/bitmask-enumeration/">Bitmasks</a></td>
+                  <td><ul><li>Represent a subset as an integer and enumerate all of them</li><li>Use the standard bit intrinsics instead of hand-rolled loops</li><li>Enumerate every submask of every mask in 3^n rather than 4^n</li><li>Generate distinct permutations and combinations without writing a recursion</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/greedy/">Greedy</a></td>
+                  <td><ul><li>State a greedy algorithm as a choice rule plus a claim</li><li>Test a greedy rule against brute force before trusting it</li><li>Prove a greedy optimal with an exchange argument</li><li>Recognise the problems where greedy is provably wrong</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/divide-and-conquer/">Divide and conquer</a></td>
+                  <td><ul><li>Recognise the split / solve / combine shape and its recurrence</li><li>Count inversions in O(n log n) by piggy-backing on a merge</li><li>Choose a base-case cutoff by measurement</li><li>Halve an exponent instead of decrementing it</li><li>Know when divide and conquer is the wrong tool</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/meet-in-the-middle/">Meet in the middle</a></td>
+                  <td><ul><li>Recognise the n around 40 constraint as a meet-in-the-middle signal</li><li>Enumerate half the input and combine with sorting or hashing</li><li>Choose between binary search, two pointers, and a hash map for the combine</li><li>Judge when the memory cost makes the technique unavailable</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/representing-graphs/">Representing graphs</a></td>
+                  <td><ul><li>Choose between an adjacency list, a matrix, and an edge list</li><li>Build a compressed adjacency structure in one pass</li><li>[object Object]</li><li>Treat a grid as a graph without materialising it</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/bfs/">BFS</a></td>
+                  <td><ul><li>Write BFS and know why it gives shortest paths in an unweighted graph</li><li>Mark vertices when they are enqueued, and know what it costs not to</li><li>Seed the queue with many sources to get &quot;distance to the nearest&quot;</li><li>Use a deque for 0/1 edge weights instead of a heap</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/dfs/">DFS</a></td>
+                  <td><ul><li>Write DFS iteratively and know when the recursive form will overflow</li><li>Count connected components</li><li>Detect a cycle in a directed graph with three colours</li><li>Find bridges with entry times and low-links</li><li>Use entry/exit intervals as an ancestor test</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/topological-order/">Topological order</a></td>
+                  <td><ul><li>Produce a topological order with Kahn's algorithm and with DFS</li><li>Detect a cycle from the length of Kahn's output</li><li>Get the lexicographically smallest order with a heap</li><li>Write a DP over a DAG in topological order</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/union-find/">Union-Find</a></td>
+                  <td><ul><li>Implement find with path compression and union by size</li><li>Measure what each optimisation is worth</li><li>Maintain component counts and sizes as edges arrive</li><li>Answer deletion queries offline by running time backwards</li><li>Encode a two-sided constraint by doubling the vertices</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/dijkstra/">Dijkstra</a></td>
+                  <td><ul><li>Write Dijkstra with a priority queue and lazy deletion</li><li>Explain why a negative edge breaks it, with a four-vertex counterexample</li><li>Reconstruct a shortest path and count how many there are</li><li>Layer the graph to answer &quot;with at most k free moves&quot;</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/negative-weights/">Negative weights</a></td>
+                  <td><ul><li>Relax every edge n-1 times, and detect a negative cycle with one more round</li><li>Mark the vertices that have no shortest path at all</li><li>Write Floyd-Warshall with the intermediate vertex in the outermost loop</li><li>Choose between all-pairs Floyd-Warshall and n runs of Dijkstra</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr><tr>
+                  <td><a href="/CppTB/problem-solving/minimum-spanning-trees/">Spanning trees</a></td>
+                  <td><ul><li>Write Kruskal with union-find and Prim with a heap</li><li>Say why the greedy choice is safe, using the cut property</li><li>Show that an MST does not contain shortest paths</li><li>Use the MST to answer bottleneck questions</li></ul></td>
+                  <td><code>c++20</code></td>
+                </tr>
+          </tbody>
+        </table>
+      </section>
+  </article>
+    </main>
+    <div class="rail" aria-hidden="true"></div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Undefined behaviour · The C++ Textbook</title>
+  <meta name="description" content="The contract you did not know you signed, and how the optimizer uses it.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/" class="is-active" aria-current="page"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="undefined-behaviour">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/correctness/">Part 6 · Correctness</a></p>
+      <h1>Undefined behaviour</h1>
+      <p class="chapter-lede">The contract you did not know you signed, and how the optimizer uses it.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>List the common sources of undefined behaviour</li><li>Explain how UB can make code disappear</li><li>Use sanitizers to catch UB before your users do</li></ul>
+  </section>
+    <p>Every sample in this book compiles with AddressSanitizer and
+UndefinedBehaviorSanitizer switched on. You have seen them fire a dozen times.
+This chapter explains what they are catching, what they cannot catch, and why
+the language has this category at all.</p>
+<h2 id="what-the-words-mean" tabindex="-1">What the words mean</h2>
+<p>The standard sorts bad situations into three kinds, and they are not
+interchangeable.</p>
+<ul>
+<li><strong>Implementation-defined</strong>: the implementation must choose and document a
+behaviour. <code>sizeof(int)</code> is 4 on your machine, and your compiler says so.</li>
+<li><strong>Unspecified</strong>: the implementation chooses from a set of valid behaviours and
+need not tell you. The order in which function arguments are evaluated, for
+instance.</li>
+<li><strong>Undefined</strong>: the standard imposes <strong>no requirements at all</strong>. Not “returns
+garbage”, not “crashes” — no requirements.</li>
+</ul>
+<p>That last one is stronger than it sounds. A program with undefined behaviour
+anywhere in it has no defined meaning <em>as a whole</em>, and the compiler is entitled
+to assume it never happens.</p>
+<h2 id="the-compiler-assumes-you-did-not-do-it" tabindex="-1">The compiler assumes you did not do it</h2>
+<p>This is the part that surprises people. UB is not a run-time event the compiler
+guards against; it is a <em>premise the optimizer reasons from</em>.</p>
+<figure class="widget"><cpp-runner data-run="1" data-asm="1" data-std="c++20"><figcaption class="code__title">An assumption you did not know you made</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">climits</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// If x + 1 overflows, that is UB — so the compiler may assume it never does.</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// And if it never does, then x + 1 > x is always true.</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">bool</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> always_true</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> x</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;climits&gt;
+
+// If x + 1 overflows, that is UB — so the compiler may assume it never does.
+// And if it never does, then x + 1 &gt; x is always true.
+bool always_true(int x) {
+    return x + 1 &gt; x;
+}
+
+int main() { return always_true(INT_MAX) ? 0 : 1; }</template></cpp-runner></figure>
+<p>Press <strong>Assembly</strong> and switch to <code>-O2</code>. The function does not add anything and
+does not compare anything — it returns 1 unconditionally. The compiler reasoned:
+signed overflow is undefined, therefore it cannot happen, therefore <code>x + 1</code> is
+always greater than <code>x</code>.</p>
+<p>For every input where you would want an answer, that reasoning is correct. For
+<code>INT_MAX</code> it produces a function that disagrees with arithmetic. Both are
+allowed, because you promised not to pass <code>INT_MAX</code>.</p>
+<p>The same reasoning removes null checks:</p>
+<figure class="widget"><cpp-runner data-run="1" data-asm="1" data-std="c++20"><figcaption class="code__title">A check the compiler deletes</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> deref_then_check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int*</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> p</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // if p were null, this is already UB</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">p </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> nullptr</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">        // ...so p cannot be null, so this is dead code</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        return</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> -</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">int deref_then_check(int* p) {
+    const int value = *p;      // if p were null, this is already UB
+    if (p == nullptr) {        // ...so p cannot be null, so this is dead code
+        return -1;
+    }
+    return value;
+}
+
+int main() { int x = 5; return deref_then_check(&amp;x); }</template></cpp-runner></figure>
+<p>At <code>-O2</code> the comparison is gone. Dereferencing <code>p</code> promised it was not null, so
+the check that follows can only ever be false. Writing the check <em>after</em> the
+dereference is a common mistake in code that has been edited over time, and the
+result is that the safety check silently stops existing.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>This is why “it worked in debug” is not evidence. <code>-O0</code> often evaluates your
+code the way you expected; <code>-O2</code> uses the assumptions. A bug that only appears
+in release builds is very often UB that the optimizer has finally exploited.</p>
+</aside>
+<h2 id="the-common-sources" tabindex="-1">The common sources</h2>
+<p>The list is long, but a handful account for nearly everything you will hit.</p>
+<h3 id="out-of-bounds-access" tabindex="-1">Out-of-bounds access</h3>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">Past the end</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">{</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">};</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">v[5] = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">    // no bounds check, ever</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; v{1, 2, 3};
+    std::cout &lt;&lt; &quot;v[5] = &quot; &lt;&lt; v[5] &lt;&lt; '\n';    // no bounds check, ever
+}</template></cpp-runner></figure>
+<p><code>operator[]</code> does not check. <code>at()</code> does, and throws. Chapter 2.6 covered the
+array case; the sanitizer names the allocation and the offset.</p>
+<h3 id="use-after-free-and-after-return" tabindex="-1">Use after free, and after return</h3>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">Reading storage that is gone</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">memory</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    auto</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> owner </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">make_unique</span><span style="--sh-light:#999999;--sh-dark:#666666">&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#999999;--sh-dark:#666666">>(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">42</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> observer </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> owner</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">get</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">    owner</span><span style="--sh-light:#999999;--sh-dark:#666666">.</span><span style="--sh-light:#59873A;--sh-dark:#80A665">reset</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                     // the int is destroyed here</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">reading it anyway: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">observer </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main() {
+    auto owner = std::make_unique&lt;int&gt;(42);
+    int* observer = owner.get();
+
+    owner.reset();                     // the int is destroyed here
+
+    std::cout &lt;&lt; &quot;reading it anyway: &quot; &lt;&lt; *observer &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<h3 id="uninitialised-reads" tabindex="-1">Uninitialised reads</h3>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">A value that was never written</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> total </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> i </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> total </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+=</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> values</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">i</span><span style="--sh-light:#999999;--sh-dark:#666666">];</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // reading indeterminate values</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">total: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> total </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">(no sanitizer complained — see below)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int values[4];
+    int total = 0;
+    for (int i = 0; i &lt; 4; ++i) total += values[i];   // reading indeterminate values
+
+    std::cout &lt;&lt; &quot;total: &quot; &lt;&lt; total &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;(no sanitizer complained — see below)\n&quot;;
+}</template></cpp-runner></figure>
+<p>That one is undefined, and <strong>neither sanitizer said a word.</strong> ASan tracks memory
+that is out of bounds or freed; these bytes are neither. Catching uninitialised
+reads at run time is MemorySanitizer’s job, and MSan is Clang-only and requires
+every library it touches to be rebuilt with it — which is why it is rarely used.
+Your defence here is <code>-Wall</code>, which catches the cases visible within one
+function, and initialising at the point of declaration.</p>
+<h3 id="signed-overflow" tabindex="-1">Signed overflow</h3>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">One past the maximum</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">climits</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> big </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> INT_MAX</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">INT_MAX     = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> big </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">INT_MAX + 1 = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> big </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">   // undefined</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;climits&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    int big = INT_MAX;
+    std::cout &lt;&lt; &quot;INT_MAX     = &quot; &lt;&lt; big &lt;&lt; '\n';
+    std::cout &lt;&lt; &quot;INT_MAX + 1 = &quot; &lt;&lt; big + 1 &lt;&lt; '\n';   // undefined
+}</template></cpp-runner></figure>
+<p>Unsigned overflow is <em>defined</em> — it wraps modulo 2ⁿ. Signed overflow is not, and
+that asymmetry is deliberate: it lets the compiler assume loop counters do not
+wrap, which enables a great deal of optimisation.</p>
+<h3 id="invalid-shifts-and-division-by-zero" tabindex="-1">Invalid shifts, and division by zero</h3>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">Shifting too far</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> shift </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 32</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                     // int is 32 bits: shifting by 32 is UB</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">1 &#x3C;&#x3C; 32 = </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">value </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> shift</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int value = 1;
+    int shift = 32;                     // int is 32 bits: shifting by 32 is UB
+    std::cout &lt;&lt; &quot;1 &lt;&lt; 32 = &quot; &lt;&lt; (value &lt;&lt; shift) &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>Shifting by an amount greater than or equal to the width of the type is
+undefined, as is shifting a negative value left. Integer division by zero is
+undefined too — note that <em>floating-point</em> division by zero is not, and gives
+you <code>inf</code>.</p>
+<h3 id="lifetime-and-aliasing" tabindex="-1">Lifetime and aliasing</h3>
+<p>Dangling references (Chapter 2.4), reading an object through a pointer to an
+unrelated type, and modifying an object twice in one expression without
+sequencing all belong here.</p>
+<h2 id="what-the-sanitizers-catch" tabindex="-1">What the sanitizers catch</h2>
+<p>Run the samples above and a pattern emerges. Some UB is reported precisely, and
+some passes in silence.</p>
+<table>
+<thead>
+<tr>
+<th>Kind of UB</th>
+<th>Caught by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Out-of-bounds read or write</td>
+<td>AddressSanitizer</td>
+</tr>
+<tr>
+<td>Use after free, use after return</td>
+<td>AddressSanitizer</td>
+</tr>
+<tr>
+<td>Memory leak</td>
+<td>LeakSanitizer (part of ASan)</td>
+</tr>
+<tr>
+<td>Signed overflow, bad shift, division by zero</td>
+<td>UndefinedBehaviorSanitizer</td>
+</tr>
+<tr>
+<td>Null dereference, misaligned access</td>
+<td>UndefinedBehaviorSanitizer</td>
+</tr>
+<tr>
+<td>Data race</td>
+<td>ThreadSanitizer (separate, Part 8)</td>
+</tr>
+<tr>
+<td><strong>Uninitialised read</strong></td>
+<td>MemorySanitizer only — rarely available</td>
+</tr>
+<tr>
+<td><strong>Reading the wrong union member</strong></td>
+<td>nothing</td>
+</tr>
+<tr>
+<td><strong>Most logic errors that happen to be UB-free</strong></td>
+<td>nothing</td>
+</tr>
+</tbody>
+</table>
+<p>The two bolded rows are the reason sanitizers are a net, not a proof. This
+session’s own writing produced three examples where a genuine bug passed
+silently: an uninitialised read printing a plausible <code>0</code>, a self-assignment that
+quietly replaced data with garbage, and 200 leaked file handles that
+LeakSanitizer ignored because the C runtime still held them on a list.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>Run them anyway, and run them in CI. Turning on
+<code>-fsanitize=address,undefined -fno-omit-frame-pointer -g</code> costs roughly 2× run
+time and finds bugs that would otherwise reach production. The cost of <em>not</em>
+running them is measured in incident reports.</p>
+</aside>
+<figure class="code"><figcaption class="code__title">What this book compiles with</figcaption><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -std=c++20</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wall</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wextra</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -fsanitize=address,undefined</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> \</span></span>
+<span class="line"><span style="--sh-light:#A65E2B;--sh-dark:#C99076">    -fno-omit-frame-pointer</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -g</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -o</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> program</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> main.cpp</span></span></code></pre></figure>
+<h2 id="reading-a-sanitizer-report" tabindex="-1">Reading a sanitizer report</h2>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">A report worth reading closely</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 7</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">about to read past the end</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">v[9] = </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">9</span><span style="--sh-light:#999999;--sh-dark:#666666">]);</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cstdio&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; v(4, 7);
+    std::printf(&quot;about to read past the end\n&quot;);
+    std::printf(&quot;v[9] = %d\n&quot;, v[9]);
+}</template></cpp-runner></figure>
+<p>The important lines are the first and the last. The first names the <strong>kind</strong> of
+error and the address — <code>heap-buffer-overflow</code> here. The last section says where
+the memory came from: which allocation, how large it was, and how far past it
+you went. Between them is the stack trace of the access.</p>
+<p>When a trace shows only addresses rather than function names, the binary was
+built without <code>-g</code>. Add it — the whole value of the report is in the names.</p>
+<h2 id="defending-against-it" tabindex="-1">Defending against it</h2>
+<p>In rough order of how much they buy you:</p>
+<ol>
+<li><strong>Use the types that make it impossible.</strong> <code>std::vector</code> over raw arrays,
+<code>std::unique_ptr</code> over <code>new</code>/<code>delete</code>, <code>std::string</code> over <code>char*</code>,
+<code>std::optional</code> over sentinels. Every one of them removes a class of UB by
+construction, and that is the real argument for Parts 3 and 4.</li>
+<li><strong>Turn on warnings.</strong> <code>-Wall -Wextra</code> catches uninitialised reads, unused
+results, and sign-comparison mistakes within a function.</li>
+<li><strong>Run the sanitizers in CI</strong>, not just locally.</li>
+<li><strong>Prefer checked accessors at boundaries.</strong> <code>at()</code> where the index came from
+outside; <code>operator[]</code> in a loop you control.</li>
+<li><strong>Compile with <code>-fwrapv</code> if you genuinely need wrapping</strong> signed arithmetic.
+It makes signed overflow defined at the cost of some optimisation, which is
+a fair trade when the alternative is being wrong.</li>
+</ol>
+<aside class="callout callout--note"><p class="callout__label">Note</p>
+<p><code>-fwrapv</code> and <code>-ftrapv</code> are worth knowing about but are not a substitute for
+correctness. <code>-fwrapv</code> defines overflow as wrapping; <code>-ftrapv</code> traps on it. Both
+change what your program means, so they belong in a considered decision, not
+sprinkled on to silence a sanitizer.</p>
+</aside>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Why can the compiler delete `if (p == nullptr) return -1;` when it follows `int v = *p;`?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;Because the optimizer proves p is non-null from the caller&quot;, &quot;why&quot;: &quot;It usually cannot see the caller at all. The reasoning is local and needs no caller information.&quot; },
+    { &quot;text&quot;: &quot;Because dereferencing p is undefined if p is null, so the compiler may assume p is not null — making the check always false&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Exactly. UB is a premise, not a run-time event: the dereference promises non-null, so any later check for null is dead code. This is how safety checks silently disappear when code is reordered during editing.&quot; },
+    { &quot;text&quot;: &quot;Because comparing a pointer to nullptr is undefined behaviour&quot;, &quot;why&quot;: &quot;That comparison is entirely well defined. The dereference before it is what licenses the assumption.&quot; },
+    { &quot;text&quot;: &quot;It cannot — that would be a compiler bug&quot;, &quot;why&quot;: &quot;It is standard-conforming and widely done. The assembly at -O2 shows the comparison gone.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Your program passes with `-fsanitize=address,undefined`. What has that established?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;The program is free of undefined behaviour&quot;, &quot;why&quot;: &quot;The sanitizers instrument specific categories. Uninitialised reads, wrong-union-member reads, and data races (without TSan) all pass silently.&quot; },
+    { &quot;text&quot;: &quot;No UB of the kinds those two sanitizers instrument occurred on the inputs you ran&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Both qualifiers matter. They are dynamic tools, so unexercised paths are unchecked, and their coverage has real gaps — an uninitialised read is the common one.&quot; },
+    { &quot;text&quot;: &quot;The program has no memory leaks&quot;, &quot;why&quot;: &quot;LeakSanitizer catches unreachable allocations, but a leaked file handle or a still-reachable allocation is reported by nothing.&quot; },
+    { &quot;text&quot;: &quot;The program will behave identically at -O2&quot;, &quot;why&quot;: &quot;Sanitizer builds typically run at low optimisation. UB that the optimizer exploits may only appear at -O2, which is why release-only bugs are so often UB.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="find-the-ub"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/correctness/error-handling-without-exceptions/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Error handling without exceptions</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/correctness/testing/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Testing</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#what-the-words-mean">What the words mean</a></li><li class="rail__item rail__item--h2"><a href="#the-compiler-assumes-you-did-not-do-it">The compiler assumes you did not do it</a></li><li class="rail__item rail__item--h2"><a href="#the-common-sources">The common sources</a></li><li class="rail__item rail__item--h3"><a href="#out-of-bounds-access">Out-of-bounds access</a></li><li class="rail__item rail__item--h3"><a href="#use-after-free-and-after-return">Use after free, and after return</a></li><li class="rail__item rail__item--h3"><a href="#uninitialised-reads">Uninitialised reads</a></li><li class="rail__item rail__item--h3"><a href="#signed-overflow">Signed overflow</a></li><li class="rail__item rail__item--h3"><a href="#invalid-shifts-and-division-by-zero">Invalid shifts, and division by zero</a></li><li class="rail__item rail__item--h3"><a href="#lifetime-and-aliasing">Lifetime and aliasing</a></li><li class="rail__item rail__item--h2"><a href="#what-the-sanitizers-catch">What the sanitizers catch</a></li><li class="rail__item rail__item--h2"><a href="#reading-a-sanitizer-report">Reading a sanitizer report</a></li><li class="rail__item rail__item--h2"><a href="#defending-against-it">Defending against it</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>8 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="undefined-behaviour" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

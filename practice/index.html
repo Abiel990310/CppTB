@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice problems · The C++ Textbook</title>
+  <meta name="description" content="Auto-graded C++ practice problems, filterable by topic and difficulty.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose prose--wide">
+    <h1>Practice problems</h1>
+    <p class="chapter-lede">Each problem gives you a starting file and a hidden test that compiles against your code. Write, run, and the page tells you exactly which assertion failed. Progress is stored in this browser.</p>
+
+    <div class="filters">
+      <div class="filters__row">
+        <span class="filters__label">Difficulty</span>
+        <button class="chip is-on" data-filter-difficulty="all">All</button>
+        <button class="chip" data-filter-difficulty="intro">Warm-up</button><button class="chip" data-filter-difficulty="core">Core</button><button class="chip" data-filter-difficulty="stretch">Stretch</button><button class="chip" data-filter-difficulty="deep">Deep end</button>
+      </div>
+      <div class="filters__row">
+        <span class="filters__label">Topic</span>
+        <button class="chip is-on" data-filter-topic="all">All</button>
+        <button class="chip" data-filter-topic="algorithms">algorithms</button><button class="chip" data-filter-topic="aliasing">aliasing</button><button class="chip" data-filter-topic="alignment">alignment</button><button class="chip" data-filter-topic="allocation">allocation</button><button class="chip" data-filter-topic="analysis">analysis</button><button class="chip" data-filter-topic="api-design">api-design</button><button class="chip" data-filter-topic="arithmetic">arithmetic</button><button class="chip" data-filter-topic="arrays">arrays</button><button class="chip" data-filter-topic="assertions">assertions</button><button class="chip" data-filter-topic="async">async</button><button class="chip" data-filter-topic="atomics">atomics</button><button class="chip" data-filter-topic="backtracking">backtracking</button><button class="chip" data-filter-topic="basics">basics</button><button class="chip" data-filter-topic="bellman-ford">bellman-ford</button><button class="chip" data-filter-topic="benchmarking">benchmarking</button><button class="chip" data-filter-topic="bfs">bfs</button><button class="chip" data-filter-topic="binary-search">binary-search</button><button class="chip" data-filter-topic="binary-size">binary-size</button><button class="chip" data-filter-topic="bit-manipulation">bit-manipulation</button><button class="chip" data-filter-topic="bitmask">bitmask</button><button class="chip" data-filter-topic="bottleneck">bottleneck</button><button class="chip" data-filter-topic="boundaries">boundaries</button><button class="chip" data-filter-topic="classes">classes</button><button class="chip" data-filter-topic="clustering">clustering</button><button class="chip" data-filter-topic="comparators">comparators</button><button class="chip" data-filter-topic="comparison">comparison</button><button class="chip" data-filter-topic="compilation">compilation</button><button class="chip" data-filter-topic="compile-time">compile-time</button><button class="chip" data-filter-topic="compiler-errors">compiler-errors</button><button class="chip" data-filter-topic="complexity">complexity</button><button class="chip" data-filter-topic="composition">composition</button><button class="chip" data-filter-topic="compression">compression</button><button class="chip" data-filter-topic="concepts">concepts</button><button class="chip" data-filter-topic="concurrency">concurrency</button><button class="chip" data-filter-topic="const">const</button><button class="chip" data-filter-topic="constexpr">constexpr</button><button class="chip" data-filter-topic="constraints">constraints</button><button class="chip" data-filter-topic="constructors">constructors</button><button class="chip" data-filter-topic="containers">containers</button><button class="chip" data-filter-topic="control-flow">control-flow</button><button class="chip" data-filter-topic="copying">copying</button><button class="chip" data-filter-topic="coroutines">coroutines</button><button class="chip" data-filter-topic="correctness">correctness</button><button class="chip" data-filter-topic="counting">counting</button><button class="chip" data-filter-topic="crtp">crtp</button><button class="chip" data-filter-topic="data-races">data-races</button><button class="chip" data-filter-topic="deadlock">deadlock</button><button class="chip" data-filter-topic="debugging">debugging</button><button class="chip" data-filter-topic="decay">decay</button><button class="chip" data-filter-topic="declarations">declarations</button><button class="chip" data-filter-topic="decltype">decltype</button><button class="chip" data-filter-topic="deduction">deduction</button><button class="chip" data-filter-topic="dependencies">dependencies</button><button class="chip" data-filter-topic="deque">deque</button><button class="chip" data-filter-topic="design">design</button><button class="chip" data-filter-topic="destructors">destructors</button><button class="chip" data-filter-topic="dfs">dfs</button><button class="chip" data-filter-topic="difference-arrays">difference-arrays</button><button class="chip" data-filter-topic="dijkstra">dijkstra</button><button class="chip" data-filter-topic="divide-and-conquer">divide-and-conquer</button><button class="chip" data-filter-topic="dynamic-programming">dynamic-programming</button><button class="chip" data-filter-topic="edge-cases">edge-cases</button><button class="chip" data-filter-topic="elision">elision</button><button class="chip" data-filter-topic="encapsulation">encapsulation</button><button class="chip" data-filter-topic="enumeration">enumeration</button><button class="chip" data-filter-topic="error-handling">error-handling</button><button class="chip" data-filter-topic="exception-safety">exception-safety</button><button class="chip" data-filter-topic="exceptions">exceptions</button><button class="chip" data-filter-topic="expected">expected</button><button class="chip" data-filter-topic="floyd-warshall">floyd-warshall</button><button class="chip" data-filter-topic="folds">folds</button><button class="chip" data-filter-topic="format">format</button><button class="chip" data-filter-topic="forwarding">forwarding</button><button class="chip" data-filter-topic="frequency-maps">frequency-maps</button><button class="chip" data-filter-topic="functions">functions</button><button class="chip" data-filter-topic="futures">futures</button><button class="chip" data-filter-topic="generators">generators</button><button class="chip" data-filter-topic="generics">generics</button><button class="chip" data-filter-topic="getline">getline</button><button class="chip" data-filter-topic="globals">globals</button><button class="chip" data-filter-topic="graphs">graphs</button><button class="chip" data-filter-topic="greedy">greedy</button><button class="chip" data-filter-topic="grids">grids</button><button class="chip" data-filter-topic="hashing">hashing</button><button class="chip" data-filter-topic="if-constexpr">if-constexpr</button><button class="chip" data-filter-topic="indexing">indexing</button><button class="chip" data-filter-topic="inheritance">inheritance</button><button class="chip" data-filter-topic="initialisation">initialisation</button><button class="chip" data-filter-topic="input">input</button><button class="chip" data-filter-topic="integers">integers</button><button class="chip" data-filter-topic="interfaces">interfaces</button><button class="chip" data-filter-topic="invariants">invariants</button><button class="chip" data-filter-topic="io">io</button><button class="chip" data-filter-topic="iterators">iterators</button><button class="chip" data-filter-topic="jthread">jthread</button><button class="chip" data-filter-topic="kruskal">kruskal</button><button class="chip" data-filter-topic="layout">layout</button><button class="chip" data-filter-topic="laziness">laziness</button><button class="chip" data-filter-topic="lifetime">lifetime</button><button class="chip" data-filter-topic="linking">linking</button><button class="chip" data-filter-topic="locality">locality</button><button class="chip" data-filter-topic="lock-free">lock-free</button><button class="chip" data-filter-topic="loops">loops</button><button class="chip" data-filter-topic="low-link">low-link</button><button class="chip" data-filter-topic="macros">macros</button><button class="chip" data-filter-topic="map">map</button><button class="chip" data-filter-topic="meet-in-the-middle">meet-in-the-middle</button><button class="chip" data-filter-topic="memoisation">memoisation</button><button class="chip" data-filter-topic="memory-model">memory-model</button><button class="chip" data-filter-topic="metaprogramming">metaprogramming</button><button class="chip" data-filter-topic="modular-arithmetic">modular-arithmetic</button><button class="chip" data-filter-topic="monotonic-deque">monotonic-deque</button><button class="chip" data-filter-topic="monotonic-stack">monotonic-stack</button><button class="chip" data-filter-topic="monotonicity">monotonicity</button><button class="chip" data-filter-topic="moving">moving</button><button class="chip" data-filter-topic="mst">mst</button><button class="chip" data-filter-topic="multi-case">multi-case</button><button class="chip" data-filter-topic="multiset">multiset</button><button class="chip" data-filter-topic="mutexes">mutexes</button><button class="chip" data-filter-topic="nodiscard">nodiscard</button><button class="chip" data-filter-topic="odr">odr</button><button class="chip" data-filter-topic="off-by-one">off-by-one</button><button class="chip" data-filter-topic="offline">offline</button><button class="chip" data-filter-topic="operators">operators</button><button class="chip" data-filter-topic="optional">optional</button><button class="chip" data-filter-topic="overflow">overflow</button><button class="chip" data-filter-topic="overloading">overloading</button><button class="chip" data-filter-topic="ownership">ownership</button><button class="chip" data-filter-topic="packaged-task">packaged-task</button><button class="chip" data-filter-topic="parameters">parameters</button><button class="chip" data-filter-topic="parsing">parsing</button><button class="chip" data-filter-topic="performance">performance</button><button class="chip" data-filter-topic="permutations">permutations</button><button class="chip" data-filter-topic="pimpl">pimpl</button><button class="chip" data-filter-topic="pointers">pointers</button><button class="chip" data-filter-topic="polymorphism">polymorphism</button><button class="chip" data-filter-topic="prefix-sums">prefix-sums</button><button class="chip" data-filter-topic="prim">prim</button><button class="chip" data-filter-topic="projections">projections</button><button class="chip" data-filter-topic="property-based">property-based</button><button class="chip" data-filter-topic="pruning">pruning</button><button class="chip" data-filter-topic="raii">raii</button><button class="chip" data-filter-topic="ranges">ranges</button><button class="chip" data-filter-topic="recursion">recursion</button><button class="chip" data-filter-topic="refactoring">refactoring</button><button class="chip" data-filter-topic="references">references</button><button class="chip" data-filter-topic="returns">returns</button><button class="chip" data-filter-topic="review">review</button><button class="chip" data-filter-topic="rule-of-zero">rule-of-zero</button><button class="chip" data-filter-topic="scope">scope</button><button class="chip" data-filter-topic="search">search</button><button class="chip" data-filter-topic="short-circuit">short-circuit</button><button class="chip" data-filter-topic="slicing">slicing</button><button class="chip" data-filter-topic="sliding-window">sliding-window</button><button class="chip" data-filter-topic="smart-pointers">smart-pointers</button><button class="chip" data-filter-topic="sorting">sorting</button><button class="chip" data-filter-topic="special-members">special-members</button><button class="chip" data-filter-topic="specialisation">specialisation</button><button class="chip" data-filter-topic="specialization">specialization</button><button class="chip" data-filter-topic="state-space">state-space</button><button class="chip" data-filter-topic="static-polymorphism">static-polymorphism</button><button class="chip" data-filter-topic="statistics">statistics</button><button class="chip" data-filter-topic="stop-token">stop-token</button><button class="chip" data-filter-topic="streams">streams</button><button class="chip" data-filter-topic="string_view">string_view</button><button class="chip" data-filter-topic="strings">strings</button><button class="chip" data-filter-topic="structs">structs</button><button class="chip" data-filter-topic="subset-sums">subset-sums</button><button class="chip" data-filter-topic="sweep">sweep</button><button class="chip" data-filter-topic="switch">switch</button><button class="chip" data-filter-topic="templates">templates</button><button class="chip" data-filter-topic="testing">testing</button><button class="chip" data-filter-topic="thread-pool">thread-pool</button><button class="chip" data-filter-topic="threads">threads</button><button class="chip" data-filter-topic="toolchain">toolchain</button><button class="chip" data-filter-topic="tooling">tooling</button><button class="chip" data-filter-topic="topological-sort">topological-sort</button><button class="chip" data-filter-topic="traits">traits</button><button class="chip" data-filter-topic="two-pointers">two-pointers</button><button class="chip" data-filter-topic="type-erasure">type-erasure</button><button class="chip" data-filter-topic="types">types</button><button class="chip" data-filter-topic="undefined-behaviour">undefined-behaviour</button><button class="chip" data-filter-topic="union-find">union-find</button><button class="chip" data-filter-topic="unordered_map">unordered_map</button><button class="chip" data-filter-topic="validation">validation</button><button class="chip" data-filter-topic="variadic">variadic</button><button class="chip" data-filter-topic="variadics">variadics</button><button class="chip" data-filter-topic="variant">variant</button><button class="chip" data-filter-topic="vector">vector</button><button class="chip" data-filter-topic="views">views</button><button class="chip" data-filter-topic="virtual">virtual</button><button class="chip" data-filter-topic="visit">visit</button><button class="chip" data-filter-topic="warnings">warnings</button>
+      </div>
+    </div>
+
+    <ul class="problems" id="problem-list"><li class="problem" data-difficulty="core" data-topics="performance pointers aliasing" data-id="alias-aware-copy">
+        <a href="/CppTB/practice/alias-aware-copy/">
+          <span class="problem__status" data-status-for="alias-aware-copy"></span>
+          <span class="problem__title">When the source is the destination</span>
+          <span class="problem__chapter">What the compiler does for you</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="arrays templates decay" data-id="array-length">
+        <a href="/CppTB/practice/array-length/">
+          <span class="problem__status" data-status-for="array-length"></span>
+          <span class="problem__title">Keep the length</span>
+          <span class="problem__chapter">Arrays, and why they decay</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="atomics concurrency lock-free" data-id="atomic-statistics">
+        <a href="/CppTB/practice/atomic-statistics/">
+          <span class="problem__status" data-status-for="atomic-statistics"></span>
+          <span class="problem__title">Counters without a lock</span>
+          <span class="problem__chapter">Atomics and the memory model</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="arithmetic types" data-id="average-of-three">
+        <a href="/CppTB/practice/average-of-three/">
+          <span class="problem__status" data-status-for="average-of-three"></span>
+          <span class="problem__title">An average that is actually right</span>
+          <span class="problem__chapter">Values, types, and names</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="references functions performance" data-id="avoid-the-copy">
+        <a href="/CppTB/practice/avoid-the-copy/">
+          <span class="problem__status" data-status-for="avoid-the-copy"></span>
+          <span class="problem__title">Stop copying the argument</span>
+          <span class="problem__chapter">References</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="recursion backtracking algorithms" data-id="backtracking-audit">
+        <a href="/CppTB/practice/backtracking-audit/">
+          <span class="problem__status" data-status-for="backtracking-audit"></span>
+          <span class="problem__title">Three searches that forget</span>
+          <span class="problem__chapter">Recursion and backtracking</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs bellman-ford algorithms" data-id="bellman-ford-audit">
+        <a href="/CppTB/practice/bellman-ford-audit/">
+          <span class="problem__status" data-status-for="bellman-ford-audit"></span>
+          <span class="problem__title">Three relaxations with negative weights</span>
+          <span class="problem__chapter">Bellman–Ford and Floyd–Warshall</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs bfs algorithms" data-id="bfs-audit">
+        <a href="/CppTB/practice/bfs-audit/">
+          <span class="problem__status" data-status-for="bfs-audit"></span>
+          <span class="problem__title">Three searches in the wrong order</span>
+          <span class="problem__chapter">BFS, 0–1 BFS, and multi-source BFS</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="bitmask bit-manipulation algorithms" data-id="bitmask-audit">
+        <a href="/CppTB/practice/bitmask-audit/">
+          <span class="problem__status" data-status-for="bitmask-audit"></span>
+          <span class="problem__title">Three masks that lose a bit</span>
+          <span class="problem__chapter">Bitmasks: enumerating subsets and permutations</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="algorithms containers search design" data-id="boolean-queries">
+        <a href="/CppTB/practice/boolean-queries/">
+          <span class="problem__status" data-status-for="boolean-queries"></span>
+          <span class="problem__title">Not every query is an AND</span>
+          <span class="problem__chapter">Project: a small search index</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="binary-search algorithms off-by-one" data-id="bounds-audit">
+        <a href="/CppTB/practice/bounds-audit/">
+          <span class="problem__status" data-status-for="bounds-audit"></span>
+          <span class="problem__title">Which bound did you want?</span>
+          <span class="problem__chapter">Binary search: on a range, and on the answer</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="smart-pointers ownership lifetime" data-id="break-the-cycle">
+        <a href="/CppTB/practice/break-the-cycle/">
+          <span class="problem__status" data-status-for="break-the-cycle"></span>
+          <span class="problem__title">Break the reference cycle</span>
+          <span class="problem__chapter">Smart pointers</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs dfs low-link algorithms" data-id="bridges-and-cuts">
+        <a href="/CppTB/practice/bridges-and-cuts/">
+          <span class="problem__status" data-status-for="bridges-and-cuts"></span>
+          <span class="problem__title">Bridges and cut vertices</span>
+          <span class="problem__chapter">DFS: components, cycles, bridges</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs prefix-sums algorithms" data-id="build-adjacency">
+        <a href="/CppTB/practice/build-adjacency/">
+          <span class="problem__status" data-status-for="build-adjacency"></span>
+          <span class="problem__title">Compressed adjacency, off by one</span>
+          <span class="problem__chapter">Representing graphs</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance templates type-erasure allocation" data-id="cheaper-callback">
+        <a href="/CppTB/practice/cheaper-callback/">
+          <span class="problem__status" data-status-for="cheaper-callback"></span>
+          <span class="problem__title">The callback that allocates</span>
+          <span class="problem__chapter">Zero-cost abstraction, examined</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="undefined-behaviour containers api-design" data-id="checked-access">
+        <a href="/CppTB/practice/checked-access/">
+          <span class="problem__status" data-status-for="checked-access"></span>
+          <span class="problem__title">Check at the boundary</span>
+          <span class="problem__chapter">Undefined behaviour</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="invariants classes assertions" data-id="class-invariant">
+        <a href="/CppTB/practice/class-invariant/">
+          <span class="problem__status" data-status-for="class-invariant"></span>
+          <span class="problem__title">Name the invariant</span>
+          <span class="problem__chapter">Invariants and assertions</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="control-flow switch" data-id="classify-number">
+        <a href="/CppTB/practice/classify-number/">
+          <span class="problem__status" data-status-for="classify-number"></span>
+          <span class="problem__title">Classify without falling through</span>
+          <span class="problem__chapter">Making decisions</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sorting comparators undefined-behaviour" data-id="comparator-audit">
+        <a href="/CppTB/practice/comparator-audit/">
+          <span class="problem__status" data-status-for="comparator-audit"></span>
+          <span class="problem__title">Four comparators, three of them broken</span>
+          <span class="problem__chapter">Sorting, comparators, and coordinate compression</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="strings parsing comparison tooling" data-id="compare-versions">
+        <a href="/CppTB/practice/compare-versions/">
+          <span class="problem__status" data-status-for="compare-versions"></span>
+          <span class="problem__title">Is this version good enough?</span>
+          <span class="problem__chapter">Dependencies and packaging</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="constexpr compile-time validation strings" data-id="compile-time-hex">
+        <a href="/CppTB/practice/compile-time-hex/">
+          <span class="problem__status" data-status-for="compile-time-hex"></span>
+          <span class="problem__title">Reject the bad literal at build time</span>
+          <span class="problem__chapter">Compile-time computation</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="complexity containers analysis" data-id="complexity-audit">
+        <a href="/CppTB/practice/complexity-audit/">
+          <span class="problem__status" data-status-for="complexity-audit"></span>
+          <span class="problem__title">What does this actually cost?</span>
+          <span class="problem__chapter">Counting the work you actually do</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sorting compression binary-search" data-id="compress-coordinates">
+        <a href="/CppTB/practice/compress-coordinates/">
+          <span class="problem__status" data-status-for="compress-coordinates"></span>
+          <span class="problem__title">A billion values, a hundred thousand slots</span>
+          <span class="problem__chapter">Sorting, comparators, and coordinate compression</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="const classes api-design" data-id="const-correct-api">
+        <a href="/CppTB/practice/const-correct-api/">
+          <span class="problem__status" data-status-for="const-correct-api"></span>
+          <span class="problem__title">Make the class usable</span>
+          <span class="problem__chapter">const and constness</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="constexpr compile-time arrays" data-id="constexpr-sieve">
+        <a href="/CppTB/practice/constexpr-sieve/">
+          <span class="problem__status" data-status-for="constexpr-sieve"></span>
+          <span class="problem__title">A table built before the program starts</span>
+          <span class="problem__chapter">Compile-time computation</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="concepts overloading templates" data-id="constrain-overloads">
+        <a href="/CppTB/practice/constrain-overloads/">
+          <span class="problem__status" data-status-for="constrain-overloads"></span>
+          <span class="problem__title">Let the constraint choose</span>
+          <span class="problem__chapter">Concepts and constraints</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="linking initialisation globals lifetime" data-id="construct-on-first-use">
+        <a href="/CppTB/practice/construct-on-first-use/">
+          <span class="problem__status" data-status-for="construct-on-first-use"></span>
+          <span class="problem__title">The global that was not ready yet</span>
+          <span class="problem__chapter">Headers, translation units, and linking</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="threads concurrency stop-token jthread" data-id="cooperative-worker">
+        <a href="/CppTB/practice/cooperative-worker/">
+          <span class="problem__status" data-status-for="cooperative-worker"></span>
+          <span class="problem__title">A worker that can be told to stop</span>
+          <span class="problem__chapter">Threads</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="coroutines lifetime undefined-behaviour raii" data-id="coroutine-lifetime">
+        <a href="/CppTB/practice/coroutine-lifetime/">
+          <span class="problem__status" data-status-for="coroutine-lifetime"></span>
+          <span class="problem__title">The frame outlives the call</span>
+          <span class="problem__chapter">Coroutines</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="templates iterators generics" data-id="count-if-template">
+        <a href="/CppTB/practice/count-if-template/">
+          <span class="problem__status" data-status-for="count-if-template"></span>
+          <span class="problem__title">Generic over the range and the test</span>
+          <span class="problem__chapter">Function templates</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance strings containers allocation" data-id="count-the-allocations">
+        <a href="/CppTB/practice/count-the-allocations/">
+          <span class="problem__status" data-status-for="count-the-allocations"></span>
+          <span class="problem__title">Make the allocations go away</span>
+          <span class="problem__chapter">Measuring, not guessing</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="strings algorithms" data-id="count-words">
+        <a href="/CppTB/practice/count-words/">
+          <span class="problem__status" data-status-for="count-words"></span>
+          <span class="problem__title">Count the words</span>
+          <span class="problem__chapter">std::string and text</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="hashing frequency-maps multiset algorithms" data-id="counting-audit">
+        <a href="/CppTB/practice/counting-audit/">
+          <span class="problem__status" data-status-for="counting-audit"></span>
+          <span class="problem__title">Three counters that lose track</span>
+          <span class="problem__chapter">Hashing, frequency maps, and multisets</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="crtp templates static-polymorphism" data-id="crtp-mixin">
+        <a href="/CppTB/practice/crtp-mixin/">
+          <span class="problem__status" data-status-for="crtp-mixin"></span>
+          <span class="problem__title">Algorithms for free, from two members</span>
+          <span class="problem__chapter">Static polymorphism</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="containers hashing unordered_map" data-id="custom-key-hash">
+        <a href="/CppTB/practice/custom-key-hash/">
+          <span class="problem__status" data-status-for="custom-key-hash"></span>
+          <span class="problem__title">A hash that does not collide</span>
+          <span class="problem__chapter">Associative containers</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs topological-sort dynamic-programming algorithms" data-id="dag-dp">
+        <a href="/CppTB/practice/dag-dp/">
+          <span class="problem__status" data-status-for="dag-dp"></span>
+          <span class="problem__title">Two sweeps over a DAG</span>
+          <span class="problem__chapter">Topological order and DAG DP</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="templates deduction decltype references" data-id="decltype-auto">
+        <a href="/CppTB/practice/decltype-auto/">
+          <span class="problem__status" data-status-for="decltype-auto"></span>
+          <span class="problem__title">Return exactly what you were given</span>
+          <span class="problem__chapter">Deduction and forwarding</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="copying ownership raii" data-id="deep-copy">
+        <a href="/CppTB/practice/deep-copy/">
+          <span class="problem__status" data-status-for="deep-copy"></span>
+          <span class="problem__title">Make the copy independent</span>
+          <span class="problem__chapter">Copying</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="monotonic-deque sliding-window algorithms" data-id="deque-audit">
+        <a href="/CppTB/practice/deque-audit/">
+          <span class="problem__status" data-status-for="deque-audit"></span>
+          <span class="problem__title">Three windows that see too much</span>
+          <span class="problem__chapter">Deques and sliding-window extrema</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs dfs algorithms" data-id="dfs-audit">
+        <a href="/CppTB/practice/dfs-audit/">
+          <span class="problem__status" data-status-for="dfs-audit"></span>
+          <span class="problem__title">Three depth-first searches</span>
+          <span class="problem__chapter">DFS: components, cycles, bridges</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs dijkstra algorithms" data-id="dijkstra-audit">
+        <a href="/CppTB/practice/dijkstra-audit/">
+          <span class="problem__status" data-status-for="dijkstra-audit"></span>
+          <span class="problem__title">Three shortest-path searches</span>
+          <span class="problem__chapter">Dijkstra</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="traits if-constexpr templates" data-id="dispatch-on-type">
+        <a href="/CppTB/practice/dispatch-on-type/">
+          <span class="problem__status" data-status-for="dispatch-on-type"></span>
+          <span class="problem__title">One function, five behaviours</span>
+          <span class="problem__chapter">Type traits and metaprogramming</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="divide-and-conquer recursion algorithms" data-id="divide-audit">
+        <a href="/CppTB/practice/divide-audit/">
+          <span class="problem__status" data-status-for="divide-audit"></span>
+          <span class="problem__title">Three recursions that combine wrongly</span>
+          <span class="problem__chapter">Divide and conquer</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="union-find graphs offline algorithms" data-id="dsu-applications">
+        <a href="/CppTB/practice/dsu-applications/">
+          <span class="problem__status" data-status-for="dsu-applications"></span>
+          <span class="problem__title">Two things a union-find can do</span>
+          <span class="problem__chapter">Union-Find</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="union-find graphs algorithms" data-id="dsu-audit">
+        <a href="/CppTB/practice/dsu-audit/">
+          <span class="problem__status" data-status-for="dsu-audit"></span>
+          <span class="problem__title">Three union-finds that lose count</span>
+          <span class="problem__chapter">Union-Find</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="edge-cases correctness constraints" data-id="edge-case-audit">
+        <a href="/CppTB/practice/edge-case-audit/">
+          <span class="problem__status" data-status-for="edge-case-audit"></span>
+          <span class="problem__title">Correct on the sample, wrong on the hidden tests</span>
+          <span class="problem__chapter">How to read a problem and its limits</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance moving elision returns" data-id="elision-audit">
+        <a href="/CppTB/practice/elision-audit/">
+          <span class="problem__status" data-status-for="elision-audit"></span>
+          <span class="problem__title">Four returns, zero unnecessary work</span>
+          <span class="problem__chapter">Copies, moves, and elision</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="iterators containers lifetime" data-id="erase-while-iterating">
+        <a href="/CppTB/practice/erase-while-iterating/">
+          <span class="problem__status" data-status-for="erase-while-iterating"></span>
+          <span class="problem__title">Erase while iterating</span>
+          <span class="problem__chapter">Iterators</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="exceptions exception-safety moving" data-id="exception-safe-swap">
+        <a href="/CppTB/practice/exception-safe-swap/">
+          <span class="problem__status" data-status-for="exception-safe-swap"></span>
+          <span class="problem__title">Commit with a swap</span>
+          <span class="problem__chapter">Exceptions</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="greedy two-pointers sorting algorithms" data-id="exchange-argument">
+        <a href="/CppTB/practice/exchange-argument/">
+          <span class="problem__status" data-status-for="exchange-argument"></span>
+          <span class="problem__title">Two rules you have to derive</span>
+          <span class="problem__chapter">Greedy, and proving it with an exchange argument</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="testing tooling api-design" data-id="exit-code-tests">
+        <a href="/CppTB/practice/exit-code-tests/">
+          <span class="problem__status" data-status-for="exit-code-tests"></span>
+          <span class="problem__title">What CTest actually reads</span>
+          <span class="problem__chapter">Build systems and CMake</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="error-handling expected api-design" data-id="expected-pipeline">
+        <a href="/CppTB/practice/expected-pipeline/">
+          <span class="problem__status" data-status-for="expected-pipeline"></span>
+          <span class="problem__title">Chain the fallible steps</span>
+          <span class="problem__chapter">Error handling without exceptions</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="divide-and-conquer modular-arithmetic algorithms" data-id="fast-power">
+        <a href="/CppTB/practice/fast-power/">
+          <span class="problem__status" data-status-for="fast-power"></span>
+          <span class="problem__title">Exponentiation by squaring</span>
+          <span class="problem__chapter">Divide and conquer</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="pointers arrays iterators" data-id="find-in-range">
+        <a href="/CppTB/practice/find-in-range/">
+          <span class="problem__status" data-status-for="find-in-range"></span>
+          <span class="problem__title">Find a value in a range</span>
+          <span class="problem__chapter">Pointers</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="undefined-behaviour pointers lifetime" data-id="find-the-ub">
+        <a href="/CppTB/practice/find-the-ub/">
+          <span class="problem__status" data-status-for="find-the-ub"></span>
+          <span class="problem__title">Four bugs, one function</span>
+          <span class="problem__chapter">Undefined behaviour</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="basics compiler-errors" data-id="fix-the-build">
+        <a href="/CppTB/practice/fix-the-build/">
+          <span class="problem__status" data-status-for="fix-the-build"></span>
+          <span class="problem__title">Make it compile</span>
+          <span class="problem__chapter">Hello, machine</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="linking odr declarations compilation" data-id="fix-the-link">
+        <a href="/CppTB/practice/fix-the-link/">
+          <span class="problem__status" data-status-for="fix-the-link"></span>
+          <span class="problem__title">Four ways to fail at link time</span>
+          <span class="problem__chapter">Headers, translation units, and linking</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="loops control-flow strings" data-id="fizz-buzz">
+        <a href="/CppTB/practice/fizz-buzz/">
+          <span class="problem__status" data-status-for="fizz-buzz"></span>
+          <span class="problem__title">Order the conditions</span>
+          <span class="problem__chapter">Repetition</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs floyd-warshall algorithms" data-id="floyd-warshall-audit">
+        <a href="/CppTB/practice/floyd-warshall-audit/">
+          <span class="problem__status" data-status-for="floyd-warshall-audit"></span>
+          <span class="problem__title">Three loops, in the wrong order</span>
+          <span class="problem__chapter">Bellman–Ford and Floyd–Warshall</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="variadics folds templates" data-id="fold-statistics">
+        <a href="/CppTB/practice/fold-statistics/">
+          <span class="problem__status" data-status-for="fold-statistics"></span>
+          <span class="problem__title">Four folds, no loops</span>
+          <span class="problem__chapter">Variadic templates</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="format strings io" data-id="format-table">
+        <a href="/CppTB/practice/format-table/">
+          <span class="problem__status" data-status-for="format-table"></span>
+          <span class="problem__title">Line up the columns</span>
+          <span class="problem__chapter">Input, output, and formatting</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="templates deduction moving variadic" data-id="forwarding-wrapper">
+        <a href="/CppTB/practice/forwarding-wrapper/">
+          <span class="problem__status" data-status-for="forwarding-wrapper"></span>
+          <span class="problem__title">A factory that adds nothing</span>
+          <span class="problem__chapter">Deduction and forwarding</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="classes invariants constructors" data-id="fraction-invariant">
+        <a href="/CppTB/practice/fraction-invariant/">
+          <span class="problem__status" data-status-for="fraction-invariant"></span>
+          <span class="problem__title">Protect the invariant</span>
+          <span class="problem__chapter">Structs and classes</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="templates generics" data-id="generic-min">
+        <a href="/CppTB/practice/generic-min/">
+          <span class="problem__status" data-status-for="generic-min"></span>
+          <span class="problem__title">One function, every type</span>
+          <span class="problem__chapter">Function templates</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs input algorithms" data-id="graph-input-audit">
+        <a href="/CppTB/practice/graph-input-audit/">
+          <span class="problem__status" data-status-for="graph-input-audit"></span>
+          <span class="problem__title">Three graphs read wrongly</span>
+          <span class="problem__chapter">Representing graphs</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="greedy sorting algorithms" data-id="greedy-audit">
+        <a href="/CppTB/practice/greedy-audit/">
+          <span class="problem__status" data-status-for="greedy-audit"></span>
+          <span class="problem__title">Three greedies sorted by the wrong key</span>
+          <span class="problem__chapter">Greedy, and proving it with an exchange argument</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="concurrency mutexes deadlock data-races" data-id="guard-the-counter">
+        <a href="/CppTB/practice/guard-the-counter/">
+          <span class="problem__status" data-status-for="guard-the-counter"></span>
+          <span class="problem__title">Three races and a deadlock</span>
+          <span class="problem__chapter">Data races and mutexes</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="hashing frequency-maps bit-manipulation algorithms" data-id="hash-defence">
+        <a href="/CppTB/practice/hash-defence/">
+          <span class="problem__status" data-status-for="hash-defence"></span>
+          <span class="problem__title">Packing keys, and counting pairs</span>
+          <span class="problem__chapter">Hashing, frequency maps, and multisets</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="io parsing streams" data-id="input-shapes">
+        <a href="/CppTB/practice/input-shapes/">
+          <span class="problem__status" data-status-for="input-shapes"></span>
+          <span class="problem__title">Four ways an input can be shaped</span>
+          <span class="problem__chapter">The contest template and fast I/O</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="iterators templates algorithms" data-id="iterator-pair">
+        <a href="/CppTB/practice/iterator-pair/">
+          <span class="problem__status" data-status-for="iterator-pair"></span>
+          <span class="problem__title">Write it for every container</span>
+          <span class="problem__chapter">Iterators</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="threads concurrency raii lifetime" data-id="join-every-thread">
+        <a href="/CppTB/practice/join-every-thread/">
+          <span class="problem__status" data-status-for="join-every-thread"></span>
+          <span class="problem__title">Five threads, none of them joined</span>
+          <span class="problem__chapter">Threads</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs floyd-warshall io" data-id="judge-all-pairs">
+        <a href="/CppTB/practice/judge-all-pairs/">
+          <span class="problem__status" data-status-for="judge-all-pairs"></span>
+          <span class="problem__title">Every distance, once</span>
+          <span class="problem__chapter">Bellman–Ford and Floyd–Warshall</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="bitmask enumeration constraints io" data-id="judge-balanced-split">
+        <a href="/CppTB/practice/judge-balanced-split/">
+          <span class="problem__status" data-status-for="judge-balanced-split"></span>
+          <span class="problem__title">Balanced split</span>
+          <span class="problem__chapter">How to read a problem and its limits</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="monotonic-deque sliding-window io" data-id="judge-bounded-spread">
+        <a href="/CppTB/practice/judge-bounded-spread/">
+          <span class="problem__status" data-status-for="judge-bounded-spread"></span>
+          <span class="problem__title">Longest window with a bounded spread</span>
+          <span class="problem__chapter">Deques and sliding-window extrema</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="meet-in-the-middle binary-search io" data-id="judge-closest-subset-sum">
+        <a href="/CppTB/practice/judge-closest-subset-sum/">
+          <span class="problem__status" data-status-for="judge-closest-subset-sum"></span>
+          <span class="problem__title">The closest subset sum</span>
+          <span class="problem__chapter">Meet in the middle</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs dfs io" data-id="judge-components">
+        <a href="/CppTB/practice/judge-components/">
+          <span class="problem__status" data-status-for="judge-components"></span>
+          <span class="problem__title">How many pieces, and how big</span>
+          <span class="problem__chapter">DFS: components, cycles, bridges</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="union-find graphs io" data-id="judge-connected-queries">
+        <a href="/CppTB/practice/judge-connected-queries/">
+          <span class="problem__status" data-status-for="judge-connected-queries"></span>
+          <span class="problem__title">Connect and ask</span>
+          <span class="problem__chapter">Union-Find</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="arithmetic complexity constraints io" data-id="judge-count-in-range">
+        <a href="/CppTB/practice/judge-count-in-range/">
+          <span class="problem__status" data-status-for="judge-count-in-range"></span>
+          <span class="problem__title">Multiples in a range</span>
+          <span class="problem__chapter">Counting the work you actually do</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="divide-and-conquer sorting io" data-id="judge-count-inversions">
+        <a href="/CppTB/practice/judge-count-inversions/">
+          <span class="problem__status" data-status-for="judge-count-inversions"></span>
+          <span class="problem__title">How far from sorted</span>
+          <span class="problem__chapter">Divide and conquer</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs topological-sort dynamic-programming io" data-id="judge-count-paths">
+        <a href="/CppTB/practice/judge-count-paths/">
+          <span class="problem__status" data-status-for="judge-count-paths"></span>
+          <span class="problem__title">Routes through a network</span>
+          <span class="problem__chapter">Topological order and DAG DP</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs dijkstra counting io" data-id="judge-count-shortest">
+        <a href="/CppTB/practice/judge-count-shortest/">
+          <span class="problem__status" data-status-for="judge-count-shortest"></span>
+          <span class="problem__title">How many cheapest routes</span>
+          <span class="problem__chapter">Dijkstra</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sorting binary-search complexity io" data-id="judge-count-smaller">
+        <a href="/CppTB/practice/judge-count-smaller/">
+          <span class="problem__status" data-status-for="judge-count-smaller"></span>
+          <span class="problem__title">How many are smaller</span>
+          <span class="problem__chapter">Sorting, comparators, and coordinate compression</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs dfs io" data-id="judge-cycle-detection">
+        <a href="/CppTB/practice/judge-cycle-detection/">
+          <span class="problem__status" data-status-for="judge-cycle-detection"></span>
+          <span class="problem__title">Does this dependency graph have a cycle?</span>
+          <span class="problem__chapter">DFS: components, cycles, bridges</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="greedy sorting io" data-id="judge-deadline-jobs">
+        <a href="/CppTB/practice/judge-deadline-jobs/">
+          <span class="problem__status" data-status-for="judge-deadline-jobs"></span>
+          <span class="problem__title">Jobs with deadlines</span>
+          <span class="problem__chapter">Greedy, and proving it with an exchange argument</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs input io" data-id="judge-degree-sequence">
+        <a href="/CppTB/practice/judge-degree-sequence/">
+          <span class="problem__status" data-status-for="judge-degree-sequence"></span>
+          <span class="problem__title">The degree of every vertex</span>
+          <span class="problem__chapter">Representing graphs</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="permutations algorithms io" data-id="judge-distinct-permutations">
+        <a href="/CppTB/practice/judge-distinct-permutations/">
+          <span class="problem__status" data-status-for="judge-distinct-permutations"></span>
+          <span class="problem__title">Every distinct arrangement, in order</span>
+          <span class="problem__chapter">Bitmasks: enumerating subsets and permutations</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="hashing frequency-maps sliding-window io" data-id="judge-distinct-window">
+        <a href="/CppTB/practice/judge-distinct-window/">
+          <span class="problem__status" data-status-for="judge-distinct-window"></span>
+          <span class="problem__title">Distinct values in every window</span>
+          <span class="problem__chapter">Hashing, frequency maps, and multisets</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="recursion complexity modular-arithmetic io" data-id="judge-fib">
+        <a href="/CppTB/practice/judge-fib/">
+          <span class="problem__status" data-status-for="judge-fib"></span>
+          <span class="problem__title">Fibonacci, modulo a prime</span>
+          <span class="problem__chapter">Counting the work you actually do</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="meet-in-the-middle hashing io" data-id="judge-four-sum">
+        <a href="/CppTB/practice/judge-four-sum/">
+          <span class="problem__status" data-status-for="judge-four-sum"></span>
+          <span class="problem__title">Quadruples that cancel</span>
+          <span class="problem__chapter">Meet in the middle</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="hashing frequency-maps io" data-id="judge-frequency-queries">
+        <a href="/CppTB/practice/judge-frequency-queries/">
+          <span class="problem__status" data-status-for="judge-frequency-queries"></span>
+          <span class="problem__title">A multiset by hand</span>
+          <span class="problem__chapter">Hashing, frequency maps, and multisets</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs grids io" data-id="judge-grid-neighbours">
+        <a href="/CppTB/practice/judge-grid-neighbours/">
+          <span class="problem__status" data-status-for="judge-grid-neighbours"></span>
+          <span class="problem__title">Counting a grid's edges</span>
+          <span class="problem__chapter">Representing graphs</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="monotonic-stack io" data-id="judge-histogram">
+        <a href="/CppTB/practice/judge-histogram/">
+          <span class="problem__status" data-status-for="judge-histogram"></span>
+          <span class="problem__title">Largest rectangle in a histogram</span>
+          <span class="problem__chapter">Monotonic stacks</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="greedy sorting io" data-id="judge-interval-cover">
+        <a href="/CppTB/practice/judge-interval-cover/">
+          <span class="problem__status" data-status-for="judge-interval-cover"></span>
+          <span class="problem__title">Covering the points</span>
+          <span class="problem__chapter">Greedy, and proving it with an exchange argument</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sorting binary-search io" data-id="judge-kth-smallest">
+        <a href="/CppTB/practice/judge-kth-smallest/">
+          <span class="problem__status" data-status-for="judge-kth-smallest"></span>
+          <span class="problem__title">The k-th smallest, many times</span>
+          <span class="problem__chapter">Binary search: on a range, and on the answer</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="io strings getline" data-id="judge-line-tokens">
+        <a href="/CppTB/practice/judge-line-tokens/">
+          <span class="problem__status" data-status-for="judge-line-tokens"></span>
+          <span class="problem__title">Words per line</span>
+          <span class="problem__chapter">The contest template and fast I/O</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="two-pointers sliding-window io" data-id="judge-longest-window">
+        <a href="/CppTB/practice/judge-longest-window/">
+          <span class="problem__status" data-status-for="judge-longest-window"></span>
+          <span class="problem__title">Longest run under a budget</span>
+          <span class="problem__chapter">Two pointers and sliding windows</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sweep difference-arrays sorting io" data-id="judge-max-overlap">
+        <a href="/CppTB/practice/judge-max-overlap/">
+          <span class="problem__status" data-status-for="judge-max-overlap"></span>
+          <span class="problem__title">Peak overlap</span>
+          <span class="problem__chapter">Prefix sums and difference arrays</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs bfs grids io" data-id="judge-maze">
+        <a href="/CppTB/practice/judge-maze/">
+          <span class="problem__status" data-status-for="judge-maze"></span>
+          <span class="problem__title">Fewest steps through a maze</span>
+          <span class="problem__chapter">BFS, 0–1 BFS, and multi-source BFS</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="binary-search monotonicity io" data-id="judge-min-capacity">
+        <a href="/CppTB/practice/judge-min-capacity/">
+          <span class="problem__status" data-status-for="judge-min-capacity"></span>
+          <span class="problem__title">Shipping within D days</span>
+          <span class="problem__chapter">Binary search: on a range, and on the answer</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="io multi-case integers" data-id="judge-multi-case">
+        <a href="/CppTB/practice/judge-multi-case/">
+          <span class="problem__status" data-status-for="judge-multi-case"></span>
+          <span class="problem__title">Spread, over many test cases</span>
+          <span class="problem__chapter">The contest template and fast I/O</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="recursion backtracking pruning io" data-id="judge-n-queens">
+        <a href="/CppTB/practice/judge-n-queens/">
+          <span class="problem__status" data-status-for="judge-n-queens"></span>
+          <span class="problem__title">Counting the queens</span>
+          <span class="problem__chapter">Recursion and backtracking</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs bfs grids io" data-id="judge-nearest-source">
+        <a href="/CppTB/practice/judge-nearest-source/">
+          <span class="problem__status" data-status-for="judge-nearest-source"></span>
+          <span class="problem__title">The farthest cell from any source</span>
+          <span class="problem__chapter">BFS, 0–1 BFS, and multi-source BFS</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs bellman-ford io" data-id="judge-negative-cycle">
+        <a href="/CppTB/practice/judge-negative-cycle/">
+          <span class="problem__status" data-status-for="judge-negative-cycle"></span>
+          <span class="problem__title">Is there a negative cycle?</span>
+          <span class="problem__chapter">Bellman–Ford and Floyd–Warshall</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs mst kruskal io" data-id="judge-network-cost">
+        <a href="/CppTB/practice/judge-network-cost/">
+          <span class="problem__status" data-status-for="judge-network-cost"></span>
+          <span class="problem__title">Cabling the town</span>
+          <span class="problem__chapter">Minimum spanning trees</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="monotonic-stack io" data-id="judge-next-greater">
+        <a href="/CppTB/practice/judge-next-greater/">
+          <span class="problem__status" data-status-for="judge-next-greater"></span>
+          <span class="problem__title">Next greater element</span>
+          <span class="problem__chapter">Monotonic stacks</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="union-find offline graphs io" data-id="judge-offline-removals">
+        <a href="/CppTB/practice/judge-offline-removals/">
+          <span class="problem__status" data-status-for="judge-offline-removals"></span>
+          <span class="problem__title">Components after each removal</span>
+          <span class="problem__chapter">Union-Find</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="divide-and-conquer modular-arithmetic io" data-id="judge-power-tower">
+        <a href="/CppTB/practice/judge-power-tower/">
+          <span class="problem__status" data-status-for="judge-power-tower"></span>
+          <span class="problem__title">A tower of exponents</span>
+          <span class="problem__chapter">Divide and conquer</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="prefix-sums io" data-id="judge-range-queries">
+        <a href="/CppTB/practice/judge-range-queries/">
+          <span class="problem__status" data-status-for="judge-range-queries"></span>
+          <span class="problem__title">Range sums, many of them</span>
+          <span class="problem__chapter">Prefix sums and difference arrays</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="bitmask search io" data-id="judge-set-cover">
+        <a href="/CppTB/practice/judge-set-cover/">
+          <span class="problem__status" data-status-for="judge-set-cover"></span>
+          <span class="problem__title">Covering everything with the fewest sets</span>
+          <span class="problem__chapter">Bitmasks: enumerating subsets and permutations</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="two-pointers sliding-window counting io" data-id="judge-shortest-cover">
+        <a href="/CppTB/practice/judge-shortest-cover/">
+          <span class="problem__status" data-status-for="judge-shortest-cover"></span>
+          <span class="problem__title">Shortest covering window</span>
+          <span class="problem__chapter">Two pointers and sliding windows</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs dijkstra io" data-id="judge-shortest-route">
+        <a href="/CppTB/practice/judge-shortest-route/">
+          <span class="problem__status" data-status-for="judge-shortest-route"></span>
+          <span class="problem__title">The cheapest route</span>
+          <span class="problem__chapter">Dijkstra</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="sorting comparators io" data-id="judge-sort-by-keys">
+        <a href="/CppTB/practice/judge-sort-by-keys/">
+          <span class="problem__status" data-status-for="judge-sort-by-keys"></span>
+          <span class="problem__title">Leaderboard</span>
+          <span class="problem__chapter">Sorting, comparators, and coordinate compression</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="recursion backtracking io" data-id="judge-subset-sums">
+        <a href="/CppTB/practice/judge-subset-sums/">
+          <span class="problem__status" data-status-for="judge-subset-sums"></span>
+          <span class="problem__title">Subsets that hit a target</span>
+          <span class="problem__chapter">Recursion and backtracking</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="io integers overflow" data-id="judge-sum-of-n">
+        <a href="/CppTB/practice/judge-sum-of-n/">
+          <span class="problem__status" data-status-for="judge-sum-of-n"></span>
+          <span class="problem__title">Sum of n integers</span>
+          <span class="problem__chapter">How to read a problem and its limits</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs topological-sort io" data-id="judge-task-order">
+        <a href="/CppTB/practice/judge-task-order/">
+          <span class="problem__status" data-status-for="judge-task-order"></span>
+          <span class="problem__title">Schedule the tasks, alphabetically</span>
+          <span class="problem__chapter">Topological order and DAG DP</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs mst bottleneck io" data-id="judge-widest-route">
+        <a href="/CppTB/practice/judge-widest-route/">
+          <span class="problem__status" data-status-for="judge-widest-route"></span>
+          <span class="problem__title">The lightest bridge you must cross</span>
+          <span class="problem__chapter">Minimum spanning trees</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="monotonic-deque sliding-window io" data-id="judge-window-max">
+        <a href="/CppTB/practice/judge-window-max/">
+          <span class="problem__status" data-status-for="judge-window-max"></span>
+          <span class="problem__title">Sliding window maximum</span>
+          <span class="problem__chapter">Deques and sliding-window extrema</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs dijkstra state-space algorithms" data-id="layered-dijkstra">
+        <a href="/CppTB/practice/layered-dijkstra/">
+          <span class="problem__status" data-status-for="layered-dijkstra"></span>
+          <span class="problem__title">When the vertex is not a place</span>
+          <span class="problem__chapter">Dijkstra</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="ranges views laziness" data-id="lazy-primes">
+        <a href="/CppTB/practice/lazy-primes/">
+          <span class="problem__status" data-status-for="lazy-primes"></span>
+          <span class="problem__title">Take from something infinite</span>
+          <span class="problem__chapter">Ranges and views</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="macros constexpr templates interfaces" data-id="macro-free-interface">
+        <a href="/CppTB/practice/macro-free-interface/">
+          <span class="problem__status" data-status-for="macro-free-interface"></span>
+          <span class="problem__title">Four macros that are not functions</span>
+          <span class="problem__chapter">Modules</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="meet-in-the-middle binary-search hashing algorithms" data-id="meet-audit">
+        <a href="/CppTB/practice/meet-audit/">
+          <span class="problem__status" data-status-for="meet-audit"></span>
+          <span class="problem__title">Three combines that miscount</span>
+          <span class="problem__chapter">Meet in the middle</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="recursion memoisation algorithms" data-id="memoise-it">
+        <a href="/CppTB/practice/memoise-it/">
+          <span class="problem__status" data-status-for="memoise-it"></span>
+          <span class="problem__title">Two caches that remember too much</span>
+          <span class="problem__chapter">Recursion and backtracking</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="futures concurrency thread-pool packaged-task" data-id="mini-thread-pool">
+        <a href="/CppTB/practice/mini-thread-pool/">
+          <span class="problem__status" data-status-for="mini-thread-pool"></span>
+          <span class="problem__title">Bounded workers, unbounded tasks</span>
+          <span class="problem__chapter">Futures, promises, and tasks</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="interfaces encapsulation concepts" data-id="module-boundary">
+        <a href="/CppTB/practice/module-boundary/">
+          <span class="problem__status" data-status-for="module-boundary"></span>
+          <span class="problem__title">An interface the language enforces</span>
+          <span class="problem__chapter">Modules</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="operators classes api-design" data-id="money-operators">
+        <a href="/CppTB/practice/money-operators/">
+          <span class="problem__status" data-status-for="money-operators"></span>
+          <span class="problem__title">Make it add up</span>
+          <span class="problem__chapter">Operator overloading</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="moving ownership performance" data-id="move-not-copy">
+        <a href="/CppTB/practice/move-not-copy/">
+          <span class="problem__status" data-status-for="move-not-copy"></span>
+          <span class="problem__title">Move instead of copying</span>
+          <span class="problem__chapter">Moving</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs mst kruskal prim algorithms" data-id="mst-audit">
+        <a href="/CppTB/practice/mst-audit/">
+          <span class="problem__status" data-status-for="mst-audit"></span>
+          <span class="problem__title">Three spanning-tree routines</span>
+          <span class="problem__chapter">Minimum spanning trees</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs mst bottleneck clustering" data-id="mst-bottleneck">
+        <a href="/CppTB/practice/mst-bottleneck/">
+          <span class="problem__status" data-status-for="mst-bottleneck"></span>
+          <span class="problem__title">Questions the tree answers</span>
+          <span class="problem__chapter">Minimum spanning trees</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="ownership exceptions raii" data-id="no-leak-on-throw">
+        <a href="/CppTB/practice/no-leak-on-throw/">
+          <span class="problem__status" data-status-for="no-leak-on-throw"></span>
+          <span class="problem__title">The leak on the exception path</span>
+          <span class="problem__chapter">The stack and the heap</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="error-handling api-design nodiscard" data-id="nodiscard-status">
+        <a href="/CppTB/practice/nodiscard-status/">
+          <span class="problem__status" data-status-for="nodiscard-status"></span>
+          <span class="problem__title">Do not let it be ignored</span>
+          <span class="problem__chapter">Error handling without exceptions</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="optional containers api-design" data-id="optional-lookup">
+        <a href="/CppTB/practice/optional-lookup/">
+          <span class="problem__status" data-status-for="optional-lookup"></span>
+          <span class="problem__title">Absence without sentinels</span>
+          <span class="problem__chapter">optional, variant, and expected</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="optional api-design error-handling" data-id="optional-parse">
+        <a href="/CppTB/practice/optional-parse/">
+          <span class="problem__status" data-status-for="optional-parse"></span>
+          <span class="problem__title">Absence with a reason</span>
+          <span class="problem__chapter">optional, variant, and expected</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="templates binary-size compilation refactoring" data-id="outline-the-template">
+        <a href="/CppTB/practice/outline-the-template/">
+          <span class="problem__status" data-status-for="outline-the-template"></span>
+          <span class="problem__title">One template, one copy of the work</span>
+          <span class="problem__chapter">Inlining, linking, and layout</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="integers overflow constraints" data-id="overflow-audit">
+        <a href="/CppTB/practice/overflow-audit/">
+          <span class="problem__status" data-status-for="overflow-audit"></span>
+          <span class="problem__title">Four sums that do not fit</span>
+          <span class="problem__chapter">How to read a problem and its limits</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="functions overloading" data-id="overload-resolution">
+        <a href="/CppTB/practice/overload-resolution/">
+          <span class="problem__status" data-status-for="overload-resolution"></span>
+          <span class="problem__title">Resolve the ambiguity</span>
+          <span class="problem__chapter">Functions</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="raii ownership destructors" data-id="owning-buffer">
+        <a href="/CppTB/practice/owning-buffer/">
+          <span class="problem__status" data-status-for="owning-buffer"></span>
+          <span class="problem__title">A buffer that cleans up after itself</span>
+          <span class="problem__chapter">Constructors, destructors, and RAII</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="templates classes deduction" data-id="pair-template">
+        <a href="/CppTB/practice/pair-template/">
+          <span class="problem__status" data-status-for="pair-template"></span>
+          <span class="problem__title">A pair of your own</span>
+          <span class="problem__chapter">Class templates</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="futures async concurrency" data-id="parallel-futures">
+        <a href="/CppTB/practice/parallel-futures/">
+          <span class="problem__status" data-status-for="parallel-futures"></span>
+          <span class="problem__title">Four tasks, four hundred milliseconds</span>
+          <span class="problem__chapter">Futures, promises, and tasks</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="functions references performance" data-id="pass-correctly">
+        <a href="/CppTB/practice/pass-correctly/">
+          <span class="problem__status" data-status-for="pass-correctly"></span>
+          <span class="problem__title">Fix the signatures</span>
+          <span class="problem__chapter">Functions</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="algorithms containers search indexing" data-id="phrase-search">
+        <a href="/CppTB/practice/phrase-search/">
+          <span class="problem__status" data-status-for="phrase-search"></span>
+          <span class="problem__title">Words in the right order</span>
+          <span class="problem__chapter">Project: a small search index</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="pimpl compilation smart-pointers special-members" data-id="pimpl-the-class">
+        <a href="/CppTB/practice/pimpl-the-class/">
+          <span class="problem__status" data-status-for="pimpl-the-class"></span>
+          <span class="problem__title">One pointer wide</span>
+          <span class="problem__chapter">Inlining, linking, and layout</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="ranges performance laziness" data-id="pipeline-or-loop">
+        <a href="/CppTB/practice/pipeline-or-loop/">
+          <span class="problem__status" data-status-for="pipeline-or-loop"></span>
+          <span class="problem__title">Which one is cheaper here</span>
+          <span class="problem__chapter">Zero-cost abstraction, examined</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="ranges views algorithms" data-id="pipeline-refactor">
+        <a href="/CppTB/practice/pipeline-refactor/">
+          <span class="problem__status" data-status-for="pipeline-refactor"></span>
+          <span class="problem__title">Collapse the temporaries</span>
+          <span class="problem__chapter">Ranges and views</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="pointers arrays" data-id="sum-through-pointer">
+        <a href="/CppTB/practice/sum-through-pointer/">
+          <span class="problem__status" data-status-for="sum-through-pointer"></span>
+          <span class="problem__title">Sum an array through a pointer</span>
+          <span class="problem__chapter">Pointers</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="design composition inheritance" data-id="prefer-composition">
+        <a href="/CppTB/practice/prefer-composition/">
+          <span class="problem__status" data-status-for="prefer-composition"></span>
+          <span class="problem__title">Hold it, do not be it</span>
+          <span class="problem__chapter">When not to use inheritance</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="prefix-sums difference-arrays sweep algorithms" data-id="prefix-audit">
+        <a href="/CppTB/practice/prefix-audit/">
+          <span class="problem__status" data-status-for="prefix-audit"></span>
+          <span class="problem__title">Three tables that are off by one</span>
+          <span class="problem__chapter">Prefix sums and difference arrays</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="prefix-sums hashing counting algorithms" data-id="prefix-map-counts">
+        <a href="/CppTB/practice/prefix-map-counts/">
+          <span class="problem__status" data-status-for="prefix-map-counts"></span>
+          <span class="problem__title">Counting subarrays with a frequency map</span>
+          <span class="problem__chapter">Prefix sums and difference arrays</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="basics io" data-id="print-your-name">
+        <a href="/CppTB/practice/print-your-name/">
+          <span class="problem__status" data-status-for="print-your-name"></span>
+          <span class="problem__title">Print two lines</span>
+          <span class="problem__chapter">Hello, machine</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="testing property-based" data-id="property-round-trip">
+        <a href="/CppTB/practice/property-round-trip/">
+          <span class="problem__status" data-status-for="property-round-trip"></span>
+          <span class="problem__title">State a property</span>
+          <span class="problem__chapter">Testing</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="atomics memory-model concurrency" data-id="publish-safely">
+        <a href="/CppTB/practice/publish-safely/">
+          <span class="problem__status" data-status-for="publish-safely"></span>
+          <span class="problem__title">Handing data to another thread</span>
+          <span class="problem__chapter">Atomics and the memory model</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="toolchain warnings types" data-id="read-the-warning">
+        <a href="/CppTB/practice/read-the-warning/">
+          <span class="problem__status" data-status-for="read-the-warning"></span>
+          <span class="problem__title">Fix what the warnings found</span>
+          <span class="problem__chapter">Your toolchain</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="debugging undefined-behaviour strings" data-id="reduce-the-case">
+        <a href="/CppTB/practice/reduce-the-case/">
+          <span class="problem__status" data-status-for="reduce-the-case"></span>
+          <span class="problem__title">Reduce it, then fix it</span>
+          <span class="problem__chapter">Debugging</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="algorithms containers" data-id="remove-duplicates">
+        <a href="/CppTB/practice/remove-duplicates/">
+          <span class="problem__status" data-status-for="remove-duplicates"></span>
+          <span class="problem__title">Remove the duplicates</span>
+          <span class="problem__chapter">Algorithms</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="complexity containers performance" data-id="remove-the-quadratic">
+        <a href="/CppTB/practice/remove-the-quadratic/">
+          <span class="problem__status" data-status-for="remove-the-quadratic"></span>
+          <span class="problem__title">Three lines that make it quadratic</span>
+          <span class="problem__chapter">Counting the work you actually do</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="containers vector" data-id="reserve-and-fill">
+        <a href="/CppTB/practice/reserve-and-fill/">
+          <span class="problem__status" data-status-for="reserve-and-fill"></span>
+          <span class="problem__title">reserve is not resize</span>
+          <span class="problem__chapter">Sequence containers</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="lifetime destructors scope" data-id="reverse-destruction">
+        <a href="/CppTB/practice/reverse-destruction/">
+          <span class="problem__status" data-status-for="reverse-destruction"></span>
+          <span class="problem__title">Predict the order</span>
+          <span class="problem__chapter">Lifetime and scope</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance references parameters review" data-id="review-the-copies">
+        <a href="/CppTB/practice/review-the-copies/">
+          <span class="problem__status" data-status-for="review-the-copies"></span>
+          <span class="problem__title">Thirty-one copies in three functions</span>
+          <span class="problem__chapter">Copies, moves, and elision</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="io streams error-handling" data-id="robust-read">
+        <a href="/CppTB/practice/robust-read/">
+          <span class="problem__status" data-status-for="robust-read"></span>
+          <span class="problem__title">Read past the bad input</span>
+          <span class="problem__chapter">Input, output, and formatting</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="raii ownership rule-of-zero" data-id="rule-of-zero-refactor">
+        <a href="/CppTB/practice/rule-of-zero-refactor/">
+          <span class="problem__status" data-status-for="rule-of-zero-refactor"></span>
+          <span class="problem__title">Delete the boilerplate</span>
+          <span class="problem__chapter">The rule of zero, three, and five</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="control-flow short-circuit containers" data-id="safe-guard">
+        <a href="/CppTB/practice/safe-guard/">
+          <span class="problem__status" data-status-for="safe-guard"></span>
+          <span class="problem__title">Guard before you look</span>
+          <span class="problem__chapter">Making decisions</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="types loops containers" data-id="safe-loop-bounds">
+        <a href="/CppTB/practice/safe-loop-bounds/">
+          <span class="problem__status" data-status-for="safe-loop-bounds"></span>
+          <span class="problem__title">The loop that runs forever</span>
+          <span class="problem__chapter">Values, types, and names</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="raii destructors ownership" data-id="scope-guard">
+        <a href="/CppTB/practice/scope-guard/">
+          <span class="problem__status" data-status-for="scope-guard"></span>
+          <span class="problem__title">A guard for an unfriendly API</span>
+          <span class="problem__chapter">Constructors, destructors, and RAII</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="binary-search monotonicity algorithms" data-id="search-the-answer">
+        <a href="/CppTB/practice/search-the-answer/">
+          <span class="problem__status" data-status-for="search-the-answer"></span>
+          <span class="problem__title">Search for the answer, not the value</span>
+          <span class="problem__chapter">Binary search: on a range, and on the answer</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="inheritance polymorphism slicing" data-id="shape-hierarchy">
+        <a href="/CppTB/practice/shape-hierarchy/">
+          <span class="problem__status" data-status-for="shape-hierarchy"></span>
+          <span class="problem__title">Dispatch, and do not slice</span>
+          <span class="problem__chapter">Inheritance and virtual functions</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance integers undefined-behaviour" data-id="shift-arithmetic">
+        <a href="/CppTB/practice/shift-arithmetic/">
+          <span class="problem__status" data-status-for="shift-arithmetic"></span>
+          <span class="problem__title">The shift that is not a division</span>
+          <span class="problem__chapter">What the compiler does for you</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="moving functions performance" data-id="sink-parameter">
+        <a href="/CppTB/practice/sink-parameter/">
+          <span class="problem__status" data-status-for="sink-parameter"></span>
+          <span class="problem__title">Stop copying into the member</span>
+          <span class="problem__chapter">Moving</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="operators comparison sorting" data-id="spaceship-ordering">
+        <a href="/CppTB/practice/spaceship-ordering/">
+          <span class="problem__status" data-status-for="spaceship-ordering"></span>
+          <span class="problem__title">Sort by two keys</span>
+          <span class="problem__chapter">Operator overloading</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="monotonic-stack counting algorithms" data-id="span-counting">
+        <a href="/CppTB/practice/span-counting/">
+          <span class="problem__status" data-status-for="span-counting"></span>
+          <span class="problem__title">Counting subarrays by their extreme</span>
+          <span class="problem__chapter">Monotonic stacks</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="templates specialisation" data-id="specialise-describe">
+        <a href="/CppTB/practice/specialise-describe/">
+          <span class="problem__status" data-status-for="specialise-describe"></span>
+          <span class="problem__title">Match a family of types</span>
+          <span class="problem__chapter">Class templates</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="meet-in-the-middle binary-search algorithms" data-id="split-and-search">
+        <a href="/CppTB/practice/split-and-search/">
+          <span class="problem__status" data-status-for="split-and-search"></span>
+          <span class="problem__title">Half the items, twice</span>
+          <span class="problem__chapter">Meet in the middle</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="strings string_view containers" data-id="split-on-delimiter">
+        <a href="/CppTB/practice/split-on-delimiter/">
+          <span class="problem__status" data-status-for="split-on-delimiter"></span>
+          <span class="problem__title">Split a line into fields</span>
+          <span class="problem__chapter">std::string and text</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="containers iterators lifetime" data-id="stable-references">
+        <a href="/CppTB/practice/stable-references/">
+          <span class="problem__status" data-status-for="stable-references"></span>
+          <span class="problem__title">The reference that goes stale</span>
+          <span class="problem__chapter">Sequence containers</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="monotonic-stack algorithms" data-id="stack-audit">
+        <a href="/CppTB/practice/stack-audit/">
+          <span class="problem__status" data-status-for="stack-audit"></span>
+          <span class="problem__title">Three stacks that lose an element</span>
+          <span class="problem__chapter">Monotonic stacks</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="strings testing api-design" data-id="stats-library">
+        <a href="/CppTB/practice/stats-library/">
+          <span class="problem__status" data-status-for="stats-library"></span>
+          <span class="problem__title">The library the build file builds</span>
+          <span class="problem__chapter">Build systems and CMake</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="exceptions exception-safety invariants" data-id="strong-guarantee">
+        <a href="/CppTB/practice/strong-guarantee/">
+          <span class="problem__status" data-status-for="strong-guarantee"></span>
+          <span class="problem__title">All or nothing</span>
+          <span class="problem__chapter">Exceptions</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance layout alignment structs" data-id="struct-diet">
+        <a href="/CppTB/practice/struct-diet/">
+          <span class="problem__status" data-status-for="struct-diet"></span>
+          <span class="problem__title">Fifty-six bytes of thirty-three</span>
+          <span class="problem__chapter">Cache and data layout</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="bitmask subset-sums algorithms" data-id="submask-sums">
+        <a href="/CppTB/practice/submask-sums/">
+          <span class="problem__status" data-status-for="submask-sums"></span>
+          <span class="problem__title">Subset sums, reused</span>
+          <span class="problem__chapter">Bitmasks: enumerating subsets and permutations</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="loops control-flow" data-id="sum-to-n">
+        <a href="/CppTB/practice/sum-to-n/">
+          <span class="problem__status" data-status-for="sum-to-n"></span>
+          <span class="problem__title">Off by one</span>
+          <span class="problem__chapter">Repetition</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance benchmarking statistics" data-id="summarise-samples">
+        <a href="/CppTB/practice/summarise-samples/">
+          <span class="problem__status" data-status-for="summarise-samples"></span>
+          <span class="problem__title">What the fifteen numbers mean</span>
+          <span class="problem__chapter">Measuring, not guessing</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="intro" data-topics="references functions" data-id="swap-by-reference">
+        <a href="/CppTB/practice/swap-by-reference/">
+          <span class="problem__status" data-status-for="swap-by-reference"></span>
+          <span class="problem__title">Swap two values</span>
+          <span class="problem__chapter">References</span>
+          <span class="problem__difficulty problem__difficulty--intro">Warm-up</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="concurrency mutexes api-design" data-id="thread-safe-queue">
+        <a href="/CppTB/practice/thread-safe-queue/">
+          <span class="problem__status" data-status-for="thread-safe-queue"></span>
+          <span class="problem__title">Safe methods, unsafe together</span>
+          <span class="problem__chapter">Data races and mutexes</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="algorithms ranges projections" data-id="top-scorers">
+        <a href="/CppTB/practice/top-scorers/">
+          <span class="problem__status" data-status-for="top-scorers"></span>
+          <span class="problem__title">The top three, without sorting everything</span>
+          <span class="problem__chapter">Algorithms</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="graphs topological-sort algorithms" data-id="topo-audit">
+        <a href="/CppTB/practice/topo-audit/">
+          <span class="problem__status" data-status-for="topo-audit"></span>
+          <span class="problem__title">Three orders that are not quite topological</span>
+          <span class="problem__chapter">Topological order and DAG DP</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="performance layout locality loops" data-id="transpose-the-loop">
+        <a href="/CppTB/practice/transpose-the-loop/">
+          <span class="problem__status" data-status-for="transpose-the-loop"></span>
+          <span class="problem__title">Same answer, sequential order</span>
+          <span class="problem__chapter">Cache and data layout</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="strings string_view lifetime" data-id="trim-whitespace">
+        <a href="/CppTB/practice/trim-whitespace/">
+          <span class="problem__status" data-status-for="trim-whitespace"></span>
+          <span class="problem__title">Trim without copying</span>
+          <span class="problem__chapter">std::string and text</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="two-pointers sorting counting" data-id="two-pointer-pairs">
+        <a href="/CppTB/practice/two-pointer-pairs/">
+          <span class="problem__status" data-status-for="two-pointer-pairs"></span>
+          <span class="problem__title">Pairs, from both ends</span>
+          <span class="problem__chapter">Two pointers and sliding windows</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="static-polymorphism type-erasure templates virtual" data-id="type-erased-shape">
+        <a href="/CppTB/practice/type-erased-shape/">
+          <span class="problem__status" data-status-for="type-erased-shape"></span>
+          <span class="problem__title">One container, unrelated types</span>
+          <span class="problem__chapter">Static polymorphism</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="smart-pointers ownership raii" data-id="unique-owner">
+        <a href="/CppTB/practice/unique-owner/">
+          <span class="problem__status" data-status-for="unique-owner"></span>
+          <span class="problem__title">Give it a single owner</span>
+          <span class="problem__chapter">Smart pointers</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="variadics forwarding templates" data-id="variadic-emplace">
+        <a href="/CppTB/practice/variadic-emplace/">
+          <span class="problem__status" data-status-for="variadic-emplace"></span>
+          <span class="problem__title">One emplace, any constructor</span>
+          <span class="problem__chapter">Variadic templates</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="variant visit polymorphism" data-id="variant-shapes">
+        <a href="/CppTB/practice/variant-shapes/">
+          <span class="problem__status" data-status-for="variant-shapes"></span>
+          <span class="problem__title">One of several shapes</span>
+          <span class="problem__chapter">optional, variant, and expected</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="containers algorithms iterators" data-id="erase-evens">
+        <a href="/CppTB/practice/erase-evens/">
+          <span class="problem__status" data-status-for="erase-evens"></span>
+          <span class="problem__title">Erase without invalidating</span>
+          <span class="problem__chapter">Algorithms</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="inheritance destructors ownership" data-id="virtual-destructor">
+        <a href="/CppTB/practice/virtual-destructor/">
+          <span class="problem__status" data-status-for="virtual-destructor"></span>
+          <span class="problem__title">Delete it safely</span>
+          <span class="problem__chapter">Inheritance and virtual functions</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="two-pointers sliding-window algorithms" data-id="window-audit">
+        <a href="/CppTB/practice/window-audit/">
+          <span class="problem__status" data-status-for="window-audit"></span>
+          <span class="problem__title">Three windows that slip</span>
+          <span class="problem__chapter">Two pointers and sliding windows</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="monotonic-deque sliding-window prefix-sums algorithms" data-id="window-extrema">
+        <a href="/CppTB/practice/window-extrema/">
+          <span class="problem__status" data-status-for="window-extrema"></span>
+          <span class="problem__title">Two windows that need a second deque</span>
+          <span class="problem__chapter">Deques and sliding-window extrema</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="containers map api-design" data-id="word-frequency">
+        <a href="/CppTB/practice/word-frequency/">
+          <span class="problem__status" data-status-for="word-frequency"></span>
+          <span class="problem__title">Count without inserting</span>
+          <span class="problem__chapter">Associative containers</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="dependencies interfaces templates design" data-id="wrap-a-dependency">
+        <a href="/CppTB/practice/wrap-a-dependency/">
+          <span class="problem__status" data-status-for="wrap-a-dependency"></span>
+          <span class="problem__title">One file that knows about the library</span>
+          <span class="problem__chapter">Dependencies and packaging</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="concepts templates generics" data-id="write-a-concept">
+        <a href="/CppTB/practice/write-a-concept/">
+          <span class="problem__status" data-status-for="write-a-concept"></span>
+          <span class="problem__title">Say what you require</span>
+          <span class="problem__chapter">Concepts and constraints</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="coroutines generators laziness" data-id="write-a-generator">
+        <a href="/CppTB/practice/write-a-generator/">
+          <span class="problem__status" data-status-for="write-a-generator"></span>
+          <span class="problem__title">Three lazy sequences</span>
+          <span class="problem__chapter">Coroutines</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="traits templates specialization metaprogramming" data-id="write-a-trait">
+        <a href="/CppTB/practice/write-a-trait/">
+          <span class="problem__status" data-status-for="write-a-trait"></span>
+          <span class="problem__title">A trait of your own</span>
+          <span class="problem__chapter">Type traits and metaprogramming</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="core" data-topics="testing boundaries" data-id="write-the-tests">
+        <a href="/CppTB/practice/write-the-tests/">
+          <span class="problem__status" data-status-for="write-the-tests"></span>
+          <span class="problem__title">Find the bug with a test</span>
+          <span class="problem__chapter">Testing</span>
+          <span class="problem__difficulty problem__difficulty--core">Core</span>
+        </a>
+      </li><li class="problem" data-difficulty="stretch" data-topics="graphs bfs deque algorithms" data-id="zero-one-bfs">
+        <a href="/CppTB/practice/zero-one-bfs/">
+          <span class="problem__status" data-status-for="zero-one-bfs"></span>
+          <span class="problem__title">Deques, and the cost of an edge</span>
+          <span class="problem__chapter">BFS, 0–1 BFS, and multi-source BFS</span>
+          <span class="problem__difficulty problem__difficulty--stretch">Stretch</span>
+        </a>
+      </li></ul>
+    <p class="problems__empty" id="problem-empty" hidden>No problems match those filters yet.</p>
+  </article>
+    </main>
+    <div class="rail" aria-hidden="true"></div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

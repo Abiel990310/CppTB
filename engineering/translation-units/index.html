@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Headers, translation units, and linking · The C++ Textbook</title>
+  <meta name="description" content="Why the same code compiles once but links twice, and what ODR means.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/" class="is-active" aria-current="page"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="translation-units">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/engineering/">Part 9 · Building real software</a></p>
+      <h1>Headers, translation units, and linking</h1>
+      <p class="chapter-lede">Why the same code compiles once but links twice, and what ODR means.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Explain the compile-then-link model</li><li>Fix a duplicate-symbol and an undefined-symbol error</li><li>State the one-definition rule and how to satisfy it</li></ul>
+  </section>
+    <p>C++ inherited its build model from C in 1979, and it has barely changed: each
+<code>.cpp</code> file is compiled alone, in complete ignorance of every other file, and a
+separate program stitches the results together at the end.</p>
+<p>Almost every confusing build error comes from that split — from something being
+true in one file and not another, or from a name that the compiler was happy to
+believe in and the linker could not find. This chapter is about knowing which
+half of the build is complaining, and why.</p>
+<h2 id="four-programs-not-one" tabindex="-1">Four programs, not one</h2>
+<p><code>g++ main.cpp -o app</code> runs four tools in sequence. You can stop after any of
+them:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Stops after</th>
+<th>Produces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>g++ -E main.cpp</code></td>
+<td>the <strong>preprocessor</strong></td>
+<td>one enormous C++ file, with every <code>#include</code> pasted in</td>
+</tr>
+<tr>
+<td><code>g++ -S main.cpp</code></td>
+<td>the <strong>compiler</strong></td>
+<td>assembly for that file alone</td>
+</tr>
+<tr>
+<td><code>g++ -c main.cpp</code></td>
+<td>the <strong>assembler</strong></td>
+<td><code>main.o</code>, machine code with a symbol table</td>
+</tr>
+<tr>
+<td><code>g++ main.o util.o -o app</code></td>
+<td>the <strong>linker</strong></td>
+<td>an executable</td>
+</tr>
+</tbody>
+</table>
+<p>The unit the compiler works on is the output of stage one: a <strong>translation
+unit</strong>, meaning your <code>.cpp</code> plus everything it included, transitively. That is
+the entire world as far as the compiler is concerned. A function in another file
+does not exist; it is a name in a table, marked “somebody else’s problem”.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ g++ -c main.cpp &#x26;&#x26; nm -C main.o</span></span>
+<span class="line"><span>0000000000000000 T main</span></span>
+<span class="line"><span>                 U net::send(char const*, int)</span></span></code></pre></figure>
+<p><code>T</code> means <em>this file defines it</em>. <code>U</code> means <em>undefined here — linker, find it</em>.
+Every build error in this chapter is one of those two letters being wrong.</p>
+<h2 id="declare-as-often-as-you-like-define-once" tabindex="-1">Declare as often as you like; define once</h2>
+<p>A <strong>declaration</strong> introduces a name and its type. A <strong>definition</strong> provides the
+thing itself. Headers carry declarations; exactly one <code>.cpp</code> carries the
+definition.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> parse</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string_view</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // declaration — no body</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> parse</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string_view</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> … </span><span style="--sh-light:#999999;--sh-dark:#666666">}</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">     // definition</span></span></code></pre></figure>
+<p>Repeat a declaration as often as you like — that is what including a header ten
+times does. Provide two definitions and you have a problem, and <em>which</em> problem
+depends on whether they are in the same file.</p>
+<h3 id="undefined-symbol-the-linker-cannot-find-it" tabindex="-1">Undefined symbol: the linker cannot find it</h3>
+<figure class="widget"><cpp-runner data-run="1" data-expect-error="1"><figcaption class="code__title">Declared, called, never defined</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> checksum</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> value</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // promised</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> checksum</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">41</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int checksum(int value);          // promised
+
+int main() {
+    std::cout &lt;&lt; checksum(41) &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<blockquote>
+<p>undefined reference to <code>checksum(int)</code></p>
+</blockquote>
+<p>Read that message carefully, because it names the tool: <code>/usr/bin/ld</code>. The
+<em>compiler</em> was perfectly happy — it saw a declaration, so it knew the call was
+type-correct and emitted a <code>call</code> to a symbol. The <strong>linker</strong> then went looking
+and found nothing.</p>
+<p>Undefined-symbol errors have four usual causes, in decreasing order of
+frequency:</p>
+<ol>
+<li>You wrote the declaration and forgot the definition — or defined it with a
+slightly different signature, so the mangled names do not match. A <code>const</code> on
+a parameter, a missing <code>&amp;</code>, a member defined outside its class without the
+<code>Widget::</code> prefix.</li>
+<li>You forgot to add the <code>.cpp</code> to the build.</li>
+<li>You forgot to link the library: <code>-lfoo</code>.</li>
+<li>You linked it in the wrong order (see below).</li>
+</ol>
+<h3 id="duplicate-symbol-two-definitions" tabindex="-1">Duplicate symbol: two definitions</h3>
+<p>Within one file, this is a <em>compiler</em> error:</p>
+<figure class="widget"><cpp-runner data-run="1" data-expect-error="1"><figcaption class="code__title">Two definitions in one translation unit</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> limit</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 10</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> limit</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 20</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> limit</span><span style="--sh-light:#999999;--sh-dark:#666666">();</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span></code></pre></div><template data-role="source">int limit() { return 10; }
+int limit() { return 20; }
+
+int main() { return limit(); }</template></cpp-runner></figure>
+<blockquote>
+<p>error: redefinition of ‘int limit()’</p>
+</blockquote>
+<p>Across two files it is a <em>linker</em> error, and the message is different:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>/usr/bin/ld: b.o: in function `limit()':</span></span>
+<span class="line"><span>b.cpp:(.text+0x0): multiple definition of `limit()'; a.o:a.cpp:(.text+0x0): first defined here</span></span></code></pre></figure>
+<p>That is what happens when a function body ends up in a header without <code>inline</code>
+and two <code>.cpp</code> files include it. Chapter 7.6 covered the fix: <code>inline</code> exists
+precisely to say “several identical copies of this are expected; keep one”.</p>
+<h2 id="the-one-definition-rule" tabindex="-1">The one definition rule</h2>
+<p>Stated properly, the ODR has three parts:</p>
+<ol>
+<li>Every <strong>entity</strong> — variable, function, class, template — may be <em>defined</em> at
+most once in any one translation unit.</li>
+<li>Every non-inline function and variable that is <em>used</em> must be defined exactly
+once in the whole program.</li>
+<li>A class, an inline function, or a template may be defined in several
+translation units, <strong>provided every definition is token-for-token identical
+and means the same thing</strong> in each.</li>
+</ol>
+<p>Parts 1 and 2 are the errors above; the compiler and linker enforce them. Part 3
+is the dangerous one, because <strong>no diagnostic is required</strong>. Two files:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// a.cpp</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Config</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> };</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">            // 8 bytes</span></span></code></pre></figure>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// b.cpp</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Config</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> double</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> };</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">  // 16 bytes</span></span></code></pre></figure>
+<p>This links without a word of complaint, and each file goes on using its own idea
+of the layout. Run it and each prints its own <code>sizeof</code>:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>sizeof in a.cpp = 8</span></span>
+<span class="line"><span>sizeof in b.cpp = 16</span></span></code></pre></figure>
+<p>Now pass a <code>Config</code> from one to the other and one of them writes past the end of
+the object. There is no error, no warning, and no sanitizer report — just
+corruption whose cause is in a file that appears unrelated.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>This is why “the definition of a type lives in exactly one header, and everyone
+includes that header” is not a style preference. Any arrangement where two files
+can disagree about a class, an inline function, or a template is a silent
+memory-corruption bug waiting for someone to change one copy.</p>
+<p>The most common real cause is not copy-pasted structs; it is a macro or a
+compiler flag that changes a class’s contents in some files and not others —
+<code>#ifdef DEBUG</code> adding a member, or two libraries built with different
+<code>-D</code> settings. Chapter 7.6’s note about LTO exposing latent bugs is usually
+this bug.</p>
+</aside>
+<h2 id="header-guards-and-what-a-header-owes-you" tabindex="-1">Header guards, and what a header owes you</h2>
+<p>A header may be included twice in one translation unit — directly and through
+another header — and the second inclusion would redefine everything. Every
+header therefore needs a guard:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">ifndef</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> PROJECT_PARSER_H</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // #pragma once does the same job in one line,</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">define</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> PROJECT_PARSER_H</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // is supported everywhere in practice, and is</span></span>
+<span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                                  // not in the standard.</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">…</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">endif</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">  // PROJECT_PARSER_H</span></span></code></pre></figure>
+<p>Two other obligations, both easy to forget:</p>
+<p><strong>A header must be self-contained.</strong> It compiles on its own, including whatever
+it needs. A header that works only when included after another one is a trap
+that goes off when someone reorders includes. The cheap way to enforce this: in
+<code>parser.cpp</code>, include <code>parser.h</code> <em>first</em>, before anything else. Then any missing
+include in the header is a compile error in the file most likely to be fixed.</p>
+<p><strong>A header should include as little as possible.</strong> Chapter 7.6 measured the
+cost. Forward-declare (<code>class Widget;</code>) when a pointer or reference is all you
+need.</p>
+<h2 id="linkage-who-else-can-see-this-name" tabindex="-1">Linkage: who else can see this name</h2>
+<p>Three kinds, and one of them surprises people.</p>
+<table>
+<thead>
+<tr>
+<th>Linkage</th>
+<th>Means</th>
+<th>How you get it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>external</strong></td>
+<td>other translation units can refer to it</td>
+<td>the default for functions and non-<code>const</code> namespace-scope variables</td>
+</tr>
+<tr>
+<td><strong>internal</strong></td>
+<td>visible only in this translation unit</td>
+<td><code>static</code>, an anonymous namespace, and <code>const</code>/<code>constexpr</code> at namespace scope</td>
+</tr>
+<tr>
+<td><strong>none</strong></td>
+<td>not a linker-visible name at all</td>
+<td>anything local to a function or a block</td>
+</tr>
+</tbody>
+</table>
+<p>The surprise is the third entry on the internal row. At namespace scope,
+<code>const int limit = 10;</code> has <strong>internal</strong> linkage in C++ — unlike in C. That is
+deliberate: it lets you put <code>const</code> constants in headers without every including
+file fighting over the definition. The consequence is that</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> limit </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 10</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">         // internal: every file gets its own</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> other </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 20</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">               // external</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">extern</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> shared </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 30</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"> // external, because of `extern`</span></span></code></pre></figure>
+<p>produces a symbol table with <code>other</code> and <code>shared</code> in it and <strong>no <code>limit</code> at
+all</strong> — it was folded into its uses and never given an address.</p>
+<p>Prefer an anonymous namespace to <code>static</code> for internal linkage: it works for
+types as well as functions and variables, and it is what the standard’s own
+wording is built around.</p>
+<h2 id="mangled-names-and-extern-c" tabindex="-1">Mangled names, and <code>extern &quot;C&quot;</code></h2>
+<p>C++ has overloading and namespaces; the linker has a flat list of strings. The
+compiler bridges the gap by encoding the full signature into the symbol.</p>
+<figure class="widget"><cpp-runner data-run="1" data-asm="1"><figcaption class="code__title">What the linker actually sees</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">double</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">double</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> double</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">namespace</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> net</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> send</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> char*</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> data</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> length</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> data </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">?</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> length </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">:</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> -</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">extern</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">C</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> c_style_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1.5</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2.5</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">              &#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> net</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">send</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">x</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> c_style_add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">3</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int add(int a, int b) { return a + b; }
+double add(double a, double b) { return a + b; }
+
+namespace net {
+int send(const char* data, int length) { return data ? length : -1; }
+}
+
+extern &quot;C&quot; int c_style_add(int a, int b) { return a + b; }
+
+int main() {
+    std::cout &lt;&lt; add(1, 2) &lt;&lt; ' ' &lt;&lt; add(1.5, 2.5) &lt;&lt; ' '
+              &lt;&lt; net::send(&quot;x&quot;, 1) &lt;&lt; ' ' &lt;&lt; c_style_add(3, 4) &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>In the assembly:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Symbol</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(int, int)</code></td>
+<td><code>_Z3addii</code></td>
+</tr>
+<tr>
+<td><code>add(double, double)</code></td>
+<td><code>_Z3adddd</code></td>
+</tr>
+<tr>
+<td><code>net::send(const char*, int)</code></td>
+<td><code>_ZN3net4sendEPKci</code></td>
+</tr>
+<tr>
+<td><code>c_style_add(int, int)</code></td>
+<td><code>c_style_add</code></td>
+</tr>
+</tbody>
+</table>
+<p>The two overloads get different symbols, which is <em>how</em> overloading survives to
+link time. <code>extern &quot;C&quot;</code> turns the mangling off, which is how C++ code exposes
+functions callable from C, from Python’s <code>ctypes</code>, or from anything else that
+expects a plain name. The cost is that an <code>extern &quot;C&quot;</code> function cannot be
+overloaded — there would be nothing to tell the two symbols apart.</p>
+<p><code>nm -C</code> and <code>c++filt</code> translate mangled names back, and you will want them the
+first time a linker error prints one at you.</p>
+<h2 id="libraries-and-the-link-order-that-bites-everyone" tabindex="-1">Libraries, and the link order that bites everyone</h2>
+<p>A <strong>static library</strong> (<code>.a</code>) is an archive of <code>.o</code> files. A <strong>shared library</strong>
+(<code>.so</code>, <code>.dylib</code>, <code>.dll</code>) is loaded at run time and shared between processes.</p>
+<p>For static libraries, the order of arguments on the link command matters:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ g++ -L. -lmine app.o -o app        # wrong</span></span>
+<span class="line"><span>/usr/bin/ld: app.o: undefined reference to `lib_value()'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>$ g++ app.o -L. -lmine -o app        # right</span></span></code></pre></figure>
+<p>The traditional Unix linker makes a single left-to-right pass. When it reaches
+<code>-lmine</code> it pulls in only the archive members that resolve symbols it
+<em>already knows</em> are missing. Listed first, nothing is missing yet, so it takes nothing —
+and then <code>app.o</code> arrives needing a symbol that has already been passed over.</p>
+<p><strong>Put the things that need symbols before the things that provide them.</strong>
+Objects, then your libraries, then system libraries.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;`undefined reference to 'Widget::render() const'` — which tool produced this, and what does it tell you?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;The linker. The compiler saw a declaration and was satisfied; no translation unit in the link provided a definition&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;The message names `ld`. Usual causes: the .cpp is not in the build, the definition's signature differs slightly, or a library is missing or listed in the wrong order.&quot; },
+    { &quot;text&quot;: &quot;The compiler, because the header was not included&quot;, &quot;why&quot;: &quot;A missing declaration is a compile error that says 'was not declared in this scope'. This message means the declaration was found.&quot; },
+    { &quot;text&quot;: &quot;The preprocessor, because of a missing include guard&quot;, &quot;why&quot;: &quot;A missing guard produces redefinition errors, not undefined references.&quot; },
+    { &quot;text&quot;: &quot;The loader, at program startup&quot;, &quot;why&quot;: &quot;That produces a different message about a shared object, and only for dynamic libraries.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Two `.cpp` files define `struct Config` with different members. What happens?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;It links silently and each file uses its own layout — an ODR violation, which requires no diagnostic and behaves as memory corruption&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;The class definition is not a symbol the linker compares. This is the failure mode that makes 'one header, everyone includes it' a correctness rule rather than a style rule.&quot; },
+    { &quot;text&quot;: &quot;A multiple-definition linker error&quot;, &quot;why&quot;: &quot;That is for functions and variables. A class definition emits no symbol to collide.&quot; },
+    { &quot;text&quot;: &quot;A compile error in the second file&quot;, &quot;why&quot;: &quot;Neither file can see the other; each compiles alone and is internally consistent.&quot; },
+    { &quot;text&quot;: &quot;The linker picks the larger definition to be safe&quot;, &quot;why&quot;: &quot;The linker never sees either definition. Each object file was generated with its own idea of the layout already baked in.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="fix-the-link"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/concurrency/coroutines/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Coroutines</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/engineering/modules/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Modules</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#four-programs-not-one">Four programs, not one</a></li><li class="rail__item rail__item--h2"><a href="#declare-as-often-as-you-like-define-once">Declare as often as you like; define once</a></li><li class="rail__item rail__item--h3"><a href="#undefined-symbol-the-linker-cannot-find-it">Undefined symbol: the linker cannot find it</a></li><li class="rail__item rail__item--h3"><a href="#duplicate-symbol-two-definitions">Duplicate symbol: two definitions</a></li><li class="rail__item rail__item--h2"><a href="#the-one-definition-rule">The one definition rule</a></li><li class="rail__item rail__item--h2"><a href="#header-guards-and-what-a-header-owes-you">Header guards, and what a header owes you</a></li><li class="rail__item rail__item--h2"><a href="#linkage-who-else-can-see-this-name">Linkage: who else can see this name</a></li><li class="rail__item rail__item--h2"><a href="#mangled-names-and-extern-c">Mangled names, and extern &quot;C&quot;</a></li><li class="rail__item rail__item--h2"><a href="#libraries-and-the-link-order-that-bites-everyone">Libraries, and the link order that bites everyone</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>10 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="translation-units" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

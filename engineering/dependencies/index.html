@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dependencies and packaging · The C++ Textbook</title>
+  <meta name="description" content="Using other people's code without making your build unreproducible.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/" class="is-active" aria-current="page"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="dependencies">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/engineering/">Part 9 · Building real software</a></p>
+      <h1>Dependencies and packaging</h1>
+      <p class="chapter-lede">Using other people's code without making your build unreproducible.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Add a dependency with FetchContent or a package manager</li><li>Explain the trade-offs of vendoring</li><li>Pin versions so a build is reproducible</li></ul>
+  </section>
+    <p>C++ has no <code>cargo</code>, no <code>npm</code>, no <code>pip</code>. It has four incompatible answers to
+“how do I use somebody else’s library”, and which one is right depends on who
+has to build your project and where.</p>
+<p>This chapter is about picking one deliberately, and about the property that
+matters more than convenience: that a build done today and a build done in two
+years produce the same program.</p>
+<aside class="callout callout--note"><p class="callout__label">Note</p>
+<p>As with the previous two chapters, none of this runs in the browser. The
+FetchContent build below was configured, built and run for real — the version
+numbers, timings and error messages quoted are what it produced.</p>
+</aside>
+<h2 id="the-four-options" tabindex="-1">The four options</h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>You get</th>
+<th>You pay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>System package</strong> (<code>apt install libfmt-dev</code>)</td>
+<td>nothing to build</td>
+<td>whatever version the distribution has; different on every machine</td>
+</tr>
+<tr>
+<td><strong>Vendoring</strong> (the source, checked into your repo)</td>
+<td>total control, offline builds</td>
+<td>updating is manual; your diffs contain other people’s code</td>
+</tr>
+<tr>
+<td><strong>FetchContent</strong> (CMake downloads and builds it)</td>
+<td>one build system, versions pinned in your <code>CMakeLists.txt</code></td>
+<td>rebuilds the dependency yourself; needs network on first configure</td>
+</tr>
+<tr>
+<td><strong>Package manager</strong> (vcpkg, Conan)</td>
+<td>binary caching, transitive dependencies, a lockfile</td>
+<td>another tool everyone must install and learn</td>
+</tr>
+</tbody>
+</table>
+<p>There is no default answer. A library, whose users have their own opinions,
+should <code>find_package</code> and let them decide. An application, which controls its
+own build, is usually happiest with FetchContent or a package manager.</p>
+<h2 id="find_package-use-it-if-it-is-there" tabindex="-1"><code>find_package</code>: use it if it is there</h2>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">find_package</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(fmt 10 REQUIRED)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(myapp </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> fmt::fmt)</span></span></code></pre></figure>
+<p>This asks the machine whether the library is installed. When it is, you get an
+imported target carrying its include paths and its own dependencies — the usage
+requirements from Chapter 9.3, published by whoever installed it.</p>
+<p>When it is not, you get this:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>Could not find a package configuration file provided by "fmt" (requested</span></span>
+<span class="line"><span>version 10) with any of the following names:</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    fmtConfig.cmake</span></span>
+<span class="line"><span>    fmt-config.cmake</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Add the installation prefix of "fmt" to CMAKE_PREFIX_PATH or set "fmt_DIR"</span></span>
+<span class="line"><span>to a directory containing one of the above files.</span></span></code></pre></figure>
+<p>That message is the whole problem with system packages in one paragraph: the
+build works on the machine where someone installed the right version, and fails
+everywhere else with instructions the reader has to act on manually.</p>
+<h2 id="fetchcontent-bring-it-with-you" tabindex="-1">FetchContent: bring it with you</h2>
+<p>CMake can fetch and build a dependency as part of your own configure step.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">cmake_minimum_required</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">VERSION</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> 3.24)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">project</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(depdemo CXX)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">set</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(CMAKE_CXX_STANDARD 20)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(FetchContent)</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">FetchContent_Declare(</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">  doctest</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">  GIT_REPOSITORY https://github.com/doctest/doctest.git</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">  GIT_TAG        v2.4.11        </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># a tag, not a branch</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">  GIT_SHALLOW    </span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">TRUE</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">)</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">FetchContent_MakeAvailable(doctest)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_executable</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(tests tests.cpp)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(tests </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> doctest::doctest)</span></span></code></pre></figure>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ cmake -S . -B build -G Ninja</span></span>
+<span class="line"><span>-- Configuring done (2.9s)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>$ cmake --build build</span></span>
+<span class="line"><span>[1/2] Building CXX object CMakeFiles/tests.dir/tests.cpp.o</span></span>
+<span class="line"><span>[2/2] Linking CXX executable tests</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>$ ./build/tests</span></span>
+<span class="line"><span>[doctest] test cases: 1 | 1 passed | 0 failed | 0 skipped</span></span>
+<span class="line"><span>[doctest] assertions: 2 | 2 passed | 0 failed |</span></span>
+<span class="line"><span>[doctest] Status: SUCCESS!</span></span></code></pre></figure>
+<p>Three seconds to configure, and the dependency’s source lands in
+<code>build/_deps/doctest-src</code> — 9 MB of it here, checked out at exactly the commit
+the tag names:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ git -C build/_deps/doctest-src rev-parse HEAD</span></span>
+<span class="line"><span>ae7a13539fb71f270b87eb2e874fbac80bc8dda2</span></span>
+<span class="line"><span>$ git -C build/_deps/doctest-src describe --tags</span></span>
+<span class="line"><span>v2.4.11</span></span></code></pre></figure>
+<p>Because it lives under <code>build/</code>, <code>rm -rf build</code> removes it, and nothing about
+the dependency is in version control except the four lines that name it. That is
+the appeal: the <code>CMakeLists.txt</code> <em>is</em> the manifest.</p>
+<p>What it costs: your build now compiles the dependency’s sources, every clean
+build re-fetches, and the first configure needs the network. For a header-only
+test framework that is nothing. For Boost it is an afternoon.</p>
+<aside class="callout callout--pitfall"><p class="callout__label">Pitfall</p>
+<p><code>FetchContent_MakeAvailable</code> runs the dependency’s <code>CMakeLists.txt</code> inside your
+build. Its targets, its options, and any global settings it makes are now yours
+— which is the concrete reason Chapter 9.3 said never to set anything globally:
+a dependency that does <code>set(CMAKE_CXX_FLAGS &quot;-Werror&quot;)</code> has just done it to you.
+<code>FetchContent_Declare(... EXCLUDE_FROM_ALL)</code> keeps its targets out of your
+default build, and setting the dependency’s own options before
+<code>MakeAvailable</code> — <code>set(DOCTEST_WITH_TESTS OFF)</code> — stops it building its own test
+suite as part of yours.</p>
+</aside>
+<h2 id="pinning-and-what-reproducible-means" tabindex="-1">Pinning, and what “reproducible” means</h2>
+<p>Every one of the four approaches can be made reproducible, and every one of them
+defaults to not being.</p>
+<p><strong>Pin to an immutable revision.</strong> <code>GIT_TAG main</code> is not a version; it is
+“whatever that branch says today”, so two people configuring on different days
+get different code and one of them has a bug the other cannot reproduce. A tag
+is better, and a <strong>commit hash</strong> is the only thing that is actually immutable —
+tags can be moved, and occasionally are.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">GIT_TAG v2.4.11                                     </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># good</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">GIT_TAG ae7a13539fb71f270b87eb2e874fbac80bc8dda2    </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># unambiguous</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">GIT_TAG main                                        </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># not a version</span></span></code></pre></figure>
+<p><strong>Pin the transitive graph too.</strong> Your dependency’s dependencies matter just as
+much, and <code>FetchContent</code> gives you no lockfile — if the library you pinned
+fetches something else by branch, you have pinned nothing. This is the concrete
+argument for vcpkg or Conan on a project with more than a handful of
+dependencies: both produce a lockfile covering the whole graph.</p>
+<p><strong>Pin the toolchain, eventually.</strong> Same source, different compiler, different
+program — occasionally a differently-behaving one. Beyond a certain project
+size the answer is a container image or a Nix expression, and the honest thing
+to say is that “reproducible” is a spectrum and most projects sit further down
+it than they think.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>Write down the version you tested against, in a place a human reads. A comment
+next to the <code>GIT_TAG</code>, or a <code>dependencies.md</code>, is worth more than it looks in
+two years, when someone needs to know whether the pin was a considered choice or
+the version that happened to be current.</p>
+</aside>
+<h2 id="vendoring" tabindex="-1">Vendoring</h2>
+<p>Copying the source into your repository — <code>third_party/</code>, <code>external/</code>, <code>vendor/</code>
+— is the oldest answer and still sometimes the right one.</p>
+<p>It is right when you need offline and hermetic builds, when the upstream is
+unmaintained or you carry local patches, when the dependency is small enough
+that reviewing it is realistic, or when the dependency is <em>load-bearing</em> and you
+would rather own a fork than be surprised.</p>
+<p>It is wrong as a default, and the reasons are practical rather than
+philosophical:</p>
+<ul>
+<li><strong>Updating is a manual merge</strong>, so it does not happen, so you sit on a
+three-year-old version with known CVEs.</li>
+<li><strong>Your history is full of other people’s code</strong>, and <code>git log</code> and code review
+both get worse.</li>
+<li><strong>Nobody can tell what version you have</strong>, unless you write it down — and if
+you patched it, “what version” no longer has an answer.</li>
+</ul>
+<p>If you vendor, vendor deliberately: record the upstream URL and the exact commit
+in a file next to the code, keep local patches as separate commits or a patch
+series rather than editing in place, and put a reminder somewhere to look at
+upstream occasionally.</p>
+<h2 id="package-managers" tabindex="-1">Package managers</h2>
+<p><strong>vcpkg</strong> and <strong>Conan</strong> are the two that matter. Both fetch, build and cache
+binaries, resolve transitive dependencies, and produce a manifest and a lockfile.</p>
+<p>vcpkg in manifest mode is a <code>vcpkg.json</code> next to your <code>CMakeLists.txt</code>:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">{</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">  "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">name</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">myapp</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">  "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">version</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">0.1.0</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">  "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">dependencies</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#999999;--sh-dark:#666666"> [</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">fmt</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">catch2</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">nlohmann-json</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666"> ]</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p>with a toolchain file passed at configure time. Conan uses a <code>conanfile.txt</code> or
+<code>conanfile.py</code> and generates CMake files you include. Both give you what
+FetchContent does not: a binary cache, so the dependency is compiled once per
+machine rather than once per clean build, and a lockfile pinning the full graph.</p>
+<p>The cost is a tool that every contributor and every CI job must have, plus its
+own concepts — triplets, profiles, host and target — and the day the package you
+need is not in the registry at the version you want.</p>
+<p><strong>A reasonable default policy</strong>, and this is a judgement rather than a rule:
+FetchContent while the dependency count is small and the dependencies are
+source-friendly; a package manager once the count or the build time makes that
+painful; <code>find_package</code> in anything you publish as a library, so your users
+choose.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A `CMakeLists.txt` has `FetchContent_Declare(dep GIT_REPOSITORY … GIT_TAG main)`. Two colleagues configure it a week apart and get different behaviour. Why?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`main` is a moving branch, not a version — each configure fetches whatever it points to that day&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Pin a tag, or better a commit hash, which is the only genuinely immutable reference. A branch name is a subscription, not a dependency.&quot; },
+    { &quot;text&quot;: &quot;FetchContent caches per user, so they got different cache entries&quot;, &quot;why&quot;: &quot;The cache is per build directory, and a fresh configure would fetch the same commit if the tag were fixed.&quot; },
+    { &quot;text&quot;: &quot;CMake versions differ&quot;, &quot;why&quot;: &quot;Possible in general, but it would not change which source revision is fetched.&quot; },
+    { &quot;text&quot;: &quot;One of them had the library installed system-wide&quot;, &quot;why&quot;: &quot;FetchContent does not consult the system unless you explicitly ask it to try `find_package` first.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;You are publishing a C++ library for other people to use. How should it obtain *its* dependencies?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`find_package`, so consumers decide how those dependencies are supplied&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;A library that hard-codes FetchContent forces its choices and its versions onto every consumer, and two libraries doing that will eventually fetch the same dependency twice at different versions.&quot; },
+    { &quot;text&quot;: &quot;FetchContent, so it always builds out of the box&quot;, &quot;why&quot;: &quot;Convenient to test, hostile to consume: your `MakeAvailable` runs inside their build and its targets and options become theirs.&quot; },
+    { &quot;text&quot;: &quot;Vendored copies, so it has no external requirements&quot;, &quot;why&quot;: &quot;Then every consumer gets your copy, possibly alongside their own of the same library, with two versions of the same symbols at link time.&quot; },
+    { &quot;text&quot;: &quot;A package manager manifest, so the versions are locked&quot;, &quot;why&quot;: &quot;Locking is right for an application, which owns its build. A library imposing a package manager rules out every consumer who uses a different one.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="compare-versions"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/engineering/build-systems/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Build systems and CMake</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/engineering/project/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Project: a small search index</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#the-four-options">The four options</a></li><li class="rail__item rail__item--h2"><a href="#find_package-use-it-if-it-is-there">find_package: use it if it is there</a></li><li class="rail__item rail__item--h2"><a href="#fetchcontent-bring-it-with-you">FetchContent: bring it with you</a></li><li class="rail__item rail__item--h2"><a href="#pinning-and-what-reproducible-means">Pinning, and what “reproducible” means</a></li><li class="rail__item rail__item--h2"><a href="#vendoring">Vendoring</a></li><li class="rail__item rail__item--h2"><a href="#package-managers">Package managers</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>9 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="dependencies" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

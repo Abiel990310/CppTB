@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modules · The C++ Textbook</title>
+  <meta name="description" content="The replacement for headers, and where support stands.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/" class="is-active" aria-current="page"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="modules">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/engineering/">Part 9 · Building real software</a></p>
+      <h1>Modules</h1>
+      <p class="chapter-lede">The replacement for headers, and where support stands.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Write and consume a module</li><li>Explain what modules fix about headers</li><li>Assess whether your toolchain can use them yet</li></ul>
+  </section>
+    <p>Chapter 9.1 described <code>#include</code> as it is: textual pasting, performed before the
+compiler sees anything, with every consequence that implies. Chapter 7.6
+measured one of those consequences — an empty program taking 1,024 ms to compile
+because of headers it does not use.</p>
+<p>Modules replace the whole mechanism. A module is compiled once into a binary
+artefact describing its interface, and importing it loads that artefact instead
+of re-parsing text.</p>
+<aside class="callout callout--warning"><p class="callout__label">Undefined behaviour</p>
+<p>None of the samples in this chapter can run on this page. GCC needs
+<code>-fmodules-ts</code> for modules and the compiler backend here does not pass it. As
+with the CMake chapter, everything below was built and run with GCC 13.3 before
+it was written, and the outputs and error messages quoted are the real ones —
+including the compiler crash further down, which is the most useful thing in
+this chapter.</p>
+</aside>
+<h2 id="writing-one" tabindex="-1">Writing one</h2>
+<p>A module interface unit — conventionally <code>.cppm</code>, though GCC accepts anything
+you tell it is C++:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// math.cppm</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> module</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> math</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> a </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> b</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> square</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">*</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> helper</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">          // not exported</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> bumped</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> n</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> helper</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">n</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span></code></pre></figure>
+<p>And a consumer:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// main.cpp</span></span>
+<span class="line"><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">import math</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> %d</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> %d\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> add</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> square</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">5</span><span style="--sh-light:#999999;--sh-dark:#666666">),</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> bumped</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">9</span><span style="--sh-light:#999999;--sh-dark:#666666">));</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p>Built with GCC 13:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ g++ -std=c++20 -fmodules-ts -c -x c++ math.cppm -o math.o</span></span>
+<span class="line"><span>$ g++ -std=c++20 -fmodules-ts -c main.cpp -o main.o</span></span>
+<span class="line"><span>$ g++ math.o main.o -o app</span></span>
+<span class="line"><span>$ ./app</span></span>
+<span class="line"><span>5 25 10</span></span></code></pre></figure>
+<p>The interface unit must be compiled <strong>before</strong> anything that imports it —
+compiling <code>math.cppm</code> writes <code>gcm.cache/math.gcm</code>, and <code>import math;</code> reads it.
+That ordering constraint is new: with headers, translation units could be
+compiled in any order, and with modules they cannot. It is the single biggest
+thing a build system has to learn.</p>
+<h2 id="what-export-actually-does" tabindex="-1">What <code>export</code> actually does</h2>
+<p><code>helper</code> is in the module and not exported. It is not private, not <code>static</code>, and
+not in an anonymous namespace — it simply is not part of the interface. A
+consumer cannot see it:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>main.cpp: In function 'int main()':</span></span>
+<span class="line"><span>main.cpp:2:20: error: 'helper' was not declared in this scope</span></span>
+<span class="line"><span>    2 | int main(){ return helper(1); }</span></span></code></pre></figure>
+<p>This is genuinely new. With headers, “internal” means “in a <code>.cpp</code> file” or “in
+an anonymous namespace” or “named <code>detail::</code>” — conventions, all of them
+bypassable. A module’s boundary is enforced by the language.</p>
+<h2 id="the-four-things-modules-fix" tabindex="-1">The four things modules fix</h2>
+<p><strong>Macros do not escape.</strong> A macro defined inside a module is not visible to
+importers, at all:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// mac.cppm</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">module</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> module</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> mac</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">define</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> SECRET</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 42</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> reveal</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> SECRET</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span></code></pre></figure>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ ./macapp</span></span>
+<span class="line"><span>42</span></span>
+<span class="line"><span>SECRET did not leak</span></span></code></pre></figure>
+<p><code>reveal()</code> returns 42, and <code>#ifdef SECRET</code> in the importing file is false. With
+a header, <code>SECRET</code> would be defined in every file that included it and every
+file those files included, forever. This alone removes an entire category of bug
+— the <code>min</code>/<code>max</code> macros in <code>&lt;windows.h&gt;</code>, the <code>assert</code> that some header
+redefined, the <code>#define private public</code> someone thought was clever.</p>
+<p><strong>Order stops mattering.</strong> Because there is no textual paste, <code>import a; import b;</code> and <code>import b; import a;</code> are identical. Headers that only work when
+included after another header cannot exist.</p>
+<p><strong>One definition, once.</strong> A module interface is compiled once. Ten translation
+units importing it do not each re-parse and re-instantiate its templates.</p>
+<p><strong>Build time.</strong> Measured here, <code>#include &lt;vector&gt;</code> and <code>&lt;map&gt;</code> against importing
+both as header units:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Time</th>
+<th>Preprocessed lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>#include &lt;vector&gt; &lt;map&gt;</code></td>
+<td>319 ms</td>
+<td>30,818</td>
+</tr>
+<tr>
+<td><code>import &lt;vector&gt;; import &lt;map&gt;;</code></td>
+<td>195 ms</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>About 40% faster for two headers. The <code>.gcm</code> files are large — 3.0 MB for
+<code>&lt;vector&gt;</code>, 2.9 MB for <code>&lt;map&gt;</code> — because they hold a full parsed representation
+rather than text, and that is the trade: disk and a build-ordering constraint,
+in exchange for not re-parsing.</p>
+<h2 id="partitions" tabindex="-1">Partitions</h2>
+<p>A large module can be split without exposing the split to consumers.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// geo-shapes.cppm</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> module</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> geo:shapes</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> struct</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994"> Point</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> double</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> x</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> y</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> };</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> double</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> unit_area</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1.0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span></code></pre></figure>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">// geo.cppm</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> module</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> geo</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> import :shapes</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">                    // re-export the partition</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> double</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> doubled_area</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> unit_area</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> *</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span></code></pre></figure>
+<p>A consumer writes <code>import geo;</code> and gets <code>Point</code>, <code>unit_area</code> and
+<code>doubled_area</code>. It cannot write <code>import geo:shapes;</code> — partitions are visible
+only within their own module. Built and run, that prints <code>1 2 2</code>.</p>
+<p>This is the piece headers never had: a way to organise a component internally
+without that organisation becoming part of its public surface.</p>
+<h2 id="whether-you-can-use-them-yet" tabindex="-1">Whether you can use them yet</h2>
+<p>This is the objective that matters, and the honest answer for GCC 13.3 —
+released in 2024, and what Ubuntu 24.04 ships — is <em>partly</em>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Named modules (<code>export module</code>)</td>
+<td><strong>works</strong></td>
+</tr>
+<tr>
+<td>Module partitions</td>
+<td><strong>works</strong></td>
+</tr>
+<tr>
+<td>Non-exported entities hidden</td>
+<td><strong>works</strong></td>
+</tr>
+<tr>
+<td>Macros contained</td>
+<td><strong>works</strong></td>
+</tr>
+<tr>
+<td>A header unit (<code>import &lt;vector&gt;;</code>)</td>
+<td>works, after pre-building it</td>
+</tr>
+<tr>
+<td>Two header units in one file</td>
+<td>works</td>
+</tr>
+<tr>
+<td><code>&lt;vector&gt;</code>, <code>&lt;string&gt;</code> and <code>&lt;map&gt;</code> together</td>
+<td><strong>internal compiler error</strong></td>
+</tr>
+<tr>
+<td><code>import std;</code></td>
+<td><strong>not available</strong></td>
+</tr>
+<tr>
+<td>CMake 3.28 module support with GCC 13</td>
+<td><strong>refuses to configure</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The compiler crash is worth quoting in full, because it is what using this
+feature in 2024 actually looks like:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>/usr/include/c++/13/bits/allocator.h:193:39: internal compiler error:</span></span>
+<span class="line"><span>  in make_decl_rtl, at varasm.cc:1442</span></span>
+<span class="line"><span>Please submit a full bug report, with preprocessed source</span></span></code></pre></figure>
+<p>Three standard headers imported as header units, in one translation unit. Any
+two of the three are fine. Nothing about the program is unusual.</p>
+<p>And the build system, which is the other half of usable:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>CMake Error in CMakeLists.txt:</span></span>
+<span class="line"><span>  The target named "mathmod" has C++ sources that may use modules, but the</span></span>
+<span class="line"><span>  compiler does not provide a way to discover the import graph dependencies.</span></span></code></pre></figure>
+<p>CMake needs to know which module each file imports <strong>before</strong> compiling
+anything, in order to compile them in the right order. That requires the
+compiler to offer a dependency-scanning mode, and GCC 13 does not — so CMake
+declines to generate a build at all.</p>
+<aside class="callout callout--standards"><p class="callout__label">From the standard</p>
+<p>Where the ecosystem stands, at time of writing:</p>
+<ul>
+<li><strong>MSVC</strong> has the most complete support, including <code>import std;</code>.</li>
+<li><strong>Clang 17+</strong> supports named modules well and works with CMake 3.28’s module
+support.</li>
+<li><strong>GCC 14+</strong> adds the dependency scanning CMake needs; <code>import std;</code> arrives
+later still.</li>
+<li><strong>The standard library as a module</strong> (<code>import std;</code>) is C++23, and is the
+thing most likely to make modules worth adopting, because it is where the
+build-time win is largest.</li>
+</ul>
+<p>The practical advice: modules are not yet the default way to write C++, and a
+new project betting on them today is betting on its contributors’ toolchains.
+Watch for <code>import std;</code> working across all three major compilers <em>and</em> the build
+system you use — that is the point at which the calculation changes.</p>
+</aside>
+<h2 id="migrating-when-the-time-comes" tabindex="-1">Migrating, when the time comes</h2>
+<p>You do not have to choose all at once. Three intermediate positions, in order of
+effort:</p>
+<p><strong>Import your own headers as header units.</strong> <code>import &quot;myheader.h&quot;;</code> treats an
+existing header as a module without changing it. Nothing in the header needs to
+be rewritten, and consumers get macro isolation and no re-parsing.</p>
+<p><strong>Wrap a library in a module.</strong> A module interface that includes the old headers
+in its <em>global module fragment</em> and re-exports what it needs:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">module</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">legacy/everything.h</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">     // global module fragment: ordinary includes</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> module</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> mylib</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> using</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> legacy</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">Widget</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">export</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> using</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> legacy</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">make_widget</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span></code></pre></figure>
+<p>Consumers get a module; the implementation is unchanged.</p>
+<p><strong>Write new components as modules.</strong> A module can <code>#include</code> headers and a
+header cannot <code>import</code> a module cleanly, so the boundary between old and new
+code has a direction: new code may depend on old, not the reverse.</p>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A module defines `#define BUFFER_SIZE 4096` and exports a function that uses it. What does an importing file see?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;The function, and no macro — macros are not part of a module's interface and do not cross the boundary&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;This is one of the largest practical wins. A header's macros leak into every file that includes it, transitively and permanently; a module's do not leak at all.&quot; },
+    { &quot;text&quot;: &quot;Both, as with a header&quot;, &quot;why&quot;: &quot;That is exactly the behaviour modules were designed to remove.&quot; },
+    { &quot;text&quot;: &quot;The macro only if it is marked `export`&quot;, &quot;why&quot;: &quot;`export` applies to declarations. A macro is not a declaration and cannot be exported.&quot; },
+    { &quot;text&quot;: &quot;Neither; a module cannot contain preprocessor directives&quot;, &quot;why&quot;: &quot;It can, and they work normally inside it. They just do not escape.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Why does CMake 3.28 refuse to configure a C++ modules target with GCC 13?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;Module interfaces must be compiled before their importers, so the build system needs to scan the import graph first — and GCC 13 provides no way to do that scanning&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Headers can be compiled in any order; modules cannot. Dependency scanning is the new requirement, and it arrived in GCC 14.&quot; },
+    { &quot;text&quot;: &quot;CMake does not support modules at all&quot;, &quot;why&quot;: &quot;It does, from 3.28, and works with Clang 17 and MSVC. The missing piece here is on the compiler side.&quot; },
+    { &quot;text&quot;: &quot;GCC does not implement modules&quot;, &quot;why&quot;: &quot;It does — the named modules in this chapter compile, link and run under GCC 13.&quot; },
+    { &quot;text&quot;: &quot;The `.cppm` extension is not recognised&quot;, &quot;why&quot;: &quot;An extension is a convention; `-x c++` settles it. The error is explicitly about discovering import-graph dependencies.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="module-boundary"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/engineering/translation-units/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Headers, translation units, and linking</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/engineering/build-systems/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Build systems and CMake</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#writing-one">Writing one</a></li><li class="rail__item rail__item--h2"><a href="#what-export-actually-does">What export actually does</a></li><li class="rail__item rail__item--h2"><a href="#the-four-things-modules-fix">The four things modules fix</a></li><li class="rail__item rail__item--h2"><a href="#partitions">Partitions</a></li><li class="rail__item rail__item--h2"><a href="#whether-you-can-use-them-yet">Whether you can use them yet</a></li><li class="rail__item rail__item--h2"><a href="#migrating-when-the-time-comes">Migrating, when the time comes</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>8 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="modules" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

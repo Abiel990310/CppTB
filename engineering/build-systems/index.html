@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build systems and CMake · The C++ Textbook</title>
+  <meta name="description" content="Describing a build so that other people can reproduce it.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part" open><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/" class="is-active" aria-current="page"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="build-systems">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/engineering/">Part 9 · Building real software</a></p>
+      <h1>Build systems and CMake</h1>
+      <p class="chapter-lede">Describing a build so that other people can reproduce it.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Write a CMakeLists.txt for a small library and its tests</li><li>Explain target-based CMake and why globals are worse</li><li>Configure a debug and a release build</li></ul>
+  </section>
+    <p>Chapter 9.1 showed that a C++ program is many translation units compiled
+separately and linked together. Once there is more than a handful, someone has
+to say which files, in what order, with which flags, against which libraries —
+and say it in a way that works on a machine you have never seen.</p>
+<p>That is a build system’s job. This chapter is about CMake, because it is what
+the ecosystem settled on: not because it is elegant, but because every library
+you will want to use assumes it.</p>
+<aside class="callout callout--note"><p class="callout__label">Note</p>
+<p>The samples in this chapter cannot run in the browser — this page’s compiler
+backend builds one file at a time and has no CMake. Everything below was built
+and run with CMake 3.28 and Ninja before it was written, and the output quoted
+is the output it produced.</p>
+</aside>
+<h2 id="the-project" tabindex="-1">The project</h2>
+<p>A small library with a header, an executable that uses it, and a test binary —
+the smallest layout that has all the parts.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>textstats/</span></span>
+<span class="line"><span>├── CMakeLists.txt</span></span>
+<span class="line"><span>├── include/textstats/stats.h</span></span>
+<span class="line"><span>├── src/stats.cpp</span></span>
+<span class="line"><span>├── app/main.cpp</span></span>
+<span class="line"><span>└── tests/test_stats.cpp</span></span></code></pre></figure>
+<p>Here is what is in it. This is the library and its tests as one file, so you can
+run it — the rest of the chapter is about splitting it into the layout above and
+describing that to a build system.</p>
+<figure class="widget"><cpp-runner data-run="1"><figcaption class="code__title">The library and its tests, before the build system</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstddef</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">cstdio</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">string_view</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">namespace</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> textstats</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> word_count</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string_view</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> words </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    bool</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> inside </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> false</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">char</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ||</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ||</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\t</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> inside </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> false</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        else</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">!</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">inside</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> inside </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> true</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">words</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#999999;--sh-dark:#666666"> }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> words</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> longest_word</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#2E8F82;--sh-dark:#5DA994">string_view</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">size_t</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> best </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> current </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    for</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">char</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> text</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ||</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ||</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> c </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\t</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> current </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">        else</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">current </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">></span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> best</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> best </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> current</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> best</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">  // namespace textstats</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> failures </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">void</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">bool</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> condition</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> const</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> char*</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> what</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">condition</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> return</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">FAIL: </span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%s\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> what</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    ++</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">failures</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">word_count</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">""</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">empty text has no words</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">word_count</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">one</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">a single word</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">word_count</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">  a  bb  </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 2</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">padding and doubled spaces</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">longest_word</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">the quick brown fox</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 5</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">longest is quick</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">longest_word</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">""</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">longest of nothing</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    check</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">textstats</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">longest_word</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">aaa</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 4</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">deliberately wrong, to show a failure</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#59873A;--sh-dark:#80A665">printf</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">%d</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> failure(s)</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> failures</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    return</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> failures </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">==</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ?</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 0</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> :</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD">      // this exit code is what CTest reads</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;cstddef&gt;
+#include &lt;cstdio&gt;
+#include &lt;string_view&gt;
+
+namespace textstats {
+
+std::size_t word_count(std::string_view text) {
+    std::size_t words = 0;
+    bool inside = false;
+    for (char c : text) {
+        if (c == ' ' || c == '\n' || c == '\t') inside = false;
+        else if (!inside) { inside = true; ++words; }
+    }
+    return words;
+}
+
+std::size_t longest_word(std::string_view text) {
+    std::size_t best = 0, current = 0;
+    for (char c : text) {
+        if (c == ' ' || c == '\n' || c == '\t') current = 0;
+        else if (++current &gt; best) best = current;
+    }
+    return best;
+}
+
+}  // namespace textstats
+
+int failures = 0;
+
+void check(bool condition, const char* what) {
+    if (condition) return;
+    std::printf(&quot;FAIL: %s\n&quot;, what);
+    ++failures;
+}
+
+int main() {
+    check(textstats::word_count(&quot;&quot;) == 0, &quot;empty text has no words&quot;);
+    check(textstats::word_count(&quot;one&quot;) == 1, &quot;a single word&quot;);
+    check(textstats::word_count(&quot;  a  bb  &quot;) == 2, &quot;padding and doubled spaces&quot;);
+    check(textstats::longest_word(&quot;the quick brown fox&quot;) == 5, &quot;longest is quick&quot;);
+    check(textstats::longest_word(&quot;&quot;) == 0, &quot;longest of nothing&quot;);
+    check(textstats::longest_word(&quot;aaa&quot;) == 4, &quot;deliberately wrong, to show a failure&quot;);
+
+    std::printf(&quot;%d failure(s)\n&quot;, failures);
+    return failures == 0 ? 0 : 1;      // this exit code is what CTest reads
+}</template></cpp-runner></figure>
+<p>One of those checks is wrong on purpose, so the program exits non-zero — which
+is the entire contract between a test binary and CTest.</p>
+<p>The build file that turns this into a library, an application and a registered
+test:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">cmake_minimum_required</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(</span><span style="--sh-light:#59873A;--sh-dark:#80A665">VERSION</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> 3.20)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">project</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">VERSION</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> 0.1.0 LANGUAGES CXX)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_library</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats src/stats.cpp)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_include_directories</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PUBLIC</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> include)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_compile_features</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PUBLIC</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> cxx_std_20)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_compile_options</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> -Wall -Wextra)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_executable</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(wordcount app/main.cpp)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(wordcount </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> textstats)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(CTest)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_executable</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(test_stats tests/test_stats.cpp)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(test_stats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> textstats)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_test</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">NAME</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> stats </span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">COMMAND</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> test_stats)</span></span></code></pre></figure>
+<p>Configure, build, test:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>$ cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release</span></span>
+<span class="line"><span>-- Configuring done (0.3s)</span></span>
+<span class="line"><span>-- Generating done (0.0s)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>$ cmake --build build</span></span>
+<span class="line"><span>[1/6] Building CXX object CMakeFiles/textstats.dir/src/stats.cpp.o</span></span>
+<span class="line"><span>[2/6] Linking CXX static library libtextstats.a</span></span>
+<span class="line"><span>[3/6] Building CXX object CMakeFiles/wordcount.dir/app/main.cpp.o</span></span>
+<span class="line"><span>[4/6] Linking CXX executable wordcount</span></span>
+<span class="line"><span>[5/6] Building CXX object CMakeFiles/test_stats.dir/tests/test_stats.cpp.o</span></span>
+<span class="line"><span>[6/6] Linking CXX executable test_stats</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>$ cd build &#x26;&#x26; ctest --output-on-failure</span></span>
+<span class="line"><span>    Start 1: stats</span></span>
+<span class="line"><span>1/1 Test #1: stats ............................   Passed    0.00 sec</span></span>
+<span class="line"><span>100% tests passed, 0 tests failed out of 1</span></span></code></pre></figure>
+<p><code>-S</code> is the source directory, <code>-B</code> the build directory. Keeping them separate
+means <code>rm -rf build</code> is a complete clean and nothing generated ever lands in
+version control.</p>
+<h2 id="targets-and-why-the-old-way-was-worse" tabindex="-1">Targets, and why the old way was worse</h2>
+<p>CMake has two eras, and reading old code without knowing which one you are
+looking at is genuinely confusing.</p>
+<p><strong>Directory-based</strong> (pre-2014, still widely copy-pasted):</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include_directories</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(include)               </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># every target below, and every subdirectory</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_definitions</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(-DSOMETHING)               </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># everything</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">set</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A">CMAKE_CXX_FLAGS</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> "${CMAKE_CXX_FLAGS} -Wall"</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">)   </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># everything, globally</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(foo)                        </span><span style="--sh-light:#A0ADA0;--sh-dark:#758575DD"># everything</span></span></code></pre></figure>
+<p><strong>Target-based</strong> (what to write):</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_include_directories</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(mylib </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PUBLIC</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> include)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_compile_definitions</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(mylib </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> SOMETHING)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_compile_options</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(mylib </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> -Wall)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(mylib </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> foo)</span></span></code></pre></figure>
+<p>The difference is not verbosity. A directory-scoped setting applies to
+everything below it in the tree, including third-party code you pulled in and
+never wanted to compile with your flags. A target-scoped setting attaches to one
+target, travels with it when another target links to it, and stops where you say
+it stops.</p>
+<p>That last part is what <code>PUBLIC</code>, <code>PRIVATE</code> and <code>INTERFACE</code> control, and they are
+the whole idea:</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Applies to the target</th>
+<th>Propagates to things that link it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PRIVATE</code></td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>PUBLIC</code></td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>INTERFACE</code></td>
+<td>no</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Read them as a question about <strong>who needs this</strong>. The include directory is
+<code>PUBLIC</code> because a header of <code>textstats</code> says <code>#include &quot;textstats/stats.h&quot;</code>, so
+anyone who links it needs that path too. The warnings are <code>PRIVATE</code> because they
+are how <em>this</em> library is checked, and imposing them on consumers is rude.</p>
+<p>Both halves are observable. Change one word:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_include_directories</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> include)</span></span></code></pre></figure>
+<p>and the library still builds, while everything that links it does not:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>app/main.cpp:3:10: fatal error: textstats/stats.h: No such file or directory</span></span>
+<span class="line"><span>tests/test_stats.cpp:2:10: fatal error: textstats/stats.h: No such file or directory</span></span></code></pre></figure>
+<p>And with the original <code>PRIVATE</code> warnings, the generated compile commands show
+<code>-Wall -Wextra</code> on <code>stats.cpp</code> and on nothing else:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>stats.cpp          ['-Wall', '-Wextra']</span></span>
+<span class="line"><span>main.cpp           []</span></span>
+<span class="line"><span>test_stats.cpp     []</span></span></code></pre></figure>
+<p>This is what “modern CMake” means, and it is the one thing to take from this
+chapter: <strong>describe targets and their requirements; never set anything
+globally.</strong></p>
+<h2 id="build-types" tabindex="-1">Build types</h2>
+<p><code>CMAKE_BUILD_TYPE</code> selects a set of flags. For single-configuration generators
+(Ninja, Make) it is chosen at configure time, so a debug and a release build are
+two different build directories:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>cmake -S . -B build/debug   -DCMAKE_BUILD_TYPE=Debug</span></span>
+<span class="line"><span>cmake -S . -B build/release -DCMAKE_BUILD_TYPE=Release</span></span></code></pre></figure>
+<p>What each one actually passes, read out of <code>compile_commands.json</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Build type</th>
+<th>Flags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Debug</code></td>
+<td><code>-g</code></td>
+</tr>
+<tr>
+<td><code>Release</code></td>
+<td><code>-O3 -DNDEBUG</code></td>
+</tr>
+<tr>
+<td><code>RelWithDebInfo</code></td>
+<td><code>-O2 -g -DNDEBUG</code></td>
+</tr>
+<tr>
+<td><code>MinSizeRel</code></td>
+<td><code>-Os -DNDEBUG</code></td>
+</tr>
+</tbody>
+</table>
+<p>Two things worth noticing. <code>Debug</code> passes <strong>no optimisation flag at all</strong>, which
+means <code>-O0</code> by default — everything Chapter 7.2 said about not measuring there
+applies. And <code>NDEBUG</code> is what switches <code>assert</code> off, so a <code>Release</code> build has no
+assertions; Chapter 6.6 argued for that being a decision rather than a default.</p>
+<p><strong><code>RelWithDebInfo</code> is the one to profile.</strong> It optimises like <code>Release</code> and keeps
+the symbols, so <code>perf</code> can tell you the name of the function that is slow.</p>
+<aside class="callout callout--pitfall"><p class="callout__label">Pitfall</p>
+<p>Forgetting <code>-DCMAKE_BUILD_TYPE</code> with Ninja or Make gives you an <strong>empty</strong> build
+type: no optimisation, no <code>-g</code>, no <code>NDEBUG</code>. Not a debug build — a <em>nothing</em>
+build, which is slow and hard to debug at the same time. Multi-configuration
+generators (Visual Studio, Xcode, and Ninja Multi-Config) ignore the variable
+and take <code>--config Release</code> at build time instead.</p>
+</aside>
+<h2 id="tests" tabindex="-1">Tests</h2>
+<p><code>include(CTest)</code> plus <code>add_test</code> is enough to get <code>ctest</code> running your test
+binaries. CTest does not know or care what is inside them: a test passes if the
+program exits 0 — which is exactly the convention Chapter 6.4’s fifteen-line
+harness follows, and why that harness returns the failure count.</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(CTest)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_executable</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(test_stats tests/test_stats.cpp)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(test_stats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> textstats)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_test</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">NAME</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> stats </span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">COMMAND</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> test_stats)</span></span></code></pre></figure>
+<p>Useful invocations:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>ctest                      # run everything</span></span>
+<span class="line"><span>ctest --output-on-failure  # show what a failing test printed</span></span>
+<span class="line"><span>ctest -R stats             # only tests matching a regex</span></span>
+<span class="line"><span>ctest -j8                  # in parallel</span></span>
+<span class="line"><span>ctest --rerun-failed       # just the ones that failed last time</span></span></code></pre></figure>
+<p>With a framework — Catch2, GoogleTest, doctest — you would register each test
+case individually rather than one per binary, and each of those frameworks ships
+CMake helpers to do it. The 9.4 chapter covers getting them.</p>
+<h2 id="the-things-you-will-want-next" tabindex="-1">The things you will want next</h2>
+<p><strong><code>compile_commands.json</code>.</strong> <code>-DCMAKE_EXPORT_COMPILE_COMMANDS=ON</code> writes a file
+listing the exact command for every source file. Every editor’s C++ support,
+<code>clang-tidy</code> and <code>clangd</code> all read it. Turn it on and symlink it to the project
+root; it is the single highest-value line in this chapter.</p>
+<p><strong>Presets.</strong> A <code>CMakePresets.json</code> names configurations so nobody has to
+remember the flags:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">{</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">  "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">version</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 3</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">  "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">configurePresets</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#999999;--sh-dark:#666666"> [</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    {</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">      "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">name</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">dev</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">      "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">generator</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">Ninja</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">      "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">binaryDir</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">build/dev</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">      "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">cacheVariables</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">        "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">CMAKE_BUILD_TYPE</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">RelWithDebInfo</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span></span>
+<span class="line"><span style="--sh-light:#99841877;--sh-dark:#B8A96577">        "</span><span style="--sh-light:#998418;--sh-dark:#B8A965">CMAKE_EXPORT_COMPILE_COMMANDS</span><span style="--sh-light:#99841877;--sh-dark:#B8A96577">"</span><span style="--sh-light:#999999;--sh-dark:#666666">:</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">ON</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">      }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">  ]</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></figure>
+<p>Then <code>cmake --preset dev</code>. It is checked in, so every developer and the CI run
+the same build.</p>
+<p><strong>Ninja.</strong> <code>-G Ninja</code> is faster than Make at everything, especially
+no-op rebuilds, and is what CI should use.</p>
+<p><strong>An interface library for common flags.</strong> Rather than repeating
+<code>target_compile_options</code> on every target:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">add_library</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(project_warnings </span><span style="--sh-light:#59873A;--sh-dark:#80A665">INTERFACE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">)</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_compile_options</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(project_warnings </span><span style="--sh-light:#59873A;--sh-dark:#80A665">INTERFACE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> -Wall -Wextra -Wpedantic)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">target_link_libraries</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">(textstats </span><span style="--sh-light:#59873A;--sh-dark:#80A665">PRIVATE</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> project_warnings)</span></span></code></pre></figure>
+<p>An <code>INTERFACE</code> library compiles nothing; it is a named bundle of usage
+requirements. This is the idiomatic replacement for the global <code>CMAKE_CXX_FLAGS</code>
+that older projects set.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>Two rules that prevent most CMake pain. <strong>Never glob your sources</strong>
+(<code>file(GLOB ...)</code>) — CMake cannot tell when a new file appears, so builds go
+stale in ways that waste an afternoon; list the files. And <strong>never set
+<code>CMAKE_CXX_FLAGS</code> yourself</strong> — it is global, it fights with build types, and
+everything you want from it is a <code>target_compile_options</code> away.</p>
+</aside>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;A library's headers `#include` its own public header by path. Should `target_include_directories` use PUBLIC or PRIVATE?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;PUBLIC — anything that links the library also needs that path to compile its headers&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;PUBLIC means 'this target needs it, and so does anyone who links me'. With PRIVATE the library builds and every consumer fails with 'No such file or directory'.&quot; },
+    { &quot;text&quot;: &quot;PRIVATE — the include path is an implementation detail&quot;, &quot;why&quot;: &quot;It would be, if consumers never included the headers. They do; that is what the library is for.&quot; },
+    { &quot;text&quot;: &quot;INTERFACE — consumers need it and the library does not&quot;, &quot;why&quot;: &quot;That is right for a header-only library, which has no sources of its own. This one compiles `src/stats.cpp`, which needs the path too.&quot; },
+    { &quot;text&quot;: &quot;It makes no difference; include paths are global&quot;, &quot;why&quot;: &quot;They were, in directory-based CMake, and that is precisely the problem target-based CMake fixed.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;You configure with Ninja and forget `-DCMAKE_BUILD_TYPE`. What do you get?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;An empty build type: no optimisation flag, no `-g`, and no `NDEBUG` — slow *and* hard to debug&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;It is not a debug build. Single-configuration generators need the variable set; multi-configuration ones ignore it and take `--config` at build time.&quot; },
+    { &quot;text&quot;: &quot;A Debug build, since that is the default&quot;, &quot;why&quot;: &quot;There is no default. The variable is simply empty, and so is the flag list it would have contributed.&quot; },
+    { &quot;text&quot;: &quot;A Release build&quot;, &quot;why&quot;: &quot;Nothing selects optimisation unless you ask for it.&quot; },
+    { &quot;text&quot;: &quot;A configure error&quot;, &quot;why&quot;: &quot;CMake configures happily and says nothing, which is what makes this worth knowing.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="stats-library"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/engineering/modules/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Modules</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/engineering/dependencies/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Dependencies and packaging</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#the-project">The project</a></li><li class="rail__item rail__item--h2"><a href="#targets-and-why-the-old-way-was-worse">Targets, and why the old way was worse</a></li><li class="rail__item rail__item--h2"><a href="#build-types">Build types</a></li><li class="rail__item rail__item--h2"><a href="#tests">Tests</a></li><li class="rail__item rail__item--h2"><a href="#the-things-you-will-want-next">The things you will want next</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>8 min</p>
+        <p><span>Problems</span>2</p>
+      </div>
+      <button class="rail__done" data-chapter="build-systems" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

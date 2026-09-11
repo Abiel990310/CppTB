@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your toolchain · The C++ Textbook</title>
+  <meta name="description" content="Compiler flags, warnings, debuggers, and sanitizers — the tools that turn silent bugs into loud ones.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part" open><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/" class="is-active" aria-current="page"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose" data-chapter="your-toolchain">
+    <div class="chapter-head">
+      <p class="chapter-eyebrow"><a href="/CppTB/foundations/">Part 1 · Foundations</a></p>
+      <h1>Your toolchain</h1>
+      <p class="chapter-lede">Compiler flags, warnings, debuggers, and sanitizers — the tools that turn silent bugs into loud ones.</p>
+    </div>
+    
+    <section class="objectives">
+    <h2 class="objectives__title">By the end of this chapter you can</h2>
+    <ul><li>Compile with a warning set that catches real bugs</li><li>Run a program under AddressSanitizer and read its report</li><li>Step through a program in a debugger and inspect a variable</li></ul>
+  </section>
+    <p>Every sample in this book has been compiled with a particular set of flags, and
+that choice has been doing real work — catching mistakes in the writing, and
+producing the diagnostics you have been reading. This chapter is that command
+line, explained.</p>
+<h2 id="the-command-line" tabindex="-1">The command line</h2>
+<figure class="code"><figcaption class="code__title">What this book compiles with</figcaption><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -std=c++20</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wall</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wextra</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> \</span></span>
+<span class="line"><span style="--sh-light:#A65E2B;--sh-dark:#C99076">    -fsanitize=address,undefined</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -fno-omit-frame-pointer</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -g</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> \</span></span>
+<span class="line"><span style="--sh-light:#A65E2B;--sh-dark:#C99076">    -o</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> program</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> main.cpp</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">./program</span></span></code></pre></figure>
+<p>Piece by piece:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-std=c++20</code></td>
+<td>Selects the language version. Without it you get the compiler’s default, which may be older than you expect.</td>
+</tr>
+<tr>
+<td><code>-Wall -Wextra</code></td>
+<td>Turns on the warnings worth having. Not “all” warnings despite the name.</td>
+</tr>
+<tr>
+<td><code>-fsanitize=address,undefined</code></td>
+<td>Instruments the program to detect memory errors and undefined behaviour at run time.</td>
+</tr>
+<tr>
+<td><code>-fno-omit-frame-pointer</code></td>
+<td>Keeps stack traces readable in sanitizer reports.</td>
+</tr>
+<tr>
+<td><code>-g</code></td>
+<td>Emits debug information: function names and line numbers in traces, and the ability to use a debugger.</td>
+</tr>
+<tr>
+<td><code>-o program</code></td>
+<td>Names the output. Without it you get <code>a.out</code>.</td>
+</tr>
+</tbody>
+</table>
+<p><code>clang++</code> accepts all of these identically. On Windows, MSVC uses <code>/std:c++20 /W4</code> and has <code>/fsanitize=address</code>; the concepts transfer, the spellings do not.</p>
+<h2 id="warnings-are-the-cheapest-tool-you-have" tabindex="-1">Warnings are the cheapest tool you have</h2>
+<p><code>-Wall -Wextra</code> costs nothing at run time and catches a class of bug before the
+program exists.</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20"><figcaption class="code__title">Four warnings worth reading</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> uninitialised</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">reading an uninitialised value: </span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> uninitialised </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> signed_value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> -</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    unsigned</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> unsigned_value </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#1E754F;--sh-dark:#4D9375">    if</span><span style="--sh-light:#999999;--sh-dark:#666666"> (</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">signed_value </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> unsigned_value</span><span style="--sh-light:#999999;--sh-dark:#666666">)</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">-1 &#x3C; 1 as expected</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375"> else</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">        std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">-1 is NOT less than 1 — the comparison converted it</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">    }</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+
+int main() {
+    int uninitialised;
+    std::cout &lt;&lt; &quot;reading an uninitialised value: &quot; &lt;&lt; uninitialised &lt;&lt; '\n';
+
+    int signed_value = -1;
+    unsigned int unsigned_value = 1;
+    if (signed_value &lt; unsigned_value) {
+        std::cout &lt;&lt; &quot;-1 &lt; 1 as expected\n&quot;;
+    } else {
+        std::cout &lt;&lt; &quot;-1 is NOT less than 1 — the comparison converted it\n&quot;;
+    }
+}</template></cpp-runner></figure>
+<p>Read the warnings on that one. <code>-Wmaybe-uninitialized</code> catches the first;
+<code>-Wsign-compare</code> catches the second, which is the unsigned-conversion trap from
+Chapter 1.2 appearing as a comparison that reports the opposite of the truth.</p>
+<p>Three more worth adding once you are comfortable:</p>
+<figure class="code"><figcaption class="code__title">A stricter set</figcaption><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -std=c++20</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wall</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wextra</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wpedantic</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wshadow</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -Wconversion</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ...</span></span></code></pre></figure>
+<ul>
+<li><code>-Wpedantic</code> rejects compiler extensions, so your code stays portable.</li>
+<li><code>-Wshadow</code> catches an inner variable hiding an outer one with the same name.</li>
+<li><code>-Wconversion</code> warns on narrowing — <code>double</code> to <code>int</code>, <code>long</code> to <code>int</code>. It is
+noisy on existing code and excellent on new code.</li>
+</ul>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p><code>-Werror</code> turns warnings into errors. Use it in CI, not while you are writing —
+a warning you have not dealt with yet should not stop you compiling and testing
+a change. Turning it on in CI means the warnings never accumulate.</p>
+</aside>
+<h2 id="sanitizers" tabindex="-1">Sanitizers</h2>
+<p>A sanitizer instruments your program so that undefined behaviour announces
+itself. The two you want by default are AddressSanitizer and
+UndefinedBehaviorSanitizer, and they compose: <code>-fsanitize=address,undefined</code>.</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">AddressSanitizer, on a buffer overflow</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">vector</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">vector</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;int></span><span style="--sh-light:#59873A;--sh-dark:#80A665"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">(</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">,</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 7</span><span style="--sh-light:#999999;--sh-dark:#666666">);</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">reading one past the end</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B07D48;--sh-dark:#BD976A"> v</span><span style="--sh-light:#999999;--sh-dark:#666666">[</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91">4</span><span style="--sh-light:#999999;--sh-dark:#666666">]</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main() {
+    std::vector&lt;int&gt; v(4, 7);
+    std::cout &lt;&lt; &quot;reading one past the end\n&quot;;
+    std::cout &lt;&lt; v[4] &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<h3 id="reading-the-report" tabindex="-1">Reading the report</h3>
+<p>The output is long, and three parts of it matter:</p>
+<ol>
+<li><strong>The first line</strong> names the error and the address:
+<code>ERROR: AddressSanitizer: heap-buffer-overflow on address 0x...</code></li>
+<li><strong>The first stack frame</strong> is where the bad access happened — your code, with
+a file and line if you compiled with <code>-g</code>.</li>
+<li><strong>The allocation section</strong> at the bottom says where the memory came from and
+how large it was: <code>allocated by thread T0 here</code>, followed by the size and how
+far past it you went.</li>
+</ol>
+<p>If the trace shows addresses instead of function names, you compiled without
+<code>-g</code>. Add it — the report’s whole value is in the names.</p>
+<figure class="widget"><cpp-runner data-run="1" data-std="c++20" data-expect-ub="1"><figcaption class="code__title">UndefinedBehaviorSanitizer, on signed overflow</figcaption><div data-role="rendered"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">climits</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">#</span><span style="--sh-light:#1E754F;--sh-dark:#4D9375">include</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> &#x3C;</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">iostream</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">></span></span>
+<span class="line"></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">int</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> main</span><span style="--sh-light:#999999;--sh-dark:#666666">()</span><span style="--sh-light:#999999;--sh-dark:#666666"> {</span></span>
+<span class="line"><span style="--sh-light:#AB5959;--sh-dark:#CB7676">    int</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> big </span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> INT_MAX</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> "</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">adding one to INT_MAX</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">"</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">    std</span><span style="--sh-light:#999999;--sh-dark:#666666">::</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE">cout </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">&#x3C;&#x3C;</span><span style="--sh-light:#393A34;--sh-dark:#DBD7CAEE"> big </span><span style="--sh-light:#AB5959;--sh-dark:#CB7676">+</span><span style="--sh-light:#2F798A;--sh-dark:#4C9A91"> 1</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> &#x3C;&#x3C;</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076">\n</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#999999;--sh-dark:#666666">;</span></span>
+<span class="line"><span style="--sh-light:#999999;--sh-dark:#666666">}</span></span></code></pre></div><template data-role="source">#include &lt;climits&gt;
+#include &lt;iostream&gt;
+
+int main() {
+    int big = INT_MAX;
+    std::cout &lt;&lt; &quot;adding one to INT_MAX\n&quot;;
+    std::cout &lt;&lt; big + 1 &lt;&lt; '\n';
+}</template></cpp-runner></figure>
+<p>UBSan’s reports are shorter: a file, a line, and a sentence saying what the
+program did that the standard does not define.</p>
+<aside class="callout callout--note"><p class="callout__label">Note</p>
+<p>ASan roughly doubles run time and increases memory use substantially. That is a
+fine price for development and testing, and not one you ship. Build your release
+binaries without sanitizers, and run your test suite with them.</p>
+<p>They also do not compose with everything: ASan and ThreadSanitizer cannot be
+enabled together, and <code>-fsanitize=address</code> conflicts with <code>ulimit -v</code>, because
+ASan reserves a very large shadow mapping at startup.</p>
+</aside>
+<h3 id="what-they-do-not-catch" tabindex="-1">What they do not catch</h3>
+<p>Chapter 6.3 has the full table. The one to remember now: <strong>ASan does not catch
+uninitialised reads.</strong> That is MemorySanitizer’s job, and MSan is Clang-only and
+requires every library it touches to be rebuilt with it. Your defence against
+uninitialised reads is <code>-Wall</code> and initialising at the point of declaration.</p>
+<h2 id="the-debugger" tabindex="-1">The debugger</h2>
+<p>A debugger lets you stop a program and look at it. The two are <code>gdb</code> (GNU) and
+<code>lldb</code> (LLVM); the commands below are <code>gdb</code>, and <code>lldb</code>’s are similar.</p>
+<figure class="code"><figcaption class="code__title">A first session</figcaption><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -std=c++20</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -g</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -O0</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -o</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> program</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> main.cpp</span></span>
+<span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">gdb</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ./program</span></span></code></pre></figure>
+<p>Inside, the commands that cover most of what you need:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Short</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>break main.cpp:12</code></td>
+<td><code>b</code></td>
+<td>Stop at line 12</td>
+</tr>
+<tr>
+<td><code>run</code></td>
+<td><code>r</code></td>
+<td>Start the program</td>
+</tr>
+<tr>
+<td><code>next</code></td>
+<td><code>n</code></td>
+<td>Run the next line, stepping over calls</td>
+</tr>
+<tr>
+<td><code>step</code></td>
+<td><code>s</code></td>
+<td>Run the next line, stepping into calls</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td><code>c</code></td>
+<td>Run until the next breakpoint</td>
+</tr>
+<tr>
+<td><code>print total</code></td>
+<td><code>p</code></td>
+<td>Show a variable’s value</td>
+</tr>
+<tr>
+<td><code>backtrace</code></td>
+<td><code>bt</code></td>
+<td>Show the call stack</td>
+</tr>
+<tr>
+<td><code>finish</code></td>
+<td></td>
+<td>Run until the current function returns</td>
+</tr>
+<tr>
+<td><code>quit</code></td>
+<td><code>q</code></td>
+<td>Leave</td>
+</tr>
+</tbody>
+</table>
+<p>Compile with <code>-O0</code> for debugging. At <code>-O2</code> the compiler reorders and merges
+code, so stepping jumps around and variables report <code>&lt;optimized out&gt;</code> — the
+program is correct, but it no longer corresponds line-by-line to your source.</p>
+<aside class="callout callout--tip"><p class="callout__label">Tip</p>
+<p>When a program crashes, <code>gdb</code> gives you the answer in two commands:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span>gdb ./program</span></span>
+<span class="line"><span>run</span></span>
+<span class="line"><span>bt</span></span></code></pre></figure>
+<p><code>bt</code> prints the call stack at the moment of the crash. That is usually enough to
+find the fault without a single breakpoint.</p>
+</aside>
+<p>Your editor almost certainly wraps this in a UI — VS Code, CLion, and Visual
+Studio all drive <code>gdb</code> or <code>lldb</code> underneath. Learning the commands is still
+worth an hour, because they are what you have on a remote machine or in CI.</p>
+<h2 id="which-compiler" tabindex="-1">Which compiler</h2>
+<p>Both major open-source compilers are excellent and you should have both if you
+can:</p>
+<ul>
+<li><strong>GCC</strong> (<code>g++</code>) is the default on most Linux distributions.</li>
+<li><strong>Clang</strong> (<code>clang++</code>) generally produces clearer error messages, and its
+sanitizer support arrived first.</li>
+</ul>
+<p>Compiling with both is a genuinely useful habit: they warn about different
+things, and code that satisfies both is more portable than code that satisfies
+one. This book’s verification scripts accept <code>CPPTB_COMPILER=clang++</code> for
+exactly that reason.</p>
+<figure class="code"><figcaption class="code__title">Checking a chapter against both</figcaption><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">npm</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> run</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> verify:snippets</span></span>
+<span class="line"><span style="--sh-light:#B07D48;--sh-dark:#BD976A">CPPTB_COMPILER</span><span style="--sh-light:#999999;--sh-dark:#666666">=</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">clang++</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> npm</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> run</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> verify:snippets</span></span></code></pre></figure>
+<h2 id="getting-a-compiler" tabindex="-1">Getting a compiler</h2>
+<ul>
+<li><strong>Debian or Ubuntu:</strong> <code>sudo apt install g++ gdb</code></li>
+<li><strong>Fedora:</strong> <code>sudo dnf install gcc-c++ gdb</code></li>
+<li><strong>macOS:</strong> <code>xcode-select --install</code> gives you <code>clang++</code> and <code>lldb</code></li>
+<li><strong>Windows:</strong> install “Desktop development with C++” from the Visual Studio
+Installer, or use WSL and follow the Ubuntu instructions</li>
+</ul>
+<p>Check it worked:</p>
+<figure class="code"><pre class="shiki shiki-themes vitesse-light vitesse-dark" style="--sh-light:#393a34;--sh-dark:#dbd7caee;--sh-light-bg:#ffffff;--sh-dark-bg:#121212" tabindex="0"><code><span class="line"><span style="--sh-light:#59873A;--sh-dark:#80A665">g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> --version</span></span>
+<span class="line"><span style="--sh-light:#998418;--sh-dark:#B8A965">echo</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77"> '</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D">int main(){}</span><span style="--sh-light:#B5695977;--sh-dark:#C98A7D77">'</span><span style="--sh-light:#AB5959;--sh-dark:#CB7676"> ></span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> t.cpp</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x26;&#x26;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> g++</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -std=c++20</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> t.cpp</span><span style="--sh-light:#A65E2B;--sh-dark:#C99076"> -o</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> t</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x26;&#x26;</span><span style="--sh-light:#59873A;--sh-dark:#80A665"> ./t</span><span style="--sh-light:#999999;--sh-dark:#666666"> &#x26;&#x26;</span><span style="--sh-light:#998418;--sh-dark:#B8A965"> echo</span><span style="--sh-light:#B56959;--sh-dark:#C98A7D"> ok</span></span></code></pre></figure>
+<aside class="callout callout--pitfall"><p class="callout__label">Pitfall</p>
+<p>An old compiler is a common source of confusing errors. C++20 support landed
+progressively: GCC 10 and Clang 10 have most of it, GCC 13 and Clang 17 have
+essentially all. If a feature from this book does not compile, check your
+version before assuming you mistyped it — <code>g++ --version</code> first, error message
+second.</p>
+</aside>
+<h2 id="check-yourself" tabindex="-1">Check yourself</h2>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Your sanitizer report shows addresses like `#0 0x55d4a2 in main+0x1a2` instead of file names and line numbers. What is missing?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;`-fsanitize=address` was not passed&quot;, &quot;why&quot;: &quot;It clearly was — without it there would be no report at all, just a crash or silent corruption.&quot; },
+    { &quot;text&quot;: &quot;`-g`, which emits the debug information the symboliser needs&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Right. The sanitizer detects the error either way, but without debug info it can only report addresses. Adding -g is what turns a report into something actionable.&quot; },
+    { &quot;text&quot;: &quot;`-O0`; sanitizers require unoptimised builds&quot;, &quot;why&quot;: &quot;Sanitizers work at any optimisation level. -O0 helps a debugger step sensibly, but it is not what supplies symbol names.&quot; },
+    { &quot;text&quot;: &quot;The program needs to be run under gdb&quot;, &quot;why&quot;: &quot;Sanitizer reports are produced by the instrumented program itself; no debugger is involved.&quot; }
+  ]
+}</template></cpp-quiz>
+<cpp-quiz><template data-role="spec">{
+  &quot;question&quot;: &quot;Why is `-Wall -Wextra` worth turning on even though it catches nothing at run time?&quot;,
+  &quot;options&quot;: [
+    { &quot;text&quot;: &quot;It makes the program faster&quot;, &quot;why&quot;: &quot;Warnings have no effect on generated code. They are purely a compile-time diagnostic.&quot; },
+    { &quot;text&quot;: &quot;It catches real bugs — uninitialised reads, sign-comparison errors — before the program is ever run, at zero cost&quot;, &quot;correct&quot;: true, &quot;why&quot;: &quot;Exactly, and some of them are bugs no run-time tool will find. ASan does not catch uninitialised reads at all, so -Wmaybe-uninitialized may be your only warning.&quot; },
+    { &quot;text&quot;: &quot;It is required for C++20&quot;, &quot;why&quot;: &quot;The standard version is selected by -std=c++20 and is independent of warnings.&quot; },
+    { &quot;text&quot;: &quot;It enables the sanitizers&quot;, &quot;why&quot;: &quot;Sanitizers are enabled separately with -fsanitize=... and do a different job — run-time detection rather than compile-time analysis.&quot; }
+  ]
+}</template></cpp-quiz>
+<h2 id="practice" tabindex="-1">Practice</h2>
+<cpp-exercise data-id="read-the-warning"></cpp-exercise>
+
+    <nav class="pager" aria-label="Chapter navigation"><a class="pager__link pager__link--prev" href="/CppTB/foundations/functions/">
+           <span class="pager__dir">Previous</span>
+           <span class="pager__title">Functions</span>
+         </a><a class="pager__link pager__link--next" href="/CppTB/memory/objects-and-storage/">
+           <span class="pager__dir">Next</span>
+           <span class="pager__title">Objects and storage</span>
+         </a></nav>
+  </article>
+    </main>
+    <aside class="rail">
+    <div class="rail__inner">
+      <p class="rail__title">On this page</p><ul class="rail__list" id="rail-list"><li class="rail__item rail__item--h2"><a href="#the-command-line">The command line</a></li><li class="rail__item rail__item--h2"><a href="#warnings-are-the-cheapest-tool-you-have">Warnings are the cheapest tool you have</a></li><li class="rail__item rail__item--h2"><a href="#sanitizers">Sanitizers</a></li><li class="rail__item rail__item--h3"><a href="#reading-the-report">Reading the report</a></li><li class="rail__item rail__item--h3"><a href="#what-they-do-not-catch">What they do not catch</a></li><li class="rail__item rail__item--h2"><a href="#the-debugger">The debugger</a></li><li class="rail__item rail__item--h2"><a href="#which-compiler">Which compiler</a></li><li class="rail__item rail__item--h2"><a href="#getting-a-compiler">Getting a compiler</a></li><li class="rail__item rail__item--h2"><a href="#check-yourself">Check yourself</a></li><li class="rail__item rail__item--h2"><a href="#practice">Practice</a></li></ul>
+      <div class="rail__meta">
+        <p><span>Standard</span><code>c++20</code></p>
+        <p><span>Reading</span>8 min</p>
+        <p><span>Problems</span>1</p>
+      </div>
+      <button class="rail__done" data-chapter="your-toolchain" id="mark-done">Mark as read</button>
+    </div>
+  </aside>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>

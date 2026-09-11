@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Problem solving · The C++ Textbook</title>
+  <meta name="description" content="The techniques competitive programming is built on, taught against the constraint that decides which one you need — and drilled on a judge.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/CppTB/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/CppTB/assets/index-CiFnTGg2.css">
+</head>
+<body class="">
+  <header class="topbar">
+  <button class="topbar__menu" id="menu-toggle" aria-label="Toggle contents" aria-expanded="false">
+    <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>
+  </button>
+  <a class="topbar__brand" href="/CppTB/">The C++ Textbook</a>
+  <div class="topbar__spacer"></div>
+  <button class="search-trigger" id="search-trigger" aria-label="Search the book">
+    <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><circle cx="9" cy="9" r="5.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Search</span><kbd>/</kbd>
+  </button>
+  <button class="icon-button" id="theme-toggle" aria-label="Switch theme" title="Switch theme">
+    <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 2.5a7.5 7.5 0 1 0 7.5 7.5A6 6 0 0 1 10 2.5Z" fill="currentColor"/></svg>
+  </button>
+</header>
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Book contents">
+  <div class="sidebar__inner">
+    <a class="sidebar__link" href="/CppTB/">Start here</a>
+    <a class="sidebar__link" href="/CppTB/practice/">Practice problems</a>
+    <a class="sidebar__link" href="/CppTB/reference/">Quick reference</a>
+    <a class="sidebar__link" href="/CppTB/progress/">Progress</a>
+    <hr class="sidebar__rule">
+    <details class="nav__part"><summary><span class="nav__part-num">Part 1</span>Foundations</summary><ul class="nav__list"><li><a href="/CppTB/foundations/hello-machine/"><span class="nav__num">1.1</span><span class="nav__text">Hello, machine</span></a></li><li><a href="/CppTB/foundations/values-and-types/"><span class="nav__num">1.2</span><span class="nav__text">Values, types, and names</span></a></li><li><a href="/CppTB/foundations/making-decisions/"><span class="nav__num">1.3</span><span class="nav__text">Making decisions</span></a></li><li><a href="/CppTB/foundations/repetition/"><span class="nav__num">1.4</span><span class="nav__text">Repetition</span></a></li><li><a href="/CppTB/foundations/functions/"><span class="nav__num">1.5</span><span class="nav__text">Functions</span></a></li><li><a href="/CppTB/foundations/your-toolchain/"><span class="nav__num">1.6</span><span class="nav__text">Your toolchain</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 2</span>Memory and objects</summary><ul class="nav__list"><li><a href="/CppTB/memory/objects-and-storage/"><span class="nav__num">2.1</span><span class="nav__text">Objects and storage</span></a></li><li><a href="/CppTB/memory/pointers/"><span class="nav__num">2.2</span><span class="nav__text">Pointers</span></a></li><li><a href="/CppTB/memory/references/"><span class="nav__num">2.3</span><span class="nav__text">References</span></a></li><li><a href="/CppTB/memory/lifetime-and-scope/"><span class="nav__num">2.4</span><span class="nav__text">Lifetime and scope</span></a></li><li><a href="/CppTB/memory/stack-and-heap/"><span class="nav__num">2.5</span><span class="nav__text">The stack and the heap</span></a></li><li><a href="/CppTB/memory/arrays-and-decay/"><span class="nav__num">2.6</span><span class="nav__text">Arrays, and why they decay</span></a></li><li><a href="/CppTB/memory/const/"><span class="nav__num">2.7</span><span class="nav__text">const and constness</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 3</span>Types you make</summary><ul class="nav__list"><li><a href="/CppTB/types/structs-and-classes/"><span class="nav__num">3.1</span><span class="nav__text">Structs and classes</span></a></li><li><a href="/CppTB/types/raii/"><span class="nav__num">3.2</span><span class="nav__text">RAII</span></a></li><li><a href="/CppTB/types/copying/"><span class="nav__num">3.3</span><span class="nav__text">Copying</span></a></li><li><a href="/CppTB/types/moving/"><span class="nav__num">3.4</span><span class="nav__text">Moving</span></a></li><li><a href="/CppTB/types/rule-of-zero/"><span class="nav__num">3.5</span><span class="nav__text">Rule of zero, three, five</span></a></li><li><a href="/CppTB/types/operator-overloading/"><span class="nav__num">3.6</span><span class="nav__text">Operator overloading</span></a></li><li><a href="/CppTB/types/inheritance/"><span class="nav__num">3.7</span><span class="nav__text">Inheritance and virtual functions</span></a></li><li><a href="/CppTB/types/composition-over-inheritance/"><span class="nav__num">3.8</span><span class="nav__text">When not to use inheritance</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 4</span>The standard library</summary><ul class="nav__list"><li><a href="/CppTB/library/strings/"><span class="nav__num">4.1</span><span class="nav__text">std::string and text</span></a></li><li><a href="/CppTB/library/sequence-containers/"><span class="nav__num">4.2</span><span class="nav__text">Sequence containers</span></a></li><li><a href="/CppTB/library/associative-containers/"><span class="nav__num">4.3</span><span class="nav__text">Associative containers</span></a></li><li><a href="/CppTB/library/iterators/"><span class="nav__num">4.4</span><span class="nav__text">Iterators</span></a></li><li><a href="/CppTB/library/algorithms/"><span class="nav__num">4.5</span><span class="nav__text">Algorithms</span></a></li><li><a href="/CppTB/library/ranges/"><span class="nav__num">4.6</span><span class="nav__text">Ranges and views</span></a></li><li><a href="/CppTB/library/smart-pointers/"><span class="nav__num">4.7</span><span class="nav__text">Smart pointers</span></a></li><li><a href="/CppTB/library/vocabulary-types/"><span class="nav__num">4.8</span><span class="nav__text">optional, variant, expected</span></a></li><li><a href="/CppTB/library/io-and-formatting/"><span class="nav__num">4.9</span><span class="nav__text">Input, output, formatting</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 5</span>Generic programming</summary><ul class="nav__list"><li><a href="/CppTB/generic/function-templates/"><span class="nav__num">5.1</span><span class="nav__text">Function templates</span></a></li><li><a href="/CppTB/generic/class-templates/"><span class="nav__num">5.2</span><span class="nav__text">Class templates</span></a></li><li><a href="/CppTB/generic/deduction/"><span class="nav__num">5.3</span><span class="nav__text">Deduction and forwarding</span></a></li><li><a href="/CppTB/generic/concepts/"><span class="nav__num">5.4</span><span class="nav__text">Concepts and constraints</span></a></li><li><a href="/CppTB/generic/constexpr/"><span class="nav__num">5.5</span><span class="nav__text">Compile-time computation</span></a></li><li><a href="/CppTB/generic/variadics/"><span class="nav__num">5.6</span><span class="nav__text">Variadic templates</span></a></li><li><a href="/CppTB/generic/type-traits/"><span class="nav__num">5.7</span><span class="nav__text">Type traits</span></a></li><li><a href="/CppTB/generic/static-polymorphism/"><span class="nav__num">5.8</span><span class="nav__text">Static polymorphism</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 6</span>Correctness</summary><ul class="nav__list"><li><a href="/CppTB/correctness/exceptions/"><span class="nav__num">6.1</span><span class="nav__text">Exceptions</span></a></li><li><a href="/CppTB/correctness/error-handling-without-exceptions/"><span class="nav__num">6.2</span><span class="nav__text">Error handling without exceptions</span></a></li><li><a href="/CppTB/correctness/undefined-behaviour/"><span class="nav__num">6.3</span><span class="nav__text">Undefined behaviour</span></a></li><li><a href="/CppTB/correctness/testing/"><span class="nav__num">6.4</span><span class="nav__text">Testing</span></a></li><li><a href="/CppTB/correctness/debugging/"><span class="nav__num">6.5</span><span class="nav__text">Debugging</span></a></li><li><a href="/CppTB/correctness/invariants/"><span class="nav__num">6.6</span><span class="nav__text">Invariants and assertions</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 7</span>Performance</summary><ul class="nav__list"><li><a href="/CppTB/performance/what-the-compiler-does/"><span class="nav__num">7.1</span><span class="nav__text">What the compiler does</span></a></li><li><a href="/CppTB/performance/measuring/"><span class="nav__num">7.2</span><span class="nav__text">Measuring</span></a></li><li><a href="/CppTB/performance/cache-and-layout/"><span class="nav__num">7.3</span><span class="nav__text">Cache and layout</span></a></li><li><a href="/CppTB/performance/zero-cost/"><span class="nav__num">7.4</span><span class="nav__text">Zero-cost, examined</span></a></li><li><a href="/CppTB/performance/copies-and-moves/"><span class="nav__num">7.5</span><span class="nav__text">Copies and elision</span></a></li><li><a href="/CppTB/performance/inlining-and-linking/"><span class="nav__num">7.6</span><span class="nav__text">Inlining and linking</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 8</span>Concurrency</summary><ul class="nav__list"><li><a href="/CppTB/concurrency/threads/"><span class="nav__num">8.1</span><span class="nav__text">Threads</span></a></li><li><a href="/CppTB/concurrency/races-and-mutexes/"><span class="nav__num">8.2</span><span class="nav__text">Races and mutexes</span></a></li><li><a href="/CppTB/concurrency/atomics/"><span class="nav__num">8.3</span><span class="nav__text">Atomics</span></a></li><li><a href="/CppTB/concurrency/futures-and-tasks/"><span class="nav__num">8.4</span><span class="nav__text">Futures and tasks</span></a></li><li><a href="/CppTB/concurrency/coroutines/"><span class="nav__num">8.5</span><span class="nav__text">Coroutines</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 9</span>Building real software</summary><ul class="nav__list"><li><a href="/CppTB/engineering/translation-units/"><span class="nav__num">9.1</span><span class="nav__text">Translation units</span></a></li><li><a href="/CppTB/engineering/modules/"><span class="nav__num">9.2</span><span class="nav__text">Modules</span></a></li><li><a href="/CppTB/engineering/build-systems/"><span class="nav__num">9.3</span><span class="nav__text">Build systems</span></a></li><li><a href="/CppTB/engineering/dependencies/"><span class="nav__num">9.4</span><span class="nav__text">Dependencies</span></a></li><li><a href="/CppTB/engineering/project/"><span class="nav__num">9.5</span><span class="nav__text">Project: search index</span></a></li></ul></details><details class="nav__part"><summary><span class="nav__part-num">Part 10</span>Problem solving</summary><ul class="nav__list"><li><a href="/CppTB/problem-solving/reading-a-problem/"><span class="nav__num">10.1</span><span class="nav__text">Reading a problem</span></a></li><li><a href="/CppTB/problem-solving/counting-the-work/"><span class="nav__num">10.2</span><span class="nav__text">Counting the work</span></a></li><li><a href="/CppTB/problem-solving/contest-template/"><span class="nav__num">10.3</span><span class="nav__text">Template and fast I/O</span></a></li><li><a href="/CppTB/problem-solving/sorting-and-comparators/"><span class="nav__num">10.4</span><span class="nav__text">Sorting and comparators</span></a></li><li><a href="/CppTB/problem-solving/binary-search/"><span class="nav__num">10.5</span><span class="nav__text">Binary search</span></a></li><li><a href="/CppTB/problem-solving/two-pointers/"><span class="nav__num">10.6</span><span class="nav__text">Two pointers</span></a></li><li><a href="/CppTB/problem-solving/prefix-sums/"><span class="nav__num">10.7</span><span class="nav__text">Prefix sums</span></a></li><li><a href="/CppTB/problem-solving/monotonic-stacks/"><span class="nav__num">10.8</span><span class="nav__text">Monotonic stacks</span></a></li><li><a href="/CppTB/problem-solving/deques-and-window-extrema/"><span class="nav__num">10.9</span><span class="nav__text">Monotonic deques</span></a></li><li><a href="/CppTB/problem-solving/hashing-and-frequency/"><span class="nav__num">10.10</span><span class="nav__text">Hashing and counting</span></a></li><li><a href="/CppTB/problem-solving/recursion-and-backtracking/"><span class="nav__num">10.11</span><span class="nav__text">Recursion</span></a></li><li><a href="/CppTB/problem-solving/bitmask-enumeration/"><span class="nav__num">10.12</span><span class="nav__text">Bitmasks</span></a></li><li><a href="/CppTB/problem-solving/greedy/"><span class="nav__num">10.13</span><span class="nav__text">Greedy</span></a></li><li><a href="/CppTB/problem-solving/divide-and-conquer/"><span class="nav__num">10.14</span><span class="nav__text">Divide and conquer</span></a></li><li><a href="/CppTB/problem-solving/meet-in-the-middle/"><span class="nav__num">10.15</span><span class="nav__text">Meet in the middle</span></a></li><li><a href="/CppTB/problem-solving/representing-graphs/"><span class="nav__num">10.16</span><span class="nav__text">Representing graphs</span></a></li><li><a href="/CppTB/problem-solving/bfs/"><span class="nav__num">10.17</span><span class="nav__text">BFS</span></a></li><li><a href="/CppTB/problem-solving/dfs/"><span class="nav__num">10.18</span><span class="nav__text">DFS</span></a></li><li><a href="/CppTB/problem-solving/topological-order/"><span class="nav__num">10.19</span><span class="nav__text">Topological order</span></a></li><li><a href="/CppTB/problem-solving/union-find/"><span class="nav__num">10.20</span><span class="nav__text">Union-Find</span></a></li><li><a href="/CppTB/problem-solving/dijkstra/"><span class="nav__num">10.21</span><span class="nav__text">Dijkstra</span></a></li><li><a href="/CppTB/problem-solving/negative-weights/"><span class="nav__num">10.22</span><span class="nav__text">Negative weights</span></a></li><li><a href="/CppTB/problem-solving/minimum-spanning-trees/"><span class="nav__num">10.23</span><span class="nav__text">Spanning trees</span></a></li></ul></details>
+  </div>
+</nav>
+    <main class="content" id="content">
+      <article class="prose prose--wide">
+    <p class="chapter-eyebrow">Part 10</p>
+    <h1>Problem solving</h1>
+    <p class="chapter-lede">The techniques competitive programming is built on, taught against the constraint that decides which one you need — and drilled on a judge.</p>
+    <ul class="cards"><li class="card">
+        <a href="/CppTB/problem-solving/reading-a-problem/">
+          <span class="card__num">10.1</span>
+          <h3>How to read a problem and its limits</h3>
+          <p>The constraints are half the statement, and they usually name the algorithm.</p>
+          <span class="card__meta">10 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/counting-the-work/">
+          <span class="card__num">10.2</span>
+          <h3>Counting the work you actually do</h3>
+          <p>Deriving the complexity of the code in front of you, including the parts that do not look like loops.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/contest-template/">
+          <span class="card__num">10.3</span>
+          <h3>The contest template and fast I/O</h3>
+          <p>The four lines every solution starts with, what they are worth, and the input shapes you will meet.</p>
+          <span class="card__meta">9 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/sorting-and-comparators/">
+          <span class="card__num">10.4</span>
+          <h3>Sorting, comparators, and coordinate compression</h3>
+          <p>Ordering by whatever you like, without breaking the rule that makes sorting work.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/binary-search/">
+          <span class="card__num">10.5</span>
+          <h3>Binary search: on a range, and on the answer</h3>
+          <p>Halving a sorted range, and the larger trick of halving the space of possible answers.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/two-pointers/">
+          <span class="card__num">10.6</span>
+          <h3>Two pointers and sliding windows</h3>
+          <p>Two indices that only move forward, and why that makes a nested loop linear.</p>
+          <span class="card__meta">6 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/prefix-sums/">
+          <span class="card__num">10.7</span>
+          <h3>Prefix sums and difference arrays</h3>
+          <p>Pay once up front so every range question afterwards costs two lookups — and the same trick run backwards, so every range update costs two writes.</p>
+          <span class="card__meta">11 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/monotonic-stacks/">
+          <span class="card__num">10.8</span>
+          <h3>Monotonic stacks</h3>
+          <p>A stack you keep sorted as you go, and the amortised argument that makes &quot;for each element, look left until…&quot; a single linear pass.</p>
+          <span class="card__meta">9 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/deques-and-window-extrema/">
+          <span class="card__num">10.9</span>
+          <h3>Deques and sliding-window extrema</h3>
+          <p>A monotonic stack with an expiry date: the maximum of every window, in one pass and no logarithms.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/hashing-and-frequency/">
+          <span class="card__num">10.10</span>
+          <h3>Hashing, frequency maps, and multisets</h3>
+          <p>Four ways to count things, the one that is fifty times faster, and the hash-map attack that turns a linear solution into a quadratic one.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/recursion-and-backtracking/">
+          <span class="card__num">10.11</span>
+          <h3>Recursion and backtracking</h3>
+          <p>Choose, explore, un-choose — and the two things that turn an exponential search into a feasible one.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/bitmask-enumeration/">
+          <span class="card__num">10.12</span>
+          <h3>Bitmasks: enumerating subsets and permutations</h3>
+          <p>A subset is an integer. What that buys you, what it costs, and the three idioms worth memorising.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/greedy/">
+          <span class="card__num">10.13</span>
+          <h3>Greedy, and proving it with an exchange argument</h3>
+          <p>Three plausible greedy rules for the same problem, two of them wrong, and the argument that tells you which is which before the judge does.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/divide-and-conquer/">
+          <span class="card__num">10.14</span>
+          <h3>Divide and conquer</h3>
+          <p>Split, solve, combine — and the three questions that decide whether the combine step is worth what the split costs.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/meet-in-the-middle/">
+          <span class="card__num">10.15</span>
+          <h3>Meet in the middle</h3>
+          <p>Split the input in half, enumerate both halves, and let the two lists find each other — 2^n becomes 2^(n/2), and n = 40 becomes possible.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/representing-graphs/">
+          <span class="card__num">10.16</span>
+          <h3>Representing graphs</h3>
+          <p>Three ways to store a graph, the one that is nine times faster to build, and the graphs you never store at all.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/bfs/">
+          <span class="card__num">10.17</span>
+          <h3>BFS, 0–1 BFS, and multi-source BFS</h3>
+          <p>One queue, shortest paths in edges — and the two variations that cover most of what a contest asks for.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/dfs/">
+          <span class="card__num">10.18</span>
+          <h3>DFS: components, cycles, bridges</h3>
+          <p>The same loop as BFS with a stack instead of a queue — and the three things that only a depth-first order can tell you.</p>
+          <span class="card__meta">8 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/topological-order/">
+          <span class="card__num">10.19</span>
+          <h3>Topological order and DAG DP</h3>
+          <p>Put a directed acyclic graph in an order where every edge points forward, and dynamic programming over it becomes a single sweep.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/union-find/">
+          <span class="card__num">10.20</span>
+          <h3>Union-Find</h3>
+          <p>Two arrays, twenty lines, and a structure that answers &quot;are these connected&quot; fast enough that the answer stops being the interesting part.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/dijkstra/">
+          <span class="card__num">10.21</span>
+          <h3>Dijkstra</h3>
+          <p>A heap, a distance array, and one line of lazy deletion — plus the reason it needs non-negative weights, demonstrated rather than asserted.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/negative-weights/">
+          <span class="card__num">10.22</span>
+          <h3>Bellman–Ford and Floyd–Warshall</h3>
+          <p>What to do when Dijkstra's precondition fails, and the two algorithms that do not need it.</p>
+          <span class="card__meta">7 min</span>
+        </a>
+      </li><li class="card">
+        <a href="/CppTB/problem-solving/minimum-spanning-trees/">
+          <span class="card__num">10.23</span>
+          <h3>Minimum spanning trees</h3>
+          <p>Connect everything for the least total weight. Two greedy algorithms that always agree, a property that is not shortest paths, and one that is more useful than it looks.</p>
+          <span class="card__meta">9 min</span>
+        </a>
+      </li></ul>
+  </article>
+    </main>
+    <div class="rail" aria-hidden="true"></div>
+  </div>
+  <div class="scrim" id="scrim" hidden></div>
+  <script type="module" src="/CppTB/assets/index-CQ7I7PX0.js"></script>
+</body>
+</html>
