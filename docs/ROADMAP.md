@@ -195,7 +195,7 @@ independent cases. Before writing chapter 10.1:
 - [x] 10.21 Dijkstra
 - [x] 10.22 Bellman–Ford and Floyd–Warshall
 - [x] 10.23 Minimum spanning trees
-- [ ] 10.24 Tree DP and rerooting
+- [x] 10.24 Tree DP and rerooting
 - [ ] 10.25 LCA, binary lifting, and Euler tours
 
 ### Wave F — dynamic programming
@@ -249,9 +249,10 @@ Sprague–Grundy and impartial games · Mo's algorithm · link-cut trees.
 
 ## Standing work, not tied to a wave
 
-- **Problems.** The bank is thin (9 problems). Every written chapter should end
-  with 2–4. Adding problems to already-written chapters is always a good use of
-  a short session.
+- **Problems.** The bank holds 205 and is no longer thin — that line said 9 for
+  a long time after it stopped being true. Every written chapter should still
+  end with 2–4, and Part 10 chapters with four; topping up a chapter that falls
+  short is a good use of a short session.
 - **Diagrams.** Chapters on pointers, references, lifetime, moving, smart
   pointers, and iterator invalidation each need a `:::memviz`. They are the
   clearest thing on the site; do not skip them where they apply.

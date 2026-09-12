@@ -4,10 +4,11 @@ An interactive C++ textbook. Every code sample is compiled by a real compiler
 and every practice problem is auto-graded.
 
 **Parts 1–9 are finished** (60 chapters), and **Part 10 is under way**: 10.1
-through 10.23 are written — Waves A–D of the forty-chapter plan near the bottom
-of `docs/ROADMAP.md`, plus the first three chapters of Wave E. The engine work
-listed there is done. As of the last full run: 487 samples and 201 problems, all
-verified. The next unticked chapter is 10.24, Tree DP and rerooting.
+through 10.24 are written — Waves A–D of the forty-chapter plan near the bottom
+of `docs/ROADMAP.md`, plus the first four chapters of Wave E. The engine work
+listed there is done. As of the last full run: 492 samples and 205 problems, all
+verified. The next unticked chapter is 10.25, LCA, binary lifting, and Euler
+tours.
 
 Take the top unticked chapter in the earliest incomplete wave. Where a planned
 title turns out to overlap a chapter already written, retitle it in the roadmap
