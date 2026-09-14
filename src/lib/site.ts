@@ -8,7 +8,8 @@ export function setupTheme(): void {
     const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
     try {
-      localStorage.setItem('cpptb-theme', next);
+      // Shared across the family, so the choice follows the reader between books.
+      localStorage.setItem('tb-theme', next);
     } catch {
       /* storage may be unavailable; the toggle still works for this page */
     }

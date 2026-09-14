@@ -30,7 +30,14 @@ export function readingMinutes(words: number): number {
 }
 
 /** Set the theme before first paint so the page never flashes the wrong one. */
-const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('cpptb-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`;
+// Runs before paint, so the page never flashes the wrong theme.
+//
+// `tb-theme` is shared by every book in this family, so a reader's choice
+// follows them between the sites — they all sit on one origin. This book used
+// to write `cpptb-theme`, so that key is read once as a fallback and migrated
+// forward; without it, everyone who had already picked a theme here would
+// silently lose it.
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('tb-theme');if(!t){var old=localStorage.getItem('cpptb-theme');if(old){t=old;localStorage.setItem('tb-theme',old);localStorage.removeItem('cpptb-theme');}}if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`;
 
 function sidebar(book: Book, currentSlug?: string): string {
   const parts = book.parts
